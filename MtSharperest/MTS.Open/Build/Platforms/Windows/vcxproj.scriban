@@ -2,6 +2,5 @@
 MM_ProjectConfigurations = ["Debug","Release"]
 MM_ProjectConfigurationPlatforms = ["Win32"]
 MM_ProjectReferences = ProjectReferences
-MM_Platform = "Windows"
 include '../../vcxproj_universal.scriban'
 }}

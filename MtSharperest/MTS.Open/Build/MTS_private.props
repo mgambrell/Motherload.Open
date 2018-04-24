@@ -44,15 +44,18 @@
 		<M_SolutionPropsPath>$(SolutionDir)$(SolutionName).props</M_SolutionPropsPath>
 	</PropertyGroup>
 	<Import Project="$(M_SolutionPropsPath)" Condition="Exists('$(M_SolutionPropsPath)')" />
+	
+		<!-- Figure out what hardware platform we are. This could be some combination of logic I'm not sure about yet, but it's simply the brute platform for now -->
+	<PropertyGroup Label="Globals">
+		<M_BRUTE_PlatformName Condition="'$(M_BRUTE_PlatformName)' == ''">Proto</M_BRUTE_PlatformName>
+		
+		<M_PlatformType>$(M_BRUTE_PlatformName)</M_PlatformType>
+	</PropertyGroup>
+
 
 	<PropertyGroup Label="Globals">
 		<!-- BRUTE is thoroughly emulating .net which uses unicode, so... -->
 		<CharacterSet>Unicode</CharacterSet>
-
-		<!-- Identify hardware platform TODO: cleanup -->
-		<M_BRUTE_PlatformName Condition="'$(M_BRUTE_PlatformName)' == ''">Proto</M_BRUTE_PlatformName>
-		<M_Platform>$(M_BRUTE_PlatformName)</M_Platform>
-		<M_HardwarePlatform>$(M_BRUTE_PlatformName)</M_HardwarePlatform>
 
 		<ConfigurationType Condition="'$(M_ProjectType)'=='Bruted'">Application</ConfigurationType>
 
@@ -61,13 +64,16 @@
 		<ConfigurationType Condition="'$(M_ProjectType)'=='Native' AND '$(M_BRUTE_PlatformName)'=='Proto'">DynamicLibrary</ConfigurationType>
 
 	</PropertyGroup>
+	
 
 	<!--==========================================================================-->
 	<!-- ITEM DEFINITIONS (standard build environment) -->
 	<ItemDefinitionGroup>
 		<ClCompile>
 			<!-- Copy some of these properties into the preprocessor -->
-			<PreprocessorDefinitions>M_PROJECTTYPE=$(M_ProjectType);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<!-- Note, some of these macros are a little lame.. not all upper-cased.. it's annoying to do that in msbuild -->
+			<PreprocessorDefinitions>MTS_PROJECTTYPE_$(M_ProjectType)=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<PreprocessorDefinitions >MTS_PLATFORMTYPE_$(M_PlatformType)=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
 			
 			<!-- This is a bit tricky... -->
 			<!-- Brute sends us include directories, but we won't have them in case we're a Proto build. -->
@@ -119,9 +125,9 @@
 	</PropertyGroup>
 
 	<!-- import handling for each platform -->
-	<Import Condition="'$(M_HardwarePlatform)'=='Windows'" Project="$(M_PackagesDir)Motherload.Open/MtSharperest/MTS.Open/Build/Platforms/Windows/Platform_Windows.props"/>
-	<Import Condition="'$(M_HardwarePlatform)'=='Proto'" Project="$(M_PackagesDir)Motherload.Open/MtSharperest/MTS.Open/Build/Platforms/Windows/Platform_Windows.props"/>
-	<Import Condition="'$(M_HardwarePlatform)'=='Switch'" Project="$(M_PackagesDir)Motherload.Switch/MtSharperest/MTS.Switch/Build/Platforms/Switch/Platform_Switch.props"/>
+	<Import Condition="'$(M_BRUTE_PlatformName)'=='Windows'" Project="$(M_PackagesDir)Motherload.Open/MtSharperest/MTS.Open/Build/Platforms/Windows/Platform_Windows.props"/>
+	<Import Condition="'$(M_BRUTE_PlatformName)'=='Proto'"   Project="$(M_PackagesDir)Motherload.Open/MtSharperest/MTS.Open/Build/Platforms/Windows/Platform_Windows.props"/>
+	<Import Condition="'$(M_BRUTE_PlatformName)'=='Switch'"  Project="$(M_PackagesDir)Motherload.Switch/MtSharperest/MTS.Switch/Build/Platforms/Switch/Platform_Switch.props"/>
 
 
 </Project>
