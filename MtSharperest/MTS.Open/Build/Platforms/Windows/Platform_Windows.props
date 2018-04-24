@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- Don't include any other props from here -->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+	<!-- use this if you want to make visual studio run msbuild dependency checking every time -->
+	<!-- <PropertyGroup Condition="'$(M_ProjectType)' == 'BRUTE'"><DisableFastUpToDateCheck>true</DisableFastUpToDateCheck></PropertyGroup> -->
+	
+	<ItemGroup Label="ProjectConfigurations">
+		<ProjectConfiguration Include="Debug|Win32">
+			<Configuration>Debug</Configuration>
+			<Platform>Win32</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Release|Win32">
+			<Configuration>Release</Configuration>
+			<Platform>Win32</Platform>
+		</ProjectConfiguration>
+	</ItemGroup>	
+
+	<PropertyGroup Label="Configuration">
+
+		<!-- this is a nuisance, but we might want to do it later -->
+		<GenerateManifest>false</GenerateManifest>
+
+		<!-- OPTIMIZATION FLAGS -->
+		<WholeProgramOptimization Condition="'$(Configuration)'=='Release'">true</WholeProgramOptimization>
+
+	</PropertyGroup>
+
+	<ItemDefinitionGroup>
+
+		<ClCompile>
+
+			<!-- OPTIMIZATION FLAGS -->
+			<WholeProgramOptimization Condition="'$(Configuration)'=='Release'">true</WholeProgramOptimization>
+
+			<!-- These work together -->
+			<MultiProcessorCompilation>true</MultiProcessorCompilation>
+			<MinimalRebuild>false</MinimalRebuild>
+
+			<!-- Optimization for release builds only -->
+			<!-- TODO: there's decent odds a user might want to customize these, so maybe I can use this as an example of a customization point -->
+			<Optimization Condition="'$(Configuration)' == 'Debug'">Disabled</Optimization>
+			<Optimization Condition="'$(Configuration)' == 'Release'">Full</Optimization>
+
+			<!-- Not needed by brute.. shouldnt be used by c++ engine programmers either -->
+			<RuntimeTypeInfo>false</RuntimeTypeInfo>
+
+			<!-- Features theres no sense in having disabled: -->
+			<StringPooling>true</StringPooling>
+
+			<!-- Standard preprocessor declarations -->
+			<PreprocessorDefinitions>NOMINMAX;_CRT_SECURE_NO_WARNINGS;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<PreprocessorDefinitions Condition="'$(Configuration)' == 'Release'">;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<PreprocessorDefinitions Condition="'$(Configuration)' != 'Release'">_CRTDBG_MAP_ALLOC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+
+			<!-- exceptions are needed for BRUTE, but the default is what we want -->
+			<!-- <ExceptionHandling>DEFAULT</ExceptionHandling> -->
+
+			<!-- disable warning C4068: unknown pragma -->
+			<!-- <AdditionalOptions>/wd4068 %(AdditionalOptions)</AdditionalOptions> -->
+			<!-- disable warning C4345: behavior change: an object of POD type constructed with an initializer of the form () will be default-initialized -->
+			<!-- <AdditionalOptions>/wd4345 %(AdditionalOptions)</AdditionalOptions> -->
+			<!-- set as error warning C4715: not all control paths return a value -->
+			<!-- <AdditionalOptions>/we4715 %(AdditionalOptions)</AdditionalOptions> -->
+
+			<RuntimeLibrary Condition="'$(Configuration)' == 'Release'">MultiThreaded</RuntimeLibrary>
+			<RuntimeLibrary Condition="'$(Configuration)' != 'Release'">MultiThreadedDebug</RuntimeLibrary>
+
+		</ClCompile>
+
+		<Lib>
+
+			<!-- This is a stupid warning and happens on .obj files with no exports: -->
+			<!-- LINK : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library -->
+			<AdditionalOptions>/ignore:4221 %(AdditionalOptions)</AdditionalOptions>
+
+			<!-- LINK : warning LNK4068: /MACHINE not specified; defaulting to X86 -->
+			<TargetMachine>MachineX86</TargetMachine>
+			
+			<!-- OPTIMIZATION FLAGS -->
+			<LinkTimeCodeGeneration  Condition="'$(Configuration)' == 'Release'">true</LinkTimeCodeGeneration>
+
+		</Lib>
+
+		<Link>
+
+			<!-- Add lib directories we'll need? -->
+			<AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+
+			<!-- Why not? Well, maybe with brute there's a reason to oppose this. Need to study more -->
+			<LinkIncremental>true</LinkIncremental>
+
+			<!-- Always do this so we get a PDB even if it isnt very useful -->
+			<GenerateDebugInformation>true</GenerateDebugInformation>
+
+			<!-- This is shoddy, we should be implementing winmain for public builds. Later. -->
+			<SubSystem>Console</SubSystem>
+
+			<!-- OPTIMIZATION FLAGS -->
+			<!-- Make sure this is paired with the global option -->
+			<LinkTimeCodeGeneration Condition="'$(Configuration)' == 'Release'">UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+
+			<!-- Interferes with debugging, only useful for security, who cares -->
+			<RandomizedBaseAddress>false</RandomizedBaseAddress>
+
+			<!-- Basic Windows libs -->
+			<AdditionalDependencies>comdlg32.lib;ole32.lib;user32.lib;shell32.lib;winmm.lib</AdditionalDependencies>
+
+			<!-- LINK RES FILES HERE, IF NEEDED -->
+
+			<!-- for now only vs2015 is supported -->
+			<!-- PC builds on vs2015 need this -->
+			<!-- <AdditionalDependencies>legacy_stdio_definitions.lib;%(AdditionalDependencies);</AdditionalDependencies> -->
+			
+			<!-- Dont embed path to pdb in file, it's not professional -->
+			<AdditionalOptions Condition="'$(Configuration)' == 'Release'">/pdbaltpath:%_PDB%</AdditionalOptions>
+		
+		</Link>
+
+	</ItemDefinitionGroup>
+
+</Project>

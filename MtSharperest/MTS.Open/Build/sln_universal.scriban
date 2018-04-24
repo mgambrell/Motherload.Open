@@ -1,0 +1,45 @@
+{{~
+MM_ProjectGuid = ProjectGuid
+MM_ProjectReferences = ProjectReferences
+MM_ProjectGuids = [MM_ProjectGuid]
+for PR in MM_ProjectReferences
+	MM_ProjectGuids = array.add MM_ProjectGuids PR.Guid
+end
+~}}
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 14.0.25420.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "{{ProjectName}}.{{PlatformName}}", "{{ProjectFilename}}", "{{MM_ProjectGuid}}"
+	ProjectSection(ProjectDependencies) = postProject
+		{{~ for PR in MM_ProjectReferences ~}}
+		{{PR.Guid}} = {{PR.Guid}}
+		{{~ end ~}}
+	EndProjectSection
+EndProject
+{{~ for PR in MM_ProjectReferences ~}}
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "{{PR.Name}}", "{{PR.VcxprojPath}}", "{{PR.Guid}}"
+EndProject
+{{~ end ~}}
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+	{{~ for SC in MM_SolutionConfigurations ~}}
+		{{~ for SCP in MM_SolutionConfigurationPlatforms ~}}
+		{{SC}}|{{SCP.Configuration}} = {{SC}}|{{SCP.Configuration}}
+		{{~ end ~}}
+	{{~ end ~}}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+	{{~ for PG in MM_ProjectGuids ~}}
+		{{~ for SC in MM_SolutionConfigurations ~}}
+			{{~ for SCP in MM_SolutionConfigurationPlatforms ~}}
+		{{PG}}.{{SC}}|{{SCP.Configuration}}.ActiveCfg = {{SC}}|{{SCP.Platform}}
+		{{PG}}.{{SC}}|{{SCP.Configuration}}.Build.0 = {{SC}}|{{SCP.Platform}}
+			{{~ end ~}}
+		{{~ end ~}}
+	{{~ end ~}}
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

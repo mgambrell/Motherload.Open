@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{BB1392D6-436D-4964-9DE7-182E1DBBF55B}</ProjectGuid>
+    <RootNamespace>bdwgc</RootNamespace>
+  </PropertyGroup>
+  <Import Project="..\..\MTS_native.props" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros" />
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\..\..\..\..\..\Brute\Runtime\{gc}\bdwgc\include;..\..\..\..\..\..\Brute\Runtime\{gc}\libatomic_ops\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>ALL_INTERIOR_POINTERS;GC_NOT_DLL;GC_THREADS;XXX_THREAD_LOCAL_ALLOC;XXX_PARALLEL_MARK;GC_ASSERTIONS;ATOMIC_UNCOLLECTABLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\..\..\Brute\Runtime\{gc}\bdwgc\allchblk.c" />
+    <ClCompile Include="..\..\..\..\..\..\Brute\Runtime\{gc}\bdwgc\alloc.c" />
+    <ClCompile Include="..\..\..\..\..\..\Brute\Runtime\{gc}\bdwgc\blacklst.c" />
+    <ClCompile Include="..\..\..\..\..\..\Brute\Runtime\{gc}\bdwgc\dbg_mlc.c" />
+    <ClCompile Include="..\..\..\..\..\..\Brute\Runtime\{gc}\bdwgc\dyn_load.c" />
+    <ClCompile Include="..\..\..\..\..\..\Brute\Runtime\{gc}\bdwgc\extra\msvc_dbg.c" />
+    <ClCompile Include="..\..\..\..\..\..\Brute\Runtime\{gc}\bdwgc\finalize.c" />
+    <ClCompile Include="..\..\..\..\..\..\Brute\Runtime\{gc}\bdwgc\fnlz_mlc.c" />
+    <ClCompile Include="..\..\..\..\..\..\Brute\Runtime\{gc}\bdwgc\headers.c" />
+    <ClCompile Include="..\..\..\..\..\..\Brute\Runtime\{gc}\bdwgc\mach_dep.c" />
+    <ClCompile Include="..\..\..\..\..\..\Brute\Runtime\{gc}\bdwgc\malloc.c" />
+    <ClCompile Include="..\..\..\..\..\..\Brute\Runtime\{gc}\bdwgc\mallocx.c" />
+    <ClCompile Include="..\..\..\..\..\..\Brute\Runtime\{gc}\bdwgc\mark.c" />
+    <ClCompile Include="..\..\..\..\..\..\Brute\Runtime\{gc}\bdwgc\mark_rts.c" />
+    <ClCompile Include="..\..\..\..\..\..\Brute\Runtime\{gc}\bdwgc\misc.c" />
+    <ClCompile Include="..\..\..\..\..\..\Brute\Runtime\{gc}\bdwgc\new_hblk.c" />
+    <ClCompile Include="..\..\..\..\..\..\Brute\Runtime\{gc}\bdwgc\obj_map.c" />
+    <ClCompile Include="..\..\..\..\..\..\Brute\Runtime\{gc}\bdwgc\os_dep.c" />
+    <ClCompile Include="..\..\..\..\..\..\Brute\Runtime\{gc}\bdwgc\ptr_chck.c" />
+    <ClCompile Include="..\..\..\..\..\..\Brute\Runtime\{gc}\bdwgc\reclaim.c" />
+    <ClCompile Include="..\..\..\..\..\..\Brute\Runtime\{gc}\bdwgc\stubborn.c" />
+    <ClCompile Include="..\..\..\..\..\..\Brute\Runtime\{gc}\bdwgc\thread_local_alloc.c" />
+    <ClCompile Include="..\..\..\..\..\..\Brute\Runtime\{gc}\bdwgc\typd_mlc.c" />
+    <ClCompile Include="..\..\..\..\..\..\Brute\Runtime\{gc}\bdwgc\windows_threads.c" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <Import Project="..\..\MTS_native.targets" />
+</Project>

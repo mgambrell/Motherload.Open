@@ -1,0 +1,5 @@
+{{
+MM_SolutionConfigurations = ["Debug", "Release"]
+MM_SolutionConfigurationPlatforms = [ { Configuration: "Win32", Platform: "Win32"} ]
+include '../../sln_universal.scriban'
+}}

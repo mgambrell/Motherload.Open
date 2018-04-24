@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Project ToolsVersion="4.0" DefaultTargets="MTSIntegrityChecks" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+	<!-- FIX MSBUILD -->
+	<PropertyGroup Label="Globals">
+		<!-- warning MSB8027: Two or more files with the name of X.cpp will produce outputs to the same location. This can lead to an incorrect build result. -->
+		<IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
+
+		<!-- Well, I'm not supporting vs2010 anymore, but it was a good VS version. this will make sure we can detect it and function OK if we need to -->
+		<!-- http://sedodream.com/PermaLink,guid,a5894bad-f2a1-441a-a5b2-74f16c6cf8aa.aspx -->
+		<VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+
+		<!-- Toolset must be changed early on......... I dont know why............ (edit: must it?)-->
+		<!-- Let's just choose whatever toolset would be included with the VS version we're running -->
+		<PlatformToolset Condition="'$(VisualStudioVersion)' == '14.0'">v140</PlatformToolset>
+		<PlatformToolset Condition="'$(VisualStudioVersion)' == '15.0'">v141</PlatformToolset>
+
+	</PropertyGroup>
+	
+	<!-- MSVC gets angry if this isn't set (for me, editing vcxproj properties in IDE breaks; others may have other problems) -->
+	<!-- see https://developercommunity.visualstudio.com/content/problem/140294/windowstargetplatformversion-makes-it-impossible-t.html -->
+	<!-- Setting these has the annoying side effect of making msvc edit the value in the vcxproj whenever we edit anything else. nothing seems to be capable of preventing that -->
+	<PropertyGroup Condition="'$(WindowsTargetPlatformVersion)'==''" Label="Globals">
+		<!-- <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion> -->
+			<LatestTargetPlatformVersion>$([Microsoft.Build.Utilities.ToolLocationHelper]::GetLatestSDKTargetPlatformVersion('Windows', '10.0'))</LatestTargetPlatformVersion>
+			<WindowsTargetPlatformVersion Condition="'$(WindowsTargetPlatformVersion)' == ''">$(LatestTargetPlatformVersion)</WindowsTargetPlatformVersion>
+			<TargetPlatformVersion>$(WindowsTargetPlatformVersion)</TargetPlatformVersion>
+	</PropertyGroup>
+
+	<!-- Calculate root directory for all operations -->
+	<PropertyGroup Label="Globals">
+		<M_PackagesDir>$(MSBuildThisFileDirectory)../../../../</M_PackagesDir>
+	</PropertyGroup>
+	
+	<!-- Find out which platforms are available. Well, this is an example of that. I don't think it's needed. -->
+	<PropertyGroup Label="Globals">
+		<M_Has_Switch Condition="Exists('$(M_PackagesDir)/Motherload.Switch')">true</M_Has_Switch>
+		<M_Has_PS4 Condition="Exists('$(M_PackagesDir)/Motherload.PS4')">true</M_Has_PS4>
+	</PropertyGroup>
+
+	<!-- Import the bruted project props, if we can. If we can't, it's no big deal (it must be a proto build) -->
+	<PropertyGroup Label="Globals">
+		<M_SolutionPropsPath>$(SolutionDir)$(SolutionName).props</M_SolutionPropsPath>
+	</PropertyGroup>
+	<Import Project="$(M_SolutionPropsPath)" Condition="Exists('$(M_SolutionPropsPath)')" />
+
+	<PropertyGroup Label="Globals">
+		<!-- BRUTE is thoroughly emulating .net which uses unicode, so... -->
+		<CharacterSet>Unicode</CharacterSet>
+
+		<!-- Identify hardware platform TODO: cleanup -->
+		<M_BRUTE_PlatformName Condition="'$(M_BRUTE_PlatformName)' == ''">Proto</M_BRUTE_PlatformName>
+		<M_Platform>$(M_BRUTE_PlatformName)</M_Platform>
+		<M_HardwarePlatform>$(M_BRUTE_PlatformName)</M_HardwarePlatform>
+
+		<ConfigurationType Condition="'$(M_ProjectType)'=='Bruted'">Application</ConfigurationType>
+
+		<!-- Tricky: we want this to be a static library ... but a DLL for proto builds -->
+		<ConfigurationType Condition="'$(M_ProjectType)'=='Native'">StaticLibrary</ConfigurationType>
+		<ConfigurationType Condition="'$(M_ProjectType)'=='Native' AND '$(M_BRUTE_PlatformName)'=='Proto'">DynamicLibrary</ConfigurationType>
+
+	</PropertyGroup>
+
+	<!--==========================================================================-->
+	<!-- ITEM DEFINITIONS (standard build environment) -->
+	<ItemDefinitionGroup>
+		<ClCompile>
+			<!-- Copy some of these properties into the preprocessor -->
+			<PreprocessorDefinitions>M_PROJECTTYPE=$(M_ProjectType);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			
+			<!-- This is a bit tricky... -->
+			<!-- Brute sends us include directories, but we won't have them in case we're a Proto build. -->
+			<!-- We could build the include dirs ourselves (maybe we should?) but we can also just fix them in the Proto case.. that's what I'll do for now -->
+			<AdditionalIncludeDirectories>$(M_BRUTE_IncludeDirs);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			
+
+			<PreprocessorDefinitions Condition="'$(Configuration)' == 'Debug'">_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<PreprocessorDefinitions Condition="'$(Configuration)' == 'Release'">NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+
+		</ClCompile>
+		<Link>
+		</Link>
+		
+	</ItemDefinitionGroup>
+	
+	<!-- Setup specifically for bruted builds -->
+	<ItemDefinitionGroup Condition="'$(M_BRUTE_PlatformName)'!='Proto'">
+		<ClCompile>
+			<PreprocessorDefinitions>BRUTE;%(PreprocessorDefinitions)</PreprocessorDefinitions>	
+		</ClCompile>
+	</ItemDefinitionGroup>
+	
+	<!-- Setup specifically for proto builds -->
+	<ItemDefinitionGroup Condition="'$(M_BRUTE_PlatformName)'=='Proto'">
+		<ClCompile>
+			<!-- UHHHH THIS DOESNT MAKE SENSE! THIS IS ONLY THE MOST USELESS SUBSET OF BRUTE! LIKE, NO MSCORLIB OR ANYTHING! OH NO! -->
+			<AdditionalIncludeDirectories>$(M_PackagesDir)BRUTE/Runtime/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>$(M_PackagesDir)BRUTE/Runtime/{Brute}/Windows/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+		</ClCompile>
+	</ItemDefinitionGroup>
+
+	<!--==========================================================================-->
+
+	<!-- Setup staging directories, OutDir and IntDir, etc. -->
+	<PropertyGroup>
+	
+		<!-- set build directories and staging dirs -->
+		<!-- build directory can go under the brute output -->
+		<IntDir>$(SolutionDir).obj\$(MSBuildProjectName) ($(Configuration)-$(Platform))\</IntDir>
+		<M_StagingDir>$(SolutionDir)..\</M_StagingDir>
+	
+		<!-- applications go to a useful location -->
+		<OutDir Condition="'$(M_ProjectType)'=='Bruted'">$(M_StagingDir)\.bin\$(Configuration)\</OutDir>
+		<!-- libraries just go to the IntDir -->
+		<OutDir Condition="'$(M_ProjectType)'=='Native'">$(IntDir)</OutDir>
+		<OutDir Condition="'$(M_ProjectType)'=='Native' AND '$(M_BRUTE_PlatformName)'=='Proto'">$(SolutionDir)bin\$(Configuration)\</OutDir>
+		
+	</PropertyGroup>
+
+	<!-- import handling for each platform -->
+	<Import Condition="'$(M_HardwarePlatform)'=='Windows'" Project="$(M_PackagesDir)Motherload.Open/MtSharperest/MTS.Open/Build/Platforms/Windows/Platform_Windows.props"/>
+	<Import Condition="'$(M_HardwarePlatform)'=='Proto'" Project="$(M_PackagesDir)Motherload.Open/MtSharperest/MTS.Open/Build/Platforms/Windows/Platform_Windows.props"/>
+	<Import Condition="'$(M_HardwarePlatform)'=='Switch'" Project="$(M_PackagesDir)Motherload.Switch/MtSharperest/MTS.Switch/Build/Platforms/Switch/Platform_Switch.props"/>
+
+
+</Project>

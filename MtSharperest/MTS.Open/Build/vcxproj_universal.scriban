@@ -1,0 +1,61 @@
+{{~
+	PackagesDir = ScribanTemplateDir + "/../../../../../../"
+	MtsBuildDir = PackagesDir + "Motherload.Open/MtSharperest/MTS.Open/Build/"
+~}}
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+	<ItemGroup Label="ProjectConfigurations">
+	{{~ for PC in MM_ProjectConfigurations ~}}
+	{{~ for PP in MM_ProjectConfigurationPlatforms ~}}
+		<ProjectConfiguration Include="{{PC}}|{{PP}}">
+			<Configuration>{{PC}}</Configuration>
+			<Platform>{{PP}}</Platform>
+		</ProjectConfiguration>
+	{{~ end ~}}
+	{{~ end ~}}
+	</ItemGroup>
+
+	<PropertyGroup Label="Globals">
+		<ProjectGuid>{{ProjectGuid}}</ProjectGuid>
+		<RootNamespace>Bruted</RootNamespace>
+	</PropertyGroup>
+	<Import Project="{{MtsBuildDir}}MTS_bruted.props" />
+	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+	<ImportGroup Label="PropertySheets" />
+	<PropertyGroup Label="UserMacros" />
+
+	<ItemGroup>
+		{{~ for file in HeaderFiles ~}}
+		<ClInclude Include="{{file.FilePath}}" />
+		{{~ end ~}}
+	</ItemGroup>
+	<ItemGroup>
+		{{~ for file in SourceFiles ~}}
+		<ClCompile Include="{{file.FilePath}}" />
+		{{~ end ~}}
+	</ItemGroup>
+	<ItemGroup>
+		{{~ for file in InlineFiles ~}}
+		<None Include="{{file.FilePath}}" />
+		{{~ end ~}}
+	</ItemGroup>
+	<ItemGroup>
+		{{~ for file in MetadataFiles ~}}
+		<ClCompile Include="{{file.FilePath}}" />
+		{{~ end ~}}
+	</ItemGroup>
+	
+	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+
+	<ItemGroup>
+		{{~ for PR in MM_ProjectReferences ~}}
+		<ProjectReference Include="{{PR.VcxprojPath}}">
+			<Project>{{PR.Guid}}</Project>
+		</ProjectReference>
+		{{~ end ~}}
+	</ItemGroup>
+
+	<Import Project="{{MtsBuildDir}}/MTS_bruted.targets" />
+</Project>

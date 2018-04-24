@@ -1,0 +1,10 @@
+root = true
+
+[*.cpp]
+indent_style = tab
+
+[*.h]
+indent_style = tab
+
+[*.cs]
+indent_style = tab
