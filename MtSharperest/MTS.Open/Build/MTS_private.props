@@ -73,13 +73,7 @@
 			<!-- Copy some of these properties into the preprocessor -->
 			<!-- Note, some of these macros are a little lame.. not all upper-cased.. it's annoying to do that in msbuild -->
 			<PreprocessorDefinitions>MTS_PROJECTTYPE_$(M_ProjectType)=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<PreprocessorDefinitions >MTS_PLATFORMTYPE_$(M_PlatformType)=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			
-			<!-- This is a bit tricky... -->
-			<!-- Brute sends us include directories, but we won't have them in case we're a Proto build. -->
-			<!-- We could build the include dirs ourselves (maybe we should?) but we can also just fix them in the Proto case.. that's what I'll do for now -->
-			<AdditionalIncludeDirectories>$(M_BRUTE_IncludeDirs);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-			
+			<PreprocessorDefinitions>MTS_PLATFORMTYPE_$(M_PlatformType)=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
 
 			<PreprocessorDefinitions Condition="'$(Configuration)' == 'Debug'">_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
 			<PreprocessorDefinitions Condition="'$(Configuration)' == 'Release'">NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -93,16 +87,16 @@
 	<!-- Setup specifically for bruted builds -->
 	<ItemDefinitionGroup Condition="'$(M_BRUTE_PlatformName)'!='Proto'">
 		<ClCompile>
+			<!-- TODO: PreprocessorDefinitions BRUTE_DEBUG -->
 			<PreprocessorDefinitions>BRUTE;%(PreprocessorDefinitions)</PreprocessorDefinitions>	
+			<AdditionalIncludeDirectories>$(M_BRUTE_IncludeDirs);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 		</ClCompile>
 	</ItemDefinitionGroup>
 	
 	<!-- Setup specifically for proto builds -->
 	<ItemDefinitionGroup Condition="'$(M_BRUTE_PlatformName)'=='Proto'">
 		<ClCompile>
-			<!-- UHHHH THIS DOESNT MAKE SENSE! THIS IS ONLY THE MOST USELESS SUBSET OF BRUTE! LIKE, NO MSCORLIB OR ANYTHING! OH NO! -->
-			<AdditionalIncludeDirectories>$(M_PackagesDir)BRUTE/Runtime/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-			<AdditionalIncludeDirectories>$(M_PackagesDir)BRUTE/Runtime/{Brute}/Windows/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+		<AdditionalIncludeDirectories>DICKS;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 		</ClCompile>
 	</ItemDefinitionGroup>
 
