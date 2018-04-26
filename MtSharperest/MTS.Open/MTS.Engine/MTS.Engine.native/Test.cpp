@@ -1,16 +1,10 @@
-#ifdef MTS_PLATFORMTYPE_Proto
+#include <MTS/MTS_Native.h>
 
-#define EXPORT(rtype,name) extern "C" __declspec(dllexport) rtype name
-
-#else
-
-namespace MTS { namespace Engine {
-
-#define EXPORT(rtype, name) rtype Native$_$S_##name##_$PInvokeWrapper
-
-#endif
-
-EXPORT(int, GetPlatformType)()
+EXPORT int DllTest(int num)
+{
+	return num*2;
+}
+EXPORT int GetPlatformType()
 {
 	#if MTS_PLATFORMTYPE_Proto
 	return 0;
@@ -23,13 +17,3 @@ EXPORT(int, GetPlatformType)()
 	#endif
 }
 
-EXPORT(int, DllTest)(int num)
-{
-	return num*2;
-}
-
-#if !MTS_PLATFORMTYPE_Proto
-
-} } //end namespaces
-
-#endif 
