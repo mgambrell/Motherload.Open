@@ -2,6 +2,11 @@
 
 <Project ToolsVersion="4.0" DefaultTargets="MTSIntegrityChecks" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
+	<!--==========================================================================-->
+	<!-- PHASE 1 -->
+	<!-- The stuff in this file needs to happen BEFORE Microsoft.Cpp.Default.props and Microsoft.Cpp.props are imported -->
+	<!--==========================================================================-->
+
 	<!-- FIX MSBUILD -->
 	<PropertyGroup Label="Globals">
 		<!-- warning MSB8027: Two or more files with the name of X.cpp will produce outputs to the same location. This can lead to an incorrect build result. -->
@@ -38,70 +43,20 @@
 		<M_Has_Switch Condition="Exists('$(M_PackagesDir)/Motherload.Switch')">true</M_Has_Switch>
 		<M_Has_PS4 Condition="Exists('$(M_PackagesDir)/Motherload.PS4')">true</M_Has_PS4>
 	</PropertyGroup>
-
-	<!-- Import the bruted project props, if we can. If we can't, it's no big deal (it must be a proto build) -->
-	<PropertyGroup Label="Globals">
-		<M_SolutionPropsPath>$(SolutionDir)$(SolutionName).props</M_SolutionPropsPath>
-	</PropertyGroup>
-	<Import Project="$(M_SolutionPropsPath)" Condition="Exists('$(M_SolutionPropsPath)')" />
 	
-		<!-- Figure out what hardware platform we are. This could be some combination of logic I'm not sure about yet, but it's simply the brute platform for now -->
+	<!-- Pick project configuration type -->
 	<PropertyGroup Label="Globals">
-		<M_BRUTE_PlatformName Condition="'$(M_BRUTE_PlatformName)' == ''">Proto</M_BRUTE_PlatformName>
-		
-		<M_PlatformType>$(M_BRUTE_PlatformName)</M_PlatformType>
+		<!-- WARNING: THIS BLOB OF STUFF HAS TO BE DONE TWICE -->
+		<ConfigurationType Condition="'$(M_ProjectType)'=='Bruted'">Application</ConfigurationType>
+		<ConfigurationType Condition="'$(M_ProjectType)'=='Native'">StaticLibrary</ConfigurationType>
+		<ConfigurationType Condition="'$(M_ProjectType)'=='Native' AND '$(M_BRUTE_PlatformName)'=='Proto'">DynamicLibrary</ConfigurationType>		
 	</PropertyGroup>
-
-
+	
 	<PropertyGroup Label="Globals">
 		<!-- BRUTE is thoroughly emulating .net which uses unicode, so... -->
 		<CharacterSet>Unicode</CharacterSet>
-
-		<ConfigurationType Condition="'$(M_ProjectType)'=='Bruted'">Application</ConfigurationType>
-
-		<!-- Tricky: we want this to be a static library ... but a DLL for proto builds -->
-		<ConfigurationType Condition="'$(M_ProjectType)'=='Native'">StaticLibrary</ConfigurationType>
-		<ConfigurationType Condition="'$(M_ProjectType)'=='Native' AND '$(M_BRUTE_PlatformName)'=='Proto'">DynamicLibrary</ConfigurationType>
-
-	</PropertyGroup>
+	</PropertyGroup>	
 	
-
-	<!--==========================================================================-->
-	<!-- ITEM DEFINITIONS (standard build environment) -->
-	<ItemDefinitionGroup>
-		<ClCompile>
-			<!-- Copy some of these properties into the preprocessor -->
-			<!-- Note, some of these macros are a little lame.. not all upper-cased.. it's annoying to do that in msbuild -->
-			<PreprocessorDefinitions>MTS_PROJECTTYPE_$(M_ProjectType)=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<PreprocessorDefinitions>MTS_PLATFORMTYPE_$(M_PlatformType)=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-
-			<PreprocessorDefinitions Condition="'$(Configuration)' == 'Debug'">_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<PreprocessorDefinitions Condition="'$(Configuration)' == 'Release'">NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-
-		</ClCompile>
-		<Link>
-		</Link>
-		
-	</ItemDefinitionGroup>
-	
-	<!-- Setup specifically for bruted builds -->
-	<ItemDefinitionGroup Condition="'$(M_BRUTE_PlatformName)'!='Proto'">
-		<ClCompile>
-			<!-- TODO: PreprocessorDefinitions BRUTE_DEBUG -->
-			<PreprocessorDefinitions>BRUTE;%(PreprocessorDefinitions)</PreprocessorDefinitions>	
-			<AdditionalIncludeDirectories>$(M_BRUTE_IncludeDirs);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-		</ClCompile>
-	</ItemDefinitionGroup>
-	
-	<!-- Setup specifically for proto builds -->
-	<ItemDefinitionGroup Condition="'$(M_BRUTE_PlatformName)'=='Proto'">
-		<ClCompile>
-		<AdditionalIncludeDirectories>DICKS;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-		</ClCompile>
-	</ItemDefinitionGroup>
-
-	<!--==========================================================================-->
-
 	<!-- Setup staging directories, OutDir and IntDir, etc. -->
 	<PropertyGroup>
 	
@@ -111,17 +66,12 @@
 		<M_StagingDir>$(SolutionDir)..\</M_StagingDir>
 	
 		<!-- applications go to a useful location -->
-		<OutDir Condition="'$(M_ProjectType)'=='Bruted'">$(M_StagingDir)\.bin\$(Configuration)\</OutDir>
+		<OutDir Condition="'$(M_ProjectType)'=='Bruted'">$(M_StagingDir).bin\$(Configuration)\</OutDir>
 		<!-- libraries just go to the IntDir -->
 		<OutDir Condition="'$(M_ProjectType)'=='Native'">$(IntDir)</OutDir>
 		<OutDir Condition="'$(M_ProjectType)'=='Native' AND '$(M_BRUTE_PlatformName)'=='Proto'">$(SolutionDir)bin\$(Configuration)\</OutDir>
 		
 	</PropertyGroup>
-
-	<!-- import handling for each platform -->
-	<Import Condition="'$(M_BRUTE_PlatformName)'=='Windows'" Project="$(M_PackagesDir)Motherload.Open/MtSharperest/MTS.Open/Build/Platforms/Windows/Platform_Windows.props"/>
-	<Import Condition="'$(M_BRUTE_PlatformName)'=='Proto'"   Project="$(M_PackagesDir)Motherload.Open/MtSharperest/MTS.Open/Build/Platforms/Windows/Platform_Windows.props"/>
-	<Import Condition="'$(M_BRUTE_PlatformName)'=='Switch'"  Project="$(M_PackagesDir)Motherload.Switch/MtSharperest/MTS.Switch/Build/Platforms/Switch/Platform_Switch.props"/>
-
+	
 
 </Project>

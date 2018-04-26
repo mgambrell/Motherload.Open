@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Project ToolsVersion="4.0" DefaultTargets="MTSIntegrityChecks" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+	<!--==========================================================================-->
+	<!-- PHASE 2 -->
+	<!-- The stuff in this file needs to happen AFTER Microsoft.Cpp.Default.props and Microsoft.Cpp.props are imported -->
+	<!-- I'm summoning it from the targets file.. that should be OK -->
+	<!--==========================================================================-->
+
+	<PropertyGroup Label="Globals">
+		<M_VcxprojPropsPath>$(MSBuildProjectDirectory)\$(MSBuildProjectName).props</M_VcxprojPropsPath>
+		<M_BrutedPropsPath>$(SolutionDir)\$(SolutionName).props</M_BrutedPropsPath>
+	</PropertyGroup>
+	
+	<!-- bruted projects include only M_BrutedPropsPath; native projects include M_VcxprojPropsPath as well-->
+	<Import Condition="Exists('$(M_BrutedPropsPath)')" Project="$(M_BrutedPropsPath)" />
+	<Import Condition="Exists('$(M_VcxprojPropsPath)') AND '$(M_ProjectType)'=='Native'" Project="$(M_VcxprojPropsPath)" />
+		
+		<!-- Figure out what hardware platform we are. This could be some combination of logic I'm not sure about yet, but it's simply the brute platform for now -->
+	<PropertyGroup Label="Globals">
+		<M_BRUTE_PlatformName Condition="'$(M_BRUTE_PlatformName)' == ''">Proto</M_BRUTE_PlatformName>
+		
+		<M_PlatformType>$(M_BRUTE_PlatformName)</M_PlatformType>
+	</PropertyGroup>
+
+
+	<!-- Pick project configuration type -->
+	<PropertyGroup Label="Globals">
+		<!-- WARNING: THIS BLOB OF STUFF HAS TO BE DONE TWICE -->
+		<ConfigurationType Condition="'$(M_ProjectType)'=='Bruted'">Application</ConfigurationType>
+		<ConfigurationType Condition="'$(M_ProjectType)'=='Native'">StaticLibrary</ConfigurationType>
+		<ConfigurationType Condition="'$(M_ProjectType)'=='Native' AND '$(M_BRUTE_PlatformName)'=='Proto'">DynamicLibrary</ConfigurationType>		
+	</PropertyGroup>
+	
+	<!--==========================================================================-->
+	<!-- ITEM DEFINITIONS (standard build environment) -->
+	<ItemDefinitionGroup>
+		<ClCompile>
+			<!-- Copy some of these properties into the preprocessor -->
+			<!-- Note, some of these macros are a little lame.. not all upper-cased.. it's annoying to do that in msbuild -->
+			<PreprocessorDefinitions>MTS_PROJECTTYPE_$(M_ProjectType)=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<PreprocessorDefinitions>MTS_PLATFORMTYPE_$(M_PlatformType)=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			
+			<AdditionalIncludeDirectories>$(MSBuildThisFileDirectory)\NativeSDK;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+
+			<PreprocessorDefinitions Condition="'$(Configuration)' == 'Debug'">_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<PreprocessorDefinitions Condition="'$(Configuration)' == 'Release'">NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+
+		</ClCompile>
+		<Link>
+		</Link>
+		
+	</ItemDefinitionGroup>
+	
+	<!-- Setup specifically for bruted builds -->
+	<ItemDefinitionGroup Condition="'$(M_BRUTE_PlatformName)'!='Proto'">
+		<ClCompile>
+			<!-- TODO: PreprocessorDefinitions BRUTE_DEBUG -->
+			<!-- TODO: I think the brute include directories only makes sense for Bruted project types, right? -->
+			<PreprocessorDefinitions>BRUTE;%(PreprocessorDefinitions)</PreprocessorDefinitions>	
+			<AdditionalIncludeDirectories>$(M_BRUTE_IncludeDirs);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+		</ClCompile>
+	</ItemDefinitionGroup>
+	
+	<!-- Setup specifically for proto builds -->
+	<ItemDefinitionGroup Condition="'$(M_BRUTE_PlatformName)'=='Proto'">
+		<ClCompile>
+		<AdditionalIncludeDirectories>DICKS;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+		</ClCompile>
+	</ItemDefinitionGroup>
+
+	<!--==========================================================================-->
+
+	<PropertyGroup>
+
+		<!-- Note: this may need to vary by platform -->
+		<TargetPath>$(OutDir)$(TargetName)$(TargetExt)</TargetPath>
+		
+	</PropertyGroup>
+
+	<!-- import handling for each platform -->
+	<Import Condition="'$(M_BRUTE_PlatformName)'=='Windows'" Project="$(M_PackagesDir)Motherload.Open/MtSharperest/MTS.Open/Build/Platforms/Windows/Platform_Windows.props"/>
+	<Import Condition="'$(M_BRUTE_PlatformName)'=='Proto'"   Project="$(M_PackagesDir)Motherload.Open/MtSharperest/MTS.Open/Build/Platforms/Windows/Platform_Windows.props"/>
+	<Import Condition="'$(M_BRUTE_PlatformName)'=='Switch'"  Project="$(M_PackagesDir)Motherload.Switch/MtSharperest/MTS.Switch/Build/Platforms/Switch/Platform_Switch.props"/>
+
+
+
+</Project>

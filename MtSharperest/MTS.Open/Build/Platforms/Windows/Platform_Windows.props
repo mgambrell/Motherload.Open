@@ -79,6 +79,11 @@
 			
 			<!-- OPTIMIZATION FLAGS -->
 			<LinkTimeCodeGeneration  Condition="'$(Configuration)' == 'Release'">true</LinkTimeCodeGeneration>
+			
+			
+			<!-- This is a stupid warning and happens when you link a lib more than once. what's the harm, anyway? geeze. -->
+			<!-- winmm.lib(WINMM.dll) : warning LNK4006: __NULL_IMPORT_DESCRIPTOR already defined in gdi32.lib(GDI32.dll); second definition ignored -->
+			<AdditionalOptions>/ignore:4006 %(AdditionalOptions)</AdditionalOptions>
 
 		</Lib>
 
@@ -114,6 +119,10 @@
 			
 			<!-- Dont embed path to pdb in file, it's not professional -->
 			<AdditionalOptions Condition="'$(Configuration)' == 'Release'">/pdbaltpath:%_PDB%</AdditionalOptions>
+			
+			<!-- This is a stupid warning and happens on .obj files with no exports: -->
+			<!-- LINK : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library -->
+			<AdditionalOptions>/ignore:4221 %(AdditionalOptions)</AdditionalOptions>
 		
 		</Link>
 

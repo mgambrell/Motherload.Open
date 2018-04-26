@@ -8,6 +8,6 @@
 		<M_ProjectType>Bruted</M_ProjectType>
 	</PropertyGroup>
 	
-	<Import Project="MTS_private.props" />
+	<Import Project="MTS_private_phase1.props" />
 
 </Project>
