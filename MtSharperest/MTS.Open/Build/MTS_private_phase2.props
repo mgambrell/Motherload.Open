@@ -8,23 +8,6 @@
 	<!-- I'm summoning it from the targets file.. that should be OK -->
 	<!--==========================================================================-->
 
-	<PropertyGroup Label="Globals">
-		<M_VcxprojPropsPath>$(MSBuildProjectDirectory)\$(MSBuildProjectName).props</M_VcxprojPropsPath>
-		<M_BrutedPropsPath>$(SolutionDir)\$(SolutionName).props</M_BrutedPropsPath>
-	</PropertyGroup>
-	
-	<!-- bruted projects include only M_BrutedPropsPath; native projects include M_VcxprojPropsPath as well-->
-	<Import Condition="Exists('$(M_BrutedPropsPath)')" Project="$(M_BrutedPropsPath)" />
-	<Import Condition="Exists('$(M_VcxprojPropsPath)') AND '$(M_ProjectType)'=='Native'" Project="$(M_VcxprojPropsPath)" />
-		
-		<!-- Figure out what hardware platform we are. This could be some combination of logic I'm not sure about yet, but it's simply the brute platform for now -->
-	<PropertyGroup Label="Globals">
-		<M_BRUTE_PlatformName Condition="'$(M_BRUTE_PlatformName)' == ''">Proto</M_BRUTE_PlatformName>
-		
-		<M_PlatformType>$(M_BRUTE_PlatformName)</M_PlatformType>
-	</PropertyGroup>
-
-
 	<!-- Pick project configuration type -->
 	<PropertyGroup Label="Globals">
 		<!-- WARNING: THIS BLOB OF STUFF HAS TO BE DONE TWICE -->
@@ -48,8 +31,13 @@
 			<PreprocessorDefinitions Condition="'$(Configuration)' == 'Release'">NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
 
 		</ClCompile>
+		<!-- Since native libraries can get built as lib or dll, we need to add dependencies both ways -->
 		<Link>
+			<AdditionalDependencies>$(MTS_AdditionalLibs);%(AdditionalDependencies)</AdditionalDependencies>
 		</Link>
+		<Lib>
+			<AdditionalDependencies>$(MTS_AdditionalLibs);%(AdditionalDependencies)</AdditionalDependencies>
+		</Lib>		
 		
 	</ItemDefinitionGroup>
 	
@@ -66,7 +54,7 @@
 	<!-- Setup specifically for proto builds -->
 	<ItemDefinitionGroup Condition="'$(M_BRUTE_PlatformName)'=='Proto'">
 		<ClCompile>
-		<AdditionalIncludeDirectories>DICKS;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+		<AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 		</ClCompile>
 	</ItemDefinitionGroup>
 

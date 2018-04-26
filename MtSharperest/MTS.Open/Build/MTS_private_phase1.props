@@ -44,6 +44,25 @@
 		<M_Has_PS4 Condition="Exists('$(M_PackagesDir)/Motherload.PS4')">true</M_Has_PS4>
 	</PropertyGroup>
 	
+
+	<PropertyGroup Label="Globals">
+		<M_VcxprojPropsPath>$(MSBuildProjectDirectory)\$(MSBuildProjectName).props</M_VcxprojPropsPath>
+		<M_BrutedPropsPath>$(SolutionDir)\$(SolutionName).props</M_BrutedPropsPath>
+	</PropertyGroup>
+	
+	<!-- bruted projects include only M_BrutedPropsPath; native projects include M_VcxprojPropsPath as well-->
+	<!-- This needs to be done EARLY... so we can find out what platform we are from the M_BrutedPropsPath -->
+	<!-- If the vcxproj props files need to do anything sneaky to msbuild internals, we will need to manage that process ourselves or add yet another props file (phase1 and phase2 distinction -->
+	<Import Condition="Exists('$(M_BrutedPropsPath)')" Project="$(M_BrutedPropsPath)" />
+	<Import Condition="Exists('$(M_VcxprojPropsPath)') AND '$(M_ProjectType)'=='Native'" Project="$(M_VcxprojPropsPath)" />
+	
+	<!-- Figure out what hardware platform we are. This could be some combination of logic I'm not sure about yet, but it's simply the brute platform for now -->
+	<PropertyGroup Label="Globals">
+		<M_BRUTE_PlatformName Condition="'$(M_BRUTE_PlatformName)' == ''">Proto</M_BRUTE_PlatformName>
+		
+		<M_PlatformType>$(M_BRUTE_PlatformName)</M_PlatformType>
+	</PropertyGroup>
+
 	<!-- Pick project configuration type -->
 	<PropertyGroup Label="Globals">
 		<!-- WARNING: THIS BLOB OF STUFF HAS TO BE DONE TWICE -->
@@ -67,7 +86,8 @@
 	
 		<!-- applications go to a useful location -->
 		<OutDir Condition="'$(M_ProjectType)'=='Bruted'">$(M_StagingDir).bin\$(Configuration)\</OutDir>
-		<!-- libraries just go to the IntDir -->
+		<!-- native libraries just go to the IntDir -->
+		<!-- however, we want proto native libraries (as theyre DLLs vs+msbuild cant reference+copy well) to go to the output directory -->
 		<OutDir Condition="'$(M_ProjectType)'=='Native'">$(IntDir)</OutDir>
 		<OutDir Condition="'$(M_ProjectType)'=='Native' AND '$(M_BRUTE_PlatformName)'=='Proto'">$(SolutionDir)bin\$(Configuration)\</OutDir>
 		
