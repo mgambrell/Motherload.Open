@@ -31,16 +31,16 @@ namespace MTS.Engine
 
 	public unsafe static class Native
 	{
-		[DllImport("MTS.Engine.native.dll", CallingConvention = CallingConvention.Cdecl)]
+		[DllImport("MTS.Engine.Native.dll", CallingConvention = CallingConvention.Cdecl)]
 		public static extern int DllTest(int num);
 
-		[DllImport("MTS.Engine.native.dll", CallingConvention = CallingConvention.Cdecl)]
+		[DllImport("MTS.Engine.Native.dll", CallingConvention = CallingConvention.Cdecl)]
 		public static extern int GetPlatformType();
 
-		[DllImport("MTS.Engine.native.dll", CallingConvention = CallingConvention.Cdecl)]
+		[DllImport("MTS.Engine.Native.dll", CallingConvention = CallingConvention.Cdecl)]
 		public static extern bool zlib_uncompress(void *dest, void* src, int destLen, int srcLen);
 
-		[DllImport("MTS.Engine.native.dll", CallingConvention = CallingConvention.Cdecl)]
+		[DllImport("MTS.Engine.Native.dll", CallingConvention = CallingConvention.Cdecl)]
 		public static extern int zlib_compress(void *dest, void* src, int destLen, int srcLen, int level);
 	}
 }
