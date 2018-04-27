@@ -1,0 +1,704 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="thirdparty\libepoxy\src\wgl_generated_dispatch.c">
+      <Filter>thirdparty\libepoxy\src</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\libepoxy\src\dispatch_common.c">
+      <Filter>thirdparty\libepoxy\src</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\libepoxy\src\dispatch_wgl.c">
+      <Filter>thirdparty\libepoxy\src</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\libepoxy\src\gl_generated_dispatch.c">
+      <Filter>thirdparty\libepoxy\src</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\libm\e_atan2.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\libm\e_log.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\libm\e_pow.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\libm\e_rem_pio2.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\libm\e_sqrt.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\libm\k_cos.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\libm\k_rem_pio2.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\libm\k_sin.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\libm\k_tan.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\libm\s_atan.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\libm\s_copysign.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\libm\s_cos.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\libm\s_fabs.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\libm\s_floor.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\libm\s_scalbn.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\libm\s_sin.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\libm\s_tan.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\SDL.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\SDL_assert.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\atomic\SDL_atomic.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\audio\SDL_audio.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\audio\SDL_audiocvt.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\audio\SDL_audiodev.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\audio\SDL_audiotypecvt.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\render\software\SDL_blendfillrect.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\render\software\SDL_blendline.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\render\software\SDL_blendpoint.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\video\SDL_blit.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\video\SDL_blit_0.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\video\SDL_blit_1.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\video\SDL_blit_A.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\video\SDL_blit_auto.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\video\SDL_blit_copy.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\video\SDL_blit_N.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\video\SDL_blit_slow.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\video\SDL_bmp.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\video\SDL_clipboard.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\events\SDL_clipboardevents.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\cpuinfo\SDL_cpuinfo.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\render\SDL_d3dmath.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\SDL_dataqueue.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\haptic\windows\SDL_dinputhaptic.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\joystick\windows\SDL_dinputjoystick.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\audio\directsound\SDL_directsound.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\audio\disk\SDL_diskaudio.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\render\software\SDL_drawline.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\render\software\SDL_drawpoint.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\events\SDL_dropevents.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\audio\dummy\SDL_dummyaudio.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\dynapi\SDL_dynapi.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\video\SDL_egl.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\SDL_error.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\events\SDL_events.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\video\SDL_fillrect.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\joystick\SDL_gamecontroller.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\events\SDL_gesture.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\stdlib\SDL_getenv.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\haptic\SDL_haptic.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\SDL_hints.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\stdlib\SDL_iconv.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\joystick\SDL_joystick.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\events\SDL_keyboard.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\SDL_log.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\stdlib\SDL_malloc.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\audio\SDL_mixer.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\joystick\windows\SDL_mmjoystick.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\events\SDL_mouse.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\video\dummy\SDL_nullevents.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\video\dummy\SDL_nullframebuffer.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\video\dummy\SDL_nullvideo.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\video\SDL_pixels.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\power\SDL_power.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\stdlib\SDL_qsort.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\events\SDL_quit.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\video\SDL_rect.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\render\SDL_render.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\render\direct3d\SDL_render_d3d.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\render\direct3d11\SDL_render_d3d11.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\render\opengl\SDL_render_gl.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\render\opengles2\SDL_render_gles2.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\render\software\SDL_render_sw.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\video\SDL_RLEaccel.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\render\software\SDL_rotate.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\file\SDL_rwops.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\render\opengl\SDL_shaders_gl.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\render\opengles2\SDL_shaders_gles2.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\video\SDL_shape.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\atomic\SDL_spinlock.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\stdlib\SDL_stdlib.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\video\SDL_stretch.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\stdlib\SDL_string.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\video\SDL_surface.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\thread\generic\SDL_syscond.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\filesystem\windows\SDL_sysfilesystem.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\loadso\windows\SDL_sysloadso.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\thread\windows\SDL_sysmutex.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\power\windows\SDL_syspower.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\thread\windows\SDL_syssem.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\thread\windows\SDL_systhread.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\timer\windows\SDL_systimer.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\thread\windows\SDL_systls.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\thread\SDL_thread.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\timer\SDL_timer.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\events\SDL_touch.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\video\SDL_video.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\video\SDL_vulkan_utils.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\audio\wasapi\SDL_wasapi.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\audio\SDL_wave.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\events\SDL_windowevents.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\core\windows\SDL_windows.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\video\windows\SDL_windowsclipboard.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\video\windows\SDL_windowsevents.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\video\windows\SDL_windowsframebuffer.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\haptic\windows\SDL_windowshaptic.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\joystick\windows\SDL_windowsjoystick.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\video\windows\SDL_windowskeyboard.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\video\windows\SDL_windowsmessagebox.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\video\windows\SDL_windowsmodes.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\video\windows\SDL_windowsmouse.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\video\windows\SDL_windowsopengl.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\video\windows\SDL_windowsopengles.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\video\windows\SDL_windowsshape.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\video\windows\SDL_windowsvideo.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\video\windows\SDL_windowsvulkan.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\video\windows\SDL_windowswindow.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\audio\winmm\SDL_winmm.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\audio\xaudio2\SDL_xaudio2.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\core\windows\SDL_xinput.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\haptic\windows\SDL_xinputhaptic.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\joystick\windows\SDL_xinputjoystick.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\render\SDL_yuv_mmx.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\render\SDL_yuv_sw.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\audio\wasapi\SDL_wasapi_win32.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\video\SDL_yuv.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="thirdparty\sdl2\src\video\yuv2rgb\yuv_rgb.c">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClCompile>
+    <ClCompile Include="mts_sdl.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="thirdparty">
+      <UniqueIdentifier>{86481507-c166-4748-bdf6-e5970e121689}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="thirdparty\libepoxy">
+      <UniqueIdentifier>{14ea20c7-8917-4a24-9bbc-d4a55f6c1db0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="thirdparty\libepoxy\src">
+      <UniqueIdentifier>{8be4521a-0426-4a84-81c1-bcca747370d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="thirdparty\libepoxy\src\config">
+      <UniqueIdentifier>{107305b7-9381-4060-b718-87e72931622e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="thirdparty\sdl2">
+      <UniqueIdentifier>{5aa7fe4b-2efe-4e4a-a31d-f09ed8337845}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="thirdparty\libepoxy\src\config\libepoxy-config-win.h">
+      <Filter>thirdparty\libepoxy\src\config</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\libepoxy\src\config.h">
+      <Filter>thirdparty\libepoxy\src</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\events\blank_cursor.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\events\default_cursor.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\libm\math_libm.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\libm\math_private.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\render\mmx.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\audio\SDL_audio_c.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\audio\SDL_audiodev_c.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\render\software\SDL_blendfillrect.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\render\software\SDL_blendline.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\render\software\SDL_blendpoint.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\video\SDL_blit.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\video\SDL_blit_auto.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\video\SDL_blit_copy.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\video\SDL_blit_slow.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\events\SDL_clipboardevents_c.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\render\SDL_d3dmath.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\SDL_dataqueue.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\haptic\windows\SDL_dinputhaptic_c.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\joystick\windows\SDL_dinputjoystick_c.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\audio\directsound\SDL_directsound.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\core\windows\SDL_directx.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\audio\disk\SDL_diskaudio.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\render\software\SDL_draw.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\render\software\SDL_drawline.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\render\software\SDL_drawpoint.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\events\SDL_dropevents_c.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\audio\dummy\SDL_dummyaudio.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\dynapi\SDL_dynapi.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\dynapi\SDL_dynapi_overrides.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\dynapi\SDL_dynapi_procs.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\SDL_error_c.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\events\SDL_events_c.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\events\SDL_gesture_c.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\render\opengles\SDL_glesfuncs.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\render\opengl\SDL_glfuncs.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\joystick\SDL_joystick_c.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\events\SDL_keyboard_c.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\events\SDL_mouse_c.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\video\dummy\SDL_nullevents_c.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\video\dummy\SDL_nullframebuffer_c.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\video\dummy\SDL_nullvideo.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\video\SDL_pixels_c.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\video\SDL_rect_c.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\render\software\SDL_render_sw_c.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\video\SDL_RLEaccel_c.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\render\software\SDL_rotate.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\render\opengl\SDL_shaders_gl.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\video\SDL_shape_internals.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\audio\SDL_sysaudio.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\events\SDL_sysevents.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\haptic\SDL_syshaptic.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\joystick\SDL_sysjoystick.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\render\SDL_sysrender.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\thread\SDL_systhread.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\thread\windows\SDL_systhread_c.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\video\SDL_sysvideo.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\thread\SDL_thread_c.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\timer\SDL_timer_c.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\events\SDL_touch_c.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\video\windows\SDL_vkeys.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\video\SDL_vulkan_internal.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\audio\wasapi\SDL_wasapi.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\audio\SDL_wave.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\events\SDL_windowevents_c.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\core\windows\SDL_windows.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\video\windows\SDL_windowsclipboard.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\video\windows\SDL_windowsevents.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\video\windows\SDL_windowsframebuffer.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\haptic\windows\SDL_windowshaptic_c.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\joystick\windows\SDL_windowsjoystick_c.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\video\windows\SDL_windowskeyboard.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\video\windows\SDL_windowsmessagebox.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\video\windows\SDL_windowsmodes.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\video\windows\SDL_windowsmouse.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\video\windows\SDL_windowsopengl.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\video\windows\SDL_windowsshape.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\video\windows\SDL_windowsvideo.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\video\windows\SDL_windowsvulkan.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\video\windows\SDL_windowswindow.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\audio\winmm\SDL_winmm.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\core\windows\SDL_xinput.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\haptic\windows\SDL_xinputhaptic_c.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\joystick\windows\SDL_xinputjoystick_c.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\render\SDL_yuv_sw_c.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\sdl2\src\video\windows\wmmsg.h">
+      <Filter>thirdparty\sdl2</Filter>
+    </ClInclude>
+    <ClInclude Include="mts_sdl.h" />
+  </ItemGroup>
+</Project>

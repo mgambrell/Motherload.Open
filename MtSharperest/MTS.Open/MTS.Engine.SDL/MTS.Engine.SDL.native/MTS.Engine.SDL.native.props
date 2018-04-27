@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<ItemDefinitionGroup>
+		<ClCompile>
+			<!-- We don't a dx SDK dependency, for now. SDL builds without other deps out of the box (somehow). I'm using OGL anyway -->
+			<PreprocessorDefinitions>SDL_VIDEO_RENDER_D3D=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+
+			<!-- tells SDL to use the system libc (keeps things simpler, really) -->
+			<PreprocessorDefinitions>HAVE_LIBC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+
+		</ClCompile>
+		
+	</ItemDefinitionGroup>
+	
+	<PropertyGroup Label="Globals">
+	
+		<!-- SDL provokes the use of several libs (many of these due to the SW keyboard library) -->
+		<MTS_AdditionalLibs>OleAut32.lib;gdi32.lib;Advapi32.lib;winmm.lib;imm32.lib;version.lib</MTS_AdditionalLibs>
+			
+	</PropertyGroup>
+	
+</Project>
