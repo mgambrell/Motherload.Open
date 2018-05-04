@@ -3,9 +3,10 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{DECEE7BB-C4BE-4719-99A6-8E297E663F2C}</ProjectGuid>
   </PropertyGroup>
-  <Import Project="..\..\Build\MTS_native.props" />
+  <Import Project="..\..\Build\MTS_native_phase1.props" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <Import Project="..\..\Build\MTS_native_phase2.props" />
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <ItemDefinitionGroup>

@@ -45,9 +45,7 @@
 	<ItemDefinitionGroup Condition="'$(M_BRUTE_PlatformName)'!='Proto'">
 		<ClCompile>
 			<!-- TODO: PreprocessorDefinitions BRUTE_DEBUG -->
-			<!-- TODO: I think the brute include directories only makes sense for Bruted project types, right? -->
 			<PreprocessorDefinitions>BRUTE;%(PreprocessorDefinitions)</PreprocessorDefinitions>	
-			<AdditionalIncludeDirectories>$(M_BRUTE_IncludeDirs);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 		</ClCompile>
 	</ItemDefinitionGroup>
 	
@@ -57,6 +55,15 @@
 		<AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 		</ClCompile>
 	</ItemDefinitionGroup>
+	
+		<!-- Usually the brute include directories only makes sense for Bruted project types -->
+		<!-- However, I'm putting it on all of them now, because I want to be able to do icall-ish stuff from libraries -->
+		<!-- Also, probably redundantly, include the solution root (maybe messy, but...) so libraries can include bruted stuff, for easier icall integration -->
+	<ItemDefinitionGroup>
+		<ClCompile>
+			<AdditionalIncludeDirectories>$(M_BRUTE_IncludeDirs);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+		</ClCompile>
+	</ItemDefinitionGroup>	
 
 	<!--==========================================================================-->
 
