@@ -2,11 +2,9 @@
 <Project ToolsVersion="4.0" DefaultTargets="IntegrityChecks" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 	<ImportGroup Label="PropertySheets" />
 
-	<Import Project="MTS_private_phase2.props" />
-	
 	<!-- ENVIRONMENT INTEGRITY CHECKS -->
 	<Target Name="MTSIntegrityChecks" BeforeTargets="ClCompile">
 		<Error Condition="'$(M_ProjectType)' == ''" Text = "MTS/Build: Project type isn't set in project properties" />
 	</Target>
-
+	
 </Project>

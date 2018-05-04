@@ -20,9 +20,10 @@
 		<ProjectGuid>{{ProjectGuid}}</ProjectGuid>
 		<RootNamespace>Bruted</RootNamespace>
 	</PropertyGroup>
-	<Import Project="{{MtsBuildDir}}MTS_bruted.props" />
+	<Import Project="{{MtsBuildDir}}MTS_bruted_phase1.props" />
 	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
 	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+<Import Project="{{MtsBuildDir}}MTS_bruted_phase2.props" />
 	<ImportGroup Label="PropertySheets" />
 	<PropertyGroup Label="UserMacros" />
 

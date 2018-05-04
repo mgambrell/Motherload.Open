@@ -14,9 +14,10 @@
     <ProjectGuid>{BB1392D6-436D-4964-9DE7-182E1DBBF55B}</ProjectGuid>
     <RootNamespace>bdwgc</RootNamespace>
   </PropertyGroup>
-  <Import Project="..\..\MTS_native.props" />
+  <Import Project="..\..\MTS_native_phase1.props" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <Import Project="..\..\MTS_native_phase2.props" />  
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <ItemDefinitionGroup>
