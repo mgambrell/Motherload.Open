@@ -32,15 +32,25 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
+    <Reference Include="System.Runtime.Serialization" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="XNA\BoundingBox.cs" />
+    <Compile Include="XNA\BoundingFrustum.cs" />
+    <Compile Include="XNA\BoundingSphere.cs" />
+    <Compile Include="XNA\ContainmentType.cs" />
+    <Compile Include="XNA\MathHelper.cs" />
+    <Compile Include="XNA\Matrix.cs" />
+    <Compile Include="XNA\Plane.cs" />
+    <Compile Include="XNA\PlaneIntersectionType.cs" />
+    <Compile Include="XNA\Point.cs" />
+    <Compile Include="XNA\Quaternion.cs" />
+    <Compile Include="XNA\Ray.cs" />
+    <Compile Include="XNA\Rectangle.cs" />
+    <Compile Include="XNA\Vector2.cs" />
+    <Compile Include="XNA\Vector3.cs" />
+    <Compile Include="XNA\Vector4.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="MTS.Engine.native\MTS.Engine.native.vcxproj">
