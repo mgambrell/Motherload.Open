@@ -3,7 +3,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace mts.Engine.Platforms.SDL
+namespace MTS.Engine.Platforms.SDL
 {
 
 	public struct MTS_SDL_Shader { public IntPtr ptr; }

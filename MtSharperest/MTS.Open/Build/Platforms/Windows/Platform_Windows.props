@@ -6,13 +6,13 @@
 	<!-- <PropertyGroup Condition="'$(M_ProjectType)' == 'BRUTE'"><DisableFastUpToDateCheck>true</DisableFastUpToDateCheck></PropertyGroup> -->
 	
 	<ItemGroup Label="ProjectConfigurations">
-		<ProjectConfiguration Include="Debug|Win32">
+		<ProjectConfiguration Include="Debug|x64">
 			<Configuration>Debug</Configuration>
-			<Platform>Win32</Platform>
+			<Platform>x64</Platform>
 		</ProjectConfiguration>
-		<ProjectConfiguration Include="Release|Win32">
+		<ProjectConfiguration Include="Release|x64">
 			<Configuration>Release</Configuration>
-			<Platform>Win32</Platform>
+			<Platform>x64</Platform>
 		</ProjectConfiguration>
 	</ItemGroup>	
 

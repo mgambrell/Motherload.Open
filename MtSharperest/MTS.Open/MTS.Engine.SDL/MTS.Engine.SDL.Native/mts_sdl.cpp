@@ -5,6 +5,9 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+//needed from winnt.h in x64 for some reason
+#include <intrin.h>
+
 //this is required to get epoxy .h matching the .cpp it was built with. weird, I dont know. it's complicated, but its got a complicated job to do..
 #include <epoxy/../../src/config.h>
 

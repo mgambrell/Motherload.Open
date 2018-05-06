@@ -89,7 +89,7 @@
 		<!-- native libraries just go to the IntDir -->
 		<!-- however, we want proto native libraries (as theyre DLLs vs+msbuild cant reference+copy well) to go to the output directory -->
 		<OutDir Condition="'$(M_ProjectType)'=='Native'">$(IntDir)</OutDir>
-		<OutDir Condition="'$(M_ProjectType)'=='Native' AND '$(M_BRUTE_PlatformName)'=='Proto'">$(SolutionDir)bin\$(Configuration)\</OutDir>
+		<OutDir Condition="'$(M_ProjectType)'=='Native' AND '$(M_BRUTE_PlatformName)'=='Proto'">$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
 		
 	</PropertyGroup>
 	
