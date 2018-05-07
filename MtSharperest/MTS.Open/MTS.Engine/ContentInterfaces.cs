@@ -33,25 +33,6 @@ namespace MTS.Engine
 		bool LoadBaked(PipelineLoadBakedContext context);
 	}
 
-	public class ResourceLoaderContext
-	{
-		public ImageBuffer ImageBuffer;
-		public BinaryReader Reader;
-	}
-
-	public interface IContentConnector
-	{
-		IntPtr LoadTexture(ResourceLoaderContext context);
-		void DestroyTexture(IntPtr handle);
-
-		//TODO - determine a texture format to be used, based on metadata and image data? ??? ???
-		//void DetermineTextureFormat();
-
-		/// <summary>
-		/// Gets a pipeline suitable for building the given content
-		/// </summary>
-		IContentPipeline GetPipeline(ContentBase content);
-	}
 
 	public class ContentLoadContext
 	{

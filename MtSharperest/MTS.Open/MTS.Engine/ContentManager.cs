@@ -312,6 +312,27 @@ namespace MTS.Engine
 		#endif
 		}
 
+		public void SetBackend(Backend backend)
+		{
+			//try to set the default content connector
+			//user can override it in a minute, in case that's important
+			Type connectorType = null;
+			switch (backend)
+			{
+				case Backend.SDL:
+					connectorType = AppDomain.CurrentDomain.Load("MTS.Engine.SDL").GetType("MTS.Engine.SDL.DefaultContentConnector", false);
+					break;
+				case Backend.Switch:
+					connectorType = AppDomain.CurrentDomain.Load("MTS.Engine.Switch").GetType("MTS.Engine.Switch.DefaultContentConnector", false);
+					break;
+			}
+
+			if (connectorType != null)
+			{
+				ContentConnector = (ContentConnectorBase)Activator.CreateInstance(connectorType);
+			}
+		}
+
 		/// <summary>
 		/// mounts everything with the default directories 'content' and 'data'
 		/// </summary>
@@ -352,10 +373,7 @@ namespace MTS.Engine
 			return content;
 		}
 
-		/// <summary>
-		/// The IResourceLoader to be used for loading textures, vertex buffers, etc.
-		/// </summary>
-		public IContentConnector ContentConnector;
+		public ContentConnectorBase ContentConnector;
 
 		/// <summary>
 		/// Whether content is dumped when it's baked (this is lame, needs to be replaced with more sophistication)

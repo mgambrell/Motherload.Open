@@ -20,6 +20,17 @@ namespace MTS.Engine
 	}
 
 	/// <summary>
+	/// Provisionally, this allows us to have backends independently of target platform
+	/// For instance, on windows we might have SDL and d3d.
+	/// Someone else making their own backend or forking ours could slot in here (we'd accept a patch with new backend enums)
+	/// </summary>
+	public enum Backend
+	{
+		SDL,
+		Switch
+	}
+
+	/// <summary>
 	/// The MTS senses of platform (may not align completely with brute platforms)
 	/// </summary>
 	public enum PlatformType

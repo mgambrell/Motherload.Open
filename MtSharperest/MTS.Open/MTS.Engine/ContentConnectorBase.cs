@@ -6,7 +6,26 @@ using System.Reflection;
 
 namespace MTS.Engine
 {
-	public class ContentConnectorBase : IContentConnector
+	public class ContentConnectorContext_Texture
+	{
+		public ImageBuffer ImageBuffer;
+		public BinaryReader Reader;
+	}
+
+	public class ContentConnectorContext_ShaderProgram
+	{
+		public BinaryReader Reader;
+		public object Handle;
+	}
+
+	/// <summary>
+	/// The bridge between abstract content engine and specific engine and platform concerns.
+	/// For instance, loads textures from baked texture resources
+	/// WARNING: some of this is PIPELINE-side and some of this is RUNTIME-side
+	/// Maybe I should not have mixed those up.
+	/// TODO: rename something like BackendInterface or BackendConnector?
+	/// </summary>
+	public class ContentConnectorBase
 	{
 		Dictionary<Type, IContentPipeline> pipelinesCache = new Dictionary<Type, IContentPipeline>();
 
@@ -22,7 +41,10 @@ namespace MTS.Engine
 			}
 		}
 
-		public virtual IntPtr LoadTexture(ResourceLoaderContext context)
+		public virtual void UnloadShader(ContentConnectorContext_ShaderProgram context) { }
+		public virtual void LoadShader(ContentConnectorContext_ShaderProgram context) { }
+
+		public virtual IntPtr LoadTexture(ContentConnectorContext_Texture context)
 		{
 			return IntPtr.Zero;
 		}
@@ -30,6 +52,9 @@ namespace MTS.Engine
 		{
 		}
 
+		/// <summary>
+		/// Gets a pipeline suitable for building the given content
+		/// </summary>
 		public virtual IContentPipeline GetPipeline(ContentBase content)
 		{
 			//OK, here's the deal
@@ -38,7 +63,7 @@ namespace MTS.Engine
 			//Pipelines for type EngineType will be implemented by MTS.Engine.Pipelines.EngineTypePipeline
 			//we'll walk down the base type hierarchy to find EngineType (since sometimes the provided content will be derived from Enginetype)
 			//and we'll use reflection to try finding each thing
-			//Now, this is meant for use on the Proto target.. nonetheless, to speed it up, we'll use some reflection and a cache
+			//Now, this is meant for use on the Proto target.. nonetheless, to speed it up, we'll keep it cached
 
 			var type = content.GetType();
 			IContentPipeline ret;

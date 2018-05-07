@@ -97,7 +97,7 @@ namespace MTS.Engine
 
 			var ms = new MemoryStream(rawbuf);
 			var brRaw = new BinaryReader(ms);
-			var resLoaderContext = new ResourceLoaderContext();
+			var resLoaderContext = new ContentConnectorContext_Texture();
 			resLoaderContext.ImageBuffer = new ImageBuffer();
 			//resLoaderContext.Reader = brRaw; //meaningless now, should be restored later
 			resLoaderContext.ImageBuffer.Data = rawbuf;
@@ -146,7 +146,7 @@ namespace MTS.Engine
 			bw.Flush();
 			ms.Position = 0;
 
-			var resLoaderContext = new ResourceLoaderContext();
+			var resLoaderContext = new ContentConnectorContext_Texture();
 			resLoaderContext.ImageBuffer = new ImageBuffer();
 			//resLoaderContext.Reader = brRaw; //meaningless now, should be restored later
 			resLoaderContext.ImageBuffer.Data = ms.GetBuffer();

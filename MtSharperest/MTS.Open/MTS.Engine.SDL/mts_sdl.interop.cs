@@ -3,9 +3,8 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace MTS.Engine.Platforms.SDL
+namespace MTS.Engine.SDL
 {
-
 	public struct MTS_SDL_Shader { public IntPtr ptr; }
 	public struct MTS_SDL_Program { public IntPtr ptr; }
 	public struct MTS_SDL_VertexLayout { public IntPtr ptr; }
@@ -155,6 +154,9 @@ namespace MTS.Engine.Platforms.SDL
 
 	public static class Functions
 	{
+		//for brute, force a reference to this type
+		static DefaultContentConnector dummy;
+
 		//public static bool TryGetTextureFormat(mts.Engine.TextureFormat coreFormat, out MTS_SDL_TextureFormat sdlFormat)
 		//{
 		//	//maybe I can make a kind of uniform standard later and have everything line up (with null gaps in some kind of list for unsupported formats)

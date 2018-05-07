@@ -29,10 +29,18 @@ namespace MTS.Engine.Loaders
 
 			var bakedLoader = content as IBakedLoader;
 
-			using (var fs = new FileStream(fpBaked, FileMode.Open, FileAccess.Read, FileShare.None))
+			//save time... assume this succeeds
+			try
 			{
-				loadBakedContext.BakedReader = new BinaryReader(fs);
-				return bakedLoader.LoadBaked(loadBakedContext);
+				using (var fs = new FileStream(fpBaked, FileMode.Open, FileAccess.Read, FileShare.None))
+				{
+					loadBakedContext.BakedReader = new BinaryReader(fs);
+					return bakedLoader.LoadBaked(loadBakedContext);
+				}
+			}
+			catch
+			{
+				return false;
 			}
 		}
 	}

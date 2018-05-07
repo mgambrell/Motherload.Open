@@ -79,9 +79,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DefaultContentConnector.cs" />
     <Compile Include="mts_sdl.interop.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MTS.Engine\MTS.Engine.csproj">
+      <Project>{13817aa7-3d65-44a9-ae68-f0943e2ca0a8}</Project>
+      <Name>MTS.Engine</Name>
+    </ProjectReference>
     <ProjectReference Include="MTS.Engine.SDL.native\MTS.Engine.SDL.native.vcxproj">
       <Project>{decee7bb-c4be-4719-99a6-812394113aaa}</Project>
       <Name>MTS.Engine.SDL.native</Name>
