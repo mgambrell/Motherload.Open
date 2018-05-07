@@ -1,12 +1,9 @@
+using System;
+using System.IO;
+
 namespace MTS.Engine
 {
-
-	/// <summary>
-	/// Content that can be baked.. in the oven... i guess?
-	/// It's possible that some content will not be bakeable.. if it's.. synthesized on the fly? 
-	/// Maybe eventually everything will be obligatorily bakeable, I dont know
-	/// </summary>
-	public interface IContentBakeable
+	public interface IContentPipeline
 	{
 		/// <summary>
 		/// Not a great name, but this analyzes the inputs and determines dependencies, and whether the content exists / can be built
@@ -22,11 +19,38 @@ namespace MTS.Engine
 		/// Maybe this can be another interface? MakeBaker? I need to try that.
 		/// </summary>
 		bool Bake(PipelineBakeContext context);
+	}
 
+	/// <summary>
+	/// Content types implementing this can be loaded from baked data.
+	/// It is conceivable to have dynamic-only content which can't be loaded baked, but it seems unlikely
+	/// </summary>
+	public interface IBakedLoader
+	{
 		/// <summary>
 		/// Loads the content from baked data
 		/// </summary>
 		bool LoadBaked(PipelineLoadBakedContext context);
+	}
+
+	public class ResourceLoaderContext
+	{
+		public ImageBuffer ImageBuffer;
+		public BinaryReader Reader;
+	}
+
+	public interface IContentConnector
+	{
+		IntPtr LoadTexture(ResourceLoaderContext context);
+		void DestroyTexture(IntPtr handle);
+
+		//TODO - determine a texture format to be used, based on metadata and image data? ??? ???
+		//void DetermineTextureFormat();
+
+		/// <summary>
+		/// Gets a pipeline suitable for building the given content
+		/// </summary>
+		IContentPipeline GetPipeline(ContentBase content);
 	}
 
 	public class ContentLoadContext
@@ -40,7 +64,7 @@ namespace MTS.Engine
 	/// But this will give us the opportunity to have content that's been loaded in wildly different ways. 
 	/// (we could also achieve this by having that content say: Unload() { if(isLoadedSpecially) unloadSpecially(); else unloadNormally(); }
 	/// So... uh.... given that.... maybe I should take Unload out.
-	/// Yeah, because I'm also thinking about making loading tightly correlated with construction. therefore this could actually jsut be a MARKER,
+	/// Yeah, because I'm also thinking about making loading tightly correlated with construction. therefore this could actually just be a MARKER,
 	/// not a functional interface
 	/// ERRR. NOPE! This is how the content base 
 	/// </summary>

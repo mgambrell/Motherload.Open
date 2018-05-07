@@ -13,7 +13,7 @@ namespace MTS.Engine
 	{
 	}
 
-	public class AnimSet<CELLSTYPE, ANIMSTYPE> : ContentBase, IContentBakeable 
+	public class AnimSet<CELLSTYPE, ANIMSTYPE> : ContentBase, IBakedLoader
 		where CELLSTYPE: ContentDirectory
 		where ANIMSTYPE : ContentDirectory
 	{
@@ -41,31 +41,8 @@ namespace MTS.Engine
 		/// </summary>
 		protected Texture texture;
 
-		void IContentBakeable.Prepare(PipelineBakeContext context) { }
 
-		bool IContentBakeable.Bake(PipelineBakeContext context)
-		{
-			Console.WriteLine("AnimSet.Bake: " + context.ContentPath);
-
-			var path = context.RawContentDiskPath;
-			path += ".txt";
-			context.Depend(path);
-
-			//I dont know... I dont know...
-			if (!File.Exists(path)) return false;
-
-			var bb = new BitmapBuffer(64, 64);
-			bb.Serialize(context.BakedWriter);
-
-			var cellLines = File.ReadAllLines(path);
-			context.BakedWriter.Write(cellLines.Length);
-			foreach (var line in cellLines)
-				context.BakedWriter.Write(line);
-
-			return true;
-		}
-
-		bool IContentBakeable.LoadBaked(PipelineLoadBakedContext context)
+		bool IBakedLoader.LoadBaked(PipelineLoadBakedContext context)
 		{
 			Console.WriteLine("AnimSet.LoadBaked: " + context.ContentPath);
 

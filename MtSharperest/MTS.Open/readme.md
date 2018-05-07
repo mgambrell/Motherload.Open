@@ -28,5 +28,7 @@ Therefore, to make a bruted console project, we'll need to run brute on a Brute|
 
 When adding libraries to your sln, be sure to add the associated native project. But do not select it to build in the Brute|x64 configuration -- the bruted output will take care of building it.
 
+When making a new sln, be sure to reference MTS.Engine.Pipeline. Nothing needs it directly, but it needs to be built and output so your Proto target can hotload content.
+
 TODO: add more prescriptive docs, organized by task: Try a new project; make a console build; add an existing library; develop a new library
 

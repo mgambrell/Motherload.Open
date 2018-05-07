@@ -47,7 +47,7 @@ namespace MTS.Engine
 
 		internal bool LoadFromBakedInProgress(PipelineLoadBakedContext context)
 		{
-			((IContentBakeable)this).LoadBaked(context);
+			((IBakedLoader)this).LoadBaked(context);
 			return IsLoaded;
 		}
 
@@ -155,7 +155,7 @@ namespace MTS.Engine
 			}
 		}
 
-		protected T CreateContentProxy<T>(string name = null) where T:ContentBase
+		protected T CreateContentProxy<T>(string name = null) where T : ContentBase
 		{
 			var type = typeof(T);
 			return (T)CreateContentProxy(type, name ?? type.Name);
@@ -179,25 +179,39 @@ namespace MTS.Engine
 		{
 			ContentBase content = CreateContentProxy(type, name);
 
-			var bakeable = content as IContentBakeable;
+			//if we're bruted, just create the baked loader and move on
 
-			//if it's bakeable, set it up with an oven
-			//this will be our loader for the future, but we do not load it yet!
-			//therefore we have to set the loader by setting the secret internal field
-			if (bakeable != null)
+#if !BRUTED
+			//try getting the pipeline we'd use to bake this content. If there's such a pipeline, set us up to use it
+			var pipeline = Manager.ContentConnector.GetPipeline(content);
+
+			if (pipeline != null)
 			{
-				content._loader = new OvenContentLoader(content)
+				//TODO - I had intended a 1:1 correspondence of loaders to content instances, but maybe I can have the loaders have the required name and directory context? I think it should be possible
+				content._loader = new Loaders.ProtoLoader(content)
 				{
-					bakeable = bakeable,
 					directoryOwner = this as ContentDirectory, //I guess we know this is true
 					name = name
 				};
+				return content;
 			}
+#endif
+
+			//if we weren't able to setup the proto loader, we can still load it baked
+			//this probably doesnt make any sense in a Proto target.. 
+			//maybe it makes sense for binary content not managed by a content type really?
+			//but we should probably have some setup that copies it over, anyway
+			//else, a ProtoSlimLoader which loads it straight from the content directory.
+			//not sure yet. anyway, this is harmless.
+			content._loader = new Loaders.BakedLoader(content)
+			{
+				directoryOwner = this as ContentDirectory, //I guess we know this is true
+				name = name
+			};
 
 			return content;
 		}
-
-	} 
+	}
 
 }
 

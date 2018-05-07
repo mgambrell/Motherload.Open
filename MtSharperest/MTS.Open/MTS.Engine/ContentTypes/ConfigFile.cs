@@ -13,11 +13,16 @@ using IniParser.Model;
 
 namespace MTS.Engine
 {
-	public class ConfigFile : ContentBase, IContentBakeable
+	/// <summary>
+	/// Inherit from this type.
+	/// A ConfigFile is kind of like an ini file, but it processes data at a higher level (can identify arrays, for instance)
+	/// It databinds to fields, for more convenience.
+	/// </summary>
+	public class ConfigFile : ContentBase, IBakedLoader
 	{
-		Dictionary<string,MyFieldInfo> reflectionData;
+		internal Dictionary<string,MyFieldInfo> reflectionData;
 
-		class MyFieldInfo
+		public class MyFieldInfo
 		{
 			public FieldType Type;
 
@@ -26,19 +31,12 @@ namespace MTS.Engine
 			public FieldInfo FieldInfo;
 		}
 
-		enum FieldType
+		public enum FieldType
 		{
 			Unknown,
 			String,
 			Int32,
 			Float,
-		}
-
-		void IContentBakeable.Prepare(PipelineBakeContext context)
-		{
-			//we're going to need reflection eventually... 
-			if (reflectionData == null) Reflect();
-			context.Depend("source",context.RawContentDiskPath + ".ini");
 		}
 
 		protected override void ContentUnload()
@@ -53,78 +51,10 @@ namespace MTS.Engine
 			}
 		}
 
-		unsafe bool IContentBakeable.Bake(PipelineBakeContext context)
+		bool IBakedLoader.LoadBaked(PipelineLoadBakedContext context)
 		{
-			var zoowriter = context.BakedWriter;
+			Reflect();
 
-			var path = context.Depends["source"];
-
-			var iniConfig = new IniParser.Model.Configuration.IniParserConfiguration()
-			{
-				CaseInsensitive = true
-			};
-			var iniParser = new IniParser.Parser.IniDataParser(iniConfig);
-			FileIniDataParser fileIniData = new FileIniDataParser(iniParser);
-			IniData parsedData = fileIniData.ReadFile(path);
-			//foreach (var key in parsedData.Global)
-
-			var ms = new MemoryStream();
-			var bw = new BinaryWriter(ms);
-
-			int count = 0;
-
-			foreach (var mfi in reflectionData.Values)
-			{
-				string val;
-				bool has = parsedData.TryGetKey(mfi.FieldInfo.Name, out val);
-				if (!has) continue;
-				switch (mfi.Type)
-				{
-					case FieldType.String:
-						DumpValue(bw, mfi);
-						mfi.FieldInfo.SetValue(this, val);
-						count++;
-						break;
-					case FieldType.Int32:
-					{
-							int temp;
-							if (int.TryParse(val, out temp))
-							{
-								count++;
-								DumpValue(bw, mfi);
-								bw.Write(temp);
-							}
-							break;
-					}
-					case FieldType.Float:
-					{
-							float temp;
-							if (float.TryParse(val, out temp))
-							{
-								count++;
-								DumpValue(bw, mfi);
-								bw.Write(temp);
-							}
-							break;
-					}
-				}
-			}
-
-			bw.Flush();
-			zoowriter.Write(count);
-			zoowriter.Write(ms.ToArray());
-
-			return true;
-		}
-
-		void DumpValue(BinaryWriter writer, MyFieldInfo mfi)
-		{
-			writer.Write(mfi.FieldInfo.Name);
-			writer.Write((int)mfi.Type); 
-		}
-
-		bool IContentBakeable.LoadBaked(PipelineLoadBakedContext context)
-		{
 			var reader = context.BakedReader;
 
 			int count = reader.ReadInt32();
@@ -158,8 +88,10 @@ namespace MTS.Engine
 			return true;
 		}
 
-		void Reflect()
+		public void Reflect()
 		{
+			if (reflectionData != null) return;
+
 			reflectionData = new Dictionary<string, MyFieldInfo>();
 			HashSet<string> names = new HashSet<string>();
 

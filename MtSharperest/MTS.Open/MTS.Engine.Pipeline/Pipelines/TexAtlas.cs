@@ -8,23 +8,10 @@ using System.Drawing.Imaging;
 using System.Threading;
 using System.Threading.Tasks;
 
+using MTS.Engine;
+
 public class TexAtlas
 {
-	public class RectItem
-	{
-		public RectItem(int width, int height, object item)
-		{
-			Width = width;
-			Height = height;
-			Item = item;
-		}
-		public int X, Y;
-		public int Width, Height;
-		public int TexIndex;
-		public object Item;
-	}
-
-
 	class TryFitParam
 	{
 		public TryFitParam(int _w, int _h) { this.w = _w; this.h = _h; }

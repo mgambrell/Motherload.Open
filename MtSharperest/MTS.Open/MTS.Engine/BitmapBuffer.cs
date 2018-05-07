@@ -17,7 +17,7 @@ using MTS.Engine;
 /// a software-based bitmap, way easier (and faster) to use than .net's built-in bitmap.
 /// Only supports a fixed rgba format, but knows how to export to a NativeBitmapBuffer (TODO-reimplement/think this)
 /// </summary>
-unsafe class BitmapBuffer
+public unsafe class BitmapBuffer
 {
 	public int Width, Height;
 	public int[] Pixels;

@@ -77,12 +77,15 @@
     <Reference Include="System.Runtime.Serialization" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assembly.cs" />
+    <Compile Include="BitmapBuffer.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="ContentAttributesCollection.cs" />
     <Compile Include="ContentAttributes\ContentAttributes.cs" />
     <Compile Include="ContentAttributes\FragmentShaderName.cs" />
     <Compile Include="ContentAttributes\VertexShaderName.cs" />
     <Compile Include="ContentBase.cs" />
+    <Compile Include="ContentConnectorBase.cs" />
     <Compile Include="ContentDirectory.cs" />
     <Compile Include="ContentInterfaces.cs" />
     <Compile Include="ContentManager.cs" />
@@ -93,15 +96,14 @@
     <Compile Include="ContentTypes\FloatArrayText.cs" />
     <Compile Include="ContentTypes\NitroFont.cs" />
     <Compile Include="ContentTypes\ShaderProgram.cs" />
-    <Compile Include="ContentTypes\TextBlob.cs" />
+    <Compile Include="ContentTypes\TextFile.cs" />
     <Compile Include="ContentTypes\Texture.cs" />
     <Compile Include="Core\Collections.cs" />
     <Compile Include="Host\SmartFileSystemWatcher.cs" />
     <Compile Include="HotloadManager.cs" />
-    <Compile Include="Pipeline\BitmapBuffer.cs" />
-    <Compile Include="Pipeline\ImageAnalyzer.cs" />
-    <Compile Include="Pipeline\Math.cs" />
-    <Compile Include="Pipeline\TexAtlas.cs" />
+    <Compile Include="Loaders\BakedLoader.cs" />
+    <Compile Include="Loaders\ProtoLoader.cs" />
+    <Compile Include="PipelineStuff.cs" />
     <Compile Include="ThirdParty\rickyah-ini-parser\Exceptions\ParsingException.cs" />
     <Compile Include="ThirdParty\rickyah-ini-parser\FileIniParser.cs" />
     <Compile Include="ThirdParty\rickyah-ini-parser\Helpers\Assert.cs" />

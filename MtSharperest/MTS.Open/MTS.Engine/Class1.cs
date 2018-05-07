@@ -45,29 +45,3 @@ namespace MTS.Engine
 	}
 }
 
-
-namespace MTS.Engine
-{
-	public unsafe class Class1
-	{
-		public static void Test()
-		{
-			//placeholder for detecting where we're running
-			Console.WriteLine("WINDOWS LOGIC");
-			if (ConsoleEnvironment.Platform == PlatformType.Switch)
-			{
-				Console.WriteLine("Wrong platform");
-			}
-			else
-			{
-				Console.WriteLine(MTS.Engine.Native.DllTest(99));
-			}
-
-			byte[] test = new byte[10];
-			byte[] crunched = new byte[100];
-			fixed (byte* disarmingly = &test[0])
-			fixed (byte* disheveled = &crunched[0])
-				Native.zlib_compress(disheveled, disarmingly, 100, 10, 1);
-		}
-	}
-}

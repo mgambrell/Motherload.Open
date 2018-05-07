@@ -49,8 +49,9 @@ namespace MTS.Engine
 			if (hotPaths.Count == 0) return;
 
 			//build a list of all hotloadable content (i.e. all oven bakeable content -- that's loaded)
+			//TODO Uhhhh this is a pretty heavy duty operation for a large game. Bad idea. need to evaluate once (and re-check loaded flags elsewhere)
 			var hotloadables = cd.EnumerateContent(true).ToList();
-			hotloadables = hotloadables.Where(c => c._loader is OvenContentLoader && c.IsLoaded).ToList();
+			hotloadables = hotloadables.Where(c => c._loader is Loaders.ProtoLoader && c.IsLoaded).ToList();
 
 			List<ContentBase> toReload = new List<ContentBase>();
 
@@ -72,12 +73,13 @@ namespace MTS.Engine
 				//Oh well, spend the energy multi-threading it instead (even run it asynchronously.. should be safe.)
 				foreach (var hotloadable in hotloadables)
 				{
-					OvenContentLoader loader = hotloadable._loader as OvenContentLoader;
+					Loaders.ProtoLoader loader = hotloadable._loader as Loaders.ProtoLoader;
 
 					//TODO: this is bad, what if this never ran? need to rethink some things
 					loader.bakeContext.resolvedDependencies = new Dictionary<object, string>();
 					loader.bakeContext.dependsBag = new Bag<object, PipelineBakeContext.DependsRecord>();
-					loader.bakeable.Prepare(loader.bakeContext);
+					var pipeline = contentManager.ContentConnector.GetPipeline(hotloadable);
+					pipeline.Prepare(loader.bakeContext);
 					//junk
 					bool resolvedDependencies = loader.bakeContext.ResolveDependencies(hotloadable.Name);
 					if (!resolvedDependencies) continue;

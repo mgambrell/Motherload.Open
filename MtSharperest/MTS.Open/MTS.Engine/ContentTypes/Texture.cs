@@ -1,8 +1,4 @@
-﻿//REMINDER: I plan to name every content type something annoying, to encourage you to inherit from them to gain access to their protected stuff
-//OH NO!!! We can't do that. built-in stuff (like Art's Texture) won't be able to readily change the type of the Texture
-//so how do you extend the pipeline? something to think about in bed.
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
@@ -10,23 +6,6 @@ using System.Reflection;
 
 namespace MTS.Engine
 {
-	public class ResourceLoaderContext
-	{
-		public ImageBuffer ImageBuffer;
-		public BinaryReader Reader;
-	}
-
-
-	//TODO: make more complex. 
-	public interface IResourceLoader
-	{
-		IntPtr LoadTexture(ResourceLoaderContext context);
-		void DestroyTexture(IntPtr handle);
-
-		//TODO - determine a texture format to be used, based on metadata and image data? ??? ???
-		//void DetermineTextureFormat();
-	}
-
 	public enum TextureFormat
 	{
 		/// <summary>
@@ -71,7 +50,7 @@ namespace MTS.Engine
 	/// If you want to automatically pad it, use Art--that's so information about the original content size is preserved.
 	/// Should support mipmaps, I guess, but in the most unobtrusive way possible.
 	/// </summary>
-	public unsafe class Texture : ContentBase, IContentBakeable, PrivateInterfaces.ITextureLoaders
+	public unsafe class Texture : ContentBase, IBakedLoader, PrivateInterfaces.ITextureLoaders
 	{
 		IntPtr mHandle;
 		bool mOwnsHandle;
@@ -87,39 +66,12 @@ namespace MTS.Engine
 		{
 			Console.WriteLine("Texture.MyUnload: " + "???");
 			if(mOwnsHandle)
-				Manager.ResourceLoader.DestroyTexture(mHandle);
+				Manager.ContentConnector.DestroyTexture(mHandle);
 			mHandle = IntPtr.Zero;
 			mOwnsHandle = false;
 		}
 
-		//-------------------------
-		//IContentBakeable implementation
-		unsafe void IContentBakeable.Prepare(PipelineBakeContext context)
-		{
-			var path = context.RawContentDiskPath;
-			path += ".png";
-			context.Depend(path);
-		}
-
-#if !BRUTED
-		unsafe bool IContentBakeable.Bake(PipelineBakeContext context)
-		{
-			Console.WriteLine("Texture.Bake: " + context.ContentPath);
-
-			//I dont know... I dont know...
-			var path = context.RawContentDiskPath;
-			if (!File.Exists(path)) return false;
-
-			var bb = new BitmapBuffer(path);
-			bb.Serialize(context.BakedWriter);
-
-			return true;
-		}
-#else
-		unsafe bool IContentBakeable.Bake(PipelineBakeContext context) { return false; }
-#endif
-
-		bool IContentBakeable.LoadBaked(PipelineLoadBakedContext context)
+		bool IBakedLoader.LoadBaked(PipelineLoadBakedContext context)
 		{
 			Console.WriteLine("Texture.LoadBaked: " + context.ContentPath);
 
@@ -152,14 +104,10 @@ namespace MTS.Engine
 			resLoaderContext.ImageBuffer.Width = info.Width;
 			resLoaderContext.ImageBuffer.Height = info.Height;
 			resLoaderContext.ImageBuffer.Format = format;
-			mHandle = this.Manager.ResourceLoader.LoadTexture(resLoaderContext);
+			mHandle = this.Manager.ContentConnector.LoadTexture(resLoaderContext);
 			mOwnsHandle = true;
 			return true;
 		}
-
-
-		//end IContentBakeable
-		//-----------------------------
 
 		/// <summary>
 		/// You can create a Texture to wrap your own texture handle (i.e. a rendertarget)
@@ -205,7 +153,7 @@ namespace MTS.Engine
 			resLoaderContext.ImageBuffer.Width = info.Width;
 			resLoaderContext.ImageBuffer.Height = info.Height;
 			resLoaderContext.ImageBuffer.Format = TextureFormat.RGBA8;
-			mHandle = this.Manager.ResourceLoader.LoadTexture(resLoaderContext);
+			mHandle = this.Manager.ContentConnector.LoadTexture(resLoaderContext);
 		}
 
 	}

@@ -16,7 +16,7 @@ EXPORT bool zlib_uncompress(void *dest, void* src, int destLen, int srcLen)
 //returns resulting size; -1 if dest was too small
 EXPORT int zlib_compress(void *dest, void* src, int destLen, int srcLen, int level)
 {
-	uLongf zDestLen;
+	uLongf zDestLen = destLen;
 	int ret = compress2((Bytef*)dest, &zDestLen, (const Bytef*)src, srcLen, level);
 	if(ret == Z_OK) return (int)zDestLen;
 	else return -1;
