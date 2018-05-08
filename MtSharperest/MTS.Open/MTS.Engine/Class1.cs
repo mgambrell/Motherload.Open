@@ -28,12 +28,12 @@ namespace MTS.Engine
 	{
 		public ProjectConfig()
 		{
-			SetBackend(PlatformType.Proto, BackendType.SDL);
-			SetBackend(PlatformType.Windows, BackendType.SDL);
-			SetBackend(PlatformType.Switch, BackendType.Switch);
+			SelectBackend(PlatformType.Proto, BackendType.SDL);
+			SelectBackend(PlatformType.Windows, BackendType.SDL);
+			SelectBackend(PlatformType.Switch, BackendType.Switch);
 		}
 		public Dictionary<PlatformType, ProjectConfigPlatform> Platforms = new Dictionary<PlatformType, ProjectConfigPlatform>();
-		void SetBackend(PlatformType platform, BackendType backend)
+		void SelectBackend(PlatformType platform, BackendType backend)
 		{
 			Platforms[platform] = new ProjectConfigPlatform() { Backend = backend };
 		}

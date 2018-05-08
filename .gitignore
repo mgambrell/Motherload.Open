@@ -4,3 +4,7 @@
 /MtSharperest/MTS.Open/MTS.Engine.SDL/obj
 /MtSharperest/MTS.Open/MTS.Engine.Pipeline/obj
 /MtSharperest/MTS.Open/MTS.Engine.Pipeline/bin
+*.suo
+*.user
+/MtSharperest/MTS.Open/MTS.Oven/obj
+/MtSharperest/MTS.Open/MTS.Oven/bin

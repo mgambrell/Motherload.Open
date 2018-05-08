@@ -313,19 +313,23 @@ namespace MTS.Engine
 			hotloadManager = new HotloadManager(this);
 #endif
 
-			//locate configuration. If it isn't in the EXE assembly, then it's in this assembly
-			//NOTE: it would be ideal if the user could specify this somehow.
-			//however, it's going to need to be located via reflection for the oven.
-			var projectConfigType = System.Reflection.Assembly.GetEntryAssembly().GetType("ProjectConfig", false);
+			//automatically select ProjectConfig from the entry assembly (not ideal)
+			SelectProjectConfig(Assembly.GetEntryAssembly(), ConsoleEnvironment.Platform);
+		}
+
+		void SelectProjectConfig(Assembly fromAssembly, PlatformType forPlatform)
+		{
+			//try loading ProjectConfig from the specified assembly; fallback to this assembly (use the default project config)
+			var projectConfigType = fromAssembly.GetType("ProjectConfig", false);
 			if (projectConfigType == null)
 				projectConfigType = typeof(ProjectConfig);
 
+			//now, we better have a project config
 			ProjectConfig = (ProjectConfig)Activator.CreateInstance(projectConfigType);
-			SetBackend(ProjectConfig.Platforms[ConsoleEnvironment.Platform].Backend);
-		}
 
-		void SetBackend(BackendType backend)
-		{
+			//choose the backend for the current platform
+			var backend = ProjectConfig.Platforms[forPlatform].Backend;
+
 			//try to set the default content connector
 			//user can override it in a minute, in case that's important
 			Type runtimeConnectorType = null;
@@ -338,18 +342,42 @@ namespace MTS.Engine
 					break;
 				case BackendType.Switch:
 					runtimeConnectorType = AppDomain.CurrentDomain.Load("MTS.Engine.Switch").GetType("MTS.Engine.Switch.DefaultRuntimeConnector", false);
+					pipelineConnectorType = AppDomain.CurrentDomain.Load("MTS.Engine.Switch").GetType("MTS.Engine.Switch.DefaultPipelineConnector", false);
 					break;
 			}
 
-			if (runtimeConnectorType != null)
+			//unless we're the oven, we need a runtime connector
+			if (!ForOven && runtimeConnectorType != null)
 			{
 				RuntimeConnector = (RuntimeConnectorBase)Activator.CreateInstance(runtimeConnectorType);
 			}
 
-			if (pipelineConnectorType != null)
+			//if we're the oven or proto, we need a pipeline connector (probably)
+			if ((ForOven || forPlatform == PlatformType.Proto) && pipelineConnectorType != null)
 			{
+				//default pipeline connector needs these.. really this assembly should be referencing that one, but it would be circular
+				Assembly.Load("MTS.Engine.Pipeline");
 				PipelineConnector = (PipelineConnectorBase)Activator.CreateInstance(pipelineConnectorType);
 			}
+		}
+
+		internal void StartupOven(Assembly fromAssembly, PlatformType forPlatform)
+		{
+			ForOven = true;
+			SelectProjectConfig(fromAssembly, forPlatform);
+			DumpBakedContent = true;
+		}
+
+		/// <summary>
+		/// intended for use by the oven
+		/// </summary>
+		internal ContentManager(bool forOven)
+		{
+		}
+
+		void SetBackend(BackendType backend)
+		{
+		
 		}
 
 		/// <summary>
@@ -392,6 +420,7 @@ namespace MTS.Engine
 			return content;
 		}
 
+		bool ForOven;
 		public RuntimeConnectorBase RuntimeConnector;
 		public PipelineConnectorBase PipelineConnector;
 
