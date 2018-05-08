@@ -46,7 +46,7 @@ namespace MTS.Engine
 				}
 				else if (isContentType)
 				{
-					//content can have subcontent holders, so we need to recuse into that
+					//content can have subcontent holders, so we need to recurse into that
 					var entry = _Reflect(fieldType, true);
 					entry.Name = fi.Name;
 					entry.Attributes = fi.GetCustomAttributes(false);

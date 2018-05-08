@@ -82,17 +82,28 @@ namespace MTS.Engine
 				item.Unload();
 		}
 
-		protected override ContentBase CreateBoundContentProxy(Type type, string name)
+		protected override ContentBase CreateBoundContentProxy(Type type, string name, ContentManifestEntry manifestEntry)
 		{
 			//special handling for directories--we need to create subdirectories specially
 			//EDIT: do we really? can't it get dealt with, like, by tracking the directory owner, and pulling information from that?
-			var content = base.CreateBoundContentProxy(type, name);
+			var content = base.CreateBoundContentProxy(type, name, manifestEntry);
+
 
 			if (typeof(ContentDirectory).IsAssignableFrom(type))
 			{
 				var newSubdir = (ContentDirectory)content;
 				newSubdir.RawContentDiskRoot = System.IO.Path.Combine(RawContentDiskRoot, name);
 				newSubdir.BakedContentDiskRoot = System.IO.Path.Combine(BakedContentDiskRoot, name);
+
+				//special handling:
+				var backendSubdirAttrib = content.Attributes.GetAttribute<BackendSubdirectory>();
+				if (backendSubdirAttrib != null)
+				{
+					newSubdir.RawContentDiskRoot = System.IO.Path.Combine(newSubdir.RawContentDiskRoot, Manager.SelectedBackend.ToString());
+					newSubdir.BakedContentDiskRoot = System.IO.Path.Combine(newSubdir.BakedContentDiskRoot, Manager.SelectedBackend.ToString());
+				}
+
+
 				newSubdir.LogicalPath = $"{LogicalPath}/{name}";
 
 				//it's responsible for loading itself.. kind of weird..
@@ -170,10 +181,6 @@ namespace MTS.Engine
 		{
 			BindManifest(manifest);
 		}
-
-		//I'm working on a concept of keeping this type extremely minimal. so let's not put these here.
-		//public void StartWatching()
-		//public void StopWatching()
 	}
 
 }

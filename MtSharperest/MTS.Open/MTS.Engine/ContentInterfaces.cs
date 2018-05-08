@@ -40,6 +40,7 @@ namespace MTS.Engine
 	}
 
 	/// <summary>
+	/// OLD RAMBLING NONSENSE NOTES
 	/// A type that can handle Load and Unload signals (OvenContentLoader is the canonical example).
 	/// Unload being here has turned out to be quite a nuisance, since it is just basically universally calling a universal unloader for the content type
 	/// But this will give us the opportunity to have content that's been loaded in wildly different ways. 
@@ -52,15 +53,6 @@ namespace MTS.Engine
 	public interface IContentLoader
 	{
 		bool Load(ContentLoadContext context);
-	}
-
-	/// <summary>
-	/// Content that can respond to Load and Unload signals
-	/// </summary>
-	public interface IContentLoadable
-	{
-		bool Load();
-		void Unload();
 	}
 
 }

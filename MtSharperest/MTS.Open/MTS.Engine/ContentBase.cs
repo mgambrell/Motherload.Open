@@ -10,7 +10,7 @@ namespace MTS.Engine
 	/// note: content is meant to be read-only
 	/// to create content at runtime you should use a loader designed for the purpose?
 	/// </summary>
-	public abstract class ContentBase : IContentLoadable
+	public abstract class ContentBase
 	{
 		/// <summary>
 		/// Whether this content is loaded
@@ -131,7 +131,7 @@ namespace MTS.Engine
 					var o = fieldInfo.GetValue(this);
 					if (o == null)
 					{
-						o = CreateBoundContentProxy(fieldInfo.FieldType, name);
+						o = CreateBoundContentProxy(fieldInfo.FieldType, name, child);
 						fieldInfo.SetValue(this, o);
 					}
 
@@ -175,9 +175,14 @@ namespace MTS.Engine
 		/// That's the intent, but it looks like the different logic in here isn't directly related to that.
 		/// It should be possible to do oven stuff without... man, I dont know
 		/// </summary>
-		protected virtual ContentBase CreateBoundContentProxy(Type type, string name)
+		protected virtual ContentBase CreateBoundContentProxy(Type type, string name, ContentManifestEntry manifestEntry)
 		{
+			//manifestEntry has to come in so we can use it during creating content.. yeah.. i should have thought of that.
+			//I need to clean that up
+
 			ContentBase content = CreateContentProxy(type, name);
+
+			content.attributes = manifestEntry.Attributes;
 
 			//if we're bruted, just create the baked loader and move on
 

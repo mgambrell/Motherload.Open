@@ -306,6 +306,8 @@ namespace MTS.Engine
 #endif
 
 		ProjectConfig ProjectConfig;
+		internal PlatformType SelectedPlatform;
+		internal BackendType SelectedBackend;
 
 		public ContentManager()
 		{
@@ -319,6 +321,8 @@ namespace MTS.Engine
 
 		void SelectProjectConfig(Assembly fromAssembly, PlatformType forPlatform)
 		{
+			SelectedPlatform = forPlatform;
+
 			//try loading ProjectConfig from the specified assembly; fallback to this assembly (use the default project config)
 			var projectConfigType = fromAssembly.GetType("ProjectConfig", false);
 			if (projectConfigType == null)
@@ -328,13 +332,13 @@ namespace MTS.Engine
 			ProjectConfig = (ProjectConfig)Activator.CreateInstance(projectConfigType);
 
 			//choose the backend for the current platform
-			var backend = ProjectConfig.Platforms[forPlatform].Backend;
+			SelectedBackend = ProjectConfig.Platforms[forPlatform].Backend;
 
 			//try to set the default content connector
 			//user can override it in a minute, in case that's important
 			Type runtimeConnectorType = null;
 			Type pipelineConnectorType = null;
-			switch (backend)
+			switch (SelectedBackend)
 			{
 				case BackendType.SDL:
 					runtimeConnectorType = AppDomain.CurrentDomain.Load("MTS.Engine.SDL").GetType("MTS.Engine.SDL.DefaultRuntimeConnector", false);
