@@ -19,12 +19,32 @@ namespace MTS.Engine
 		public static PlatformType Platform = (PlatformType)Native.GetPlatformType();
 	}
 
+	public class ProjectConfigPlatform
+	{
+		public BackendType Backend;
+	}
+
+	public class ProjectConfig
+	{
+		public ProjectConfig()
+		{
+			SetBackend(PlatformType.Proto, BackendType.SDL);
+			SetBackend(PlatformType.Windows, BackendType.SDL);
+			SetBackend(PlatformType.Switch, BackendType.Switch);
+		}
+		public Dictionary<PlatformType, ProjectConfigPlatform> Platforms = new Dictionary<PlatformType, ProjectConfigPlatform>();
+		void SetBackend(PlatformType platform, BackendType backend)
+		{
+			Platforms[platform] = new ProjectConfigPlatform() { Backend = backend };
+		}
+	}
+
 	/// <summary>
 	/// Provisionally, this allows us to have backends independently of target platform
 	/// For instance, on windows we might have SDL and d3d.
 	/// Someone else making their own backend or forking ours could slot in here (we'd accept a patch with new backend enums)
 	/// </summary>
-	public enum Backend
+	public enum BackendType
 	{
 		SDL,
 		Switch

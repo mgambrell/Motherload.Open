@@ -95,19 +95,18 @@
     <Compile Include="Pipelines\ImageAnalyzer.cs" />
     <Compile Include="Pipelines\Math.cs" />
     <Compile Include="Pipelines\NitroFontPipeline.cs" />
+    <Compile Include="Pipelines\ShaderProgramPipeline.cs" />
     <Compile Include="Pipelines\TexAtlas.cs" />
     <Compile Include="Pipelines\TextFile.cs" />
     <Compile Include="Pipelines\TexturePipeline.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-
   <Target Name="BeforeBuild">
-		<!-- don't build any of this if we're Bruting -->
-	  <ItemGroup>
-	    <Compile Condition="'$(Configuration)' == 'Brute'" Remove="**" />
-	  </ItemGroup>
+    <!-- don't build any of this if we're Bruting -->
+    <ItemGroup>
+      <Compile Condition="'$(Configuration)' == 'Brute'" Remove="**" />
+    </ItemGroup>
   </Target>
   <Target Name="AfterBuild">
   </Target>
-
 </Project>

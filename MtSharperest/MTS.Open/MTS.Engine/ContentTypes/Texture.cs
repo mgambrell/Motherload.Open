@@ -66,7 +66,7 @@ namespace MTS.Engine
 		{
 			Console.WriteLine("Texture.MyUnload: " + "???");
 			if(mOwnsHandle)
-				Manager.ContentConnector.DestroyTexture(mHandle);
+				Manager.RuntimeConnector.DestroyTexture(mHandle);
 			mHandle = IntPtr.Zero;
 			mOwnsHandle = false;
 		}
@@ -104,7 +104,7 @@ namespace MTS.Engine
 			resLoaderContext.ImageBuffer.Width = info.Width;
 			resLoaderContext.ImageBuffer.Height = info.Height;
 			resLoaderContext.ImageBuffer.Format = format;
-			mHandle = this.Manager.ContentConnector.LoadTexture(resLoaderContext);
+			mHandle = this.Manager.RuntimeConnector.LoadTexture(resLoaderContext);
 			mOwnsHandle = true;
 			return true;
 		}
@@ -153,7 +153,7 @@ namespace MTS.Engine
 			resLoaderContext.ImageBuffer.Width = info.Width;
 			resLoaderContext.ImageBuffer.Height = info.Height;
 			resLoaderContext.ImageBuffer.Format = TextureFormat.RGBA8;
-			mHandle = this.Manager.ContentConnector.LoadTexture(resLoaderContext);
+			mHandle = this.Manager.RuntimeConnector.LoadTexture(resLoaderContext);
 		}
 
 	}

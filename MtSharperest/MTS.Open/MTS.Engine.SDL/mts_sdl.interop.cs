@@ -155,21 +155,21 @@ namespace MTS.Engine.SDL
 	public static class Functions
 	{
 		//for brute, force a reference to this type
-		static DefaultContentConnector dummy;
+		static DefaultRuntimeConnector dummy;
 
-		//public static bool TryGetTextureFormat(mts.Engine.TextureFormat coreFormat, out MTS_SDL_TextureFormat sdlFormat)
-		//{
-		//	//maybe I can make a kind of uniform standard later and have everything line up (with null gaps in some kind of list for unsupported formats)
-		//	//but for now...
-		//	if (coreFormat == TextureFormat.RGBA8) { sdlFormat = MTS_SDL_TextureFormat.RGBA8; return true; }
-		//	if (coreFormat == TextureFormat.BGRA8) { sdlFormat = MTS_SDL_TextureFormat.BGRA8; return true; }
-		//	if (coreFormat == TextureFormat.RGB8) { sdlFormat = MTS_SDL_TextureFormat.RGB8; return true; }
-		//	if (coreFormat == TextureFormat.BGR8) { sdlFormat = MTS_SDL_TextureFormat.BGR8; return true; }
-		//	if (coreFormat == TextureFormat.R8) { sdlFormat = MTS_SDL_TextureFormat.R8; return true; }
+		public static bool TryGetTextureFormat(MTS.Engine.TextureFormat coreFormat, out MTS_SDL_TextureFormat sdlFormat)
+		{
+			//maybe I can make a kind of uniform standard later and have everything line up (with null gaps in some kind of list for unsupported formats)
+			//but for now...
+			if (coreFormat == TextureFormat.RGBA8) { sdlFormat = MTS_SDL_TextureFormat.RGBA8; return true; }
+			if (coreFormat == TextureFormat.BGRA8) { sdlFormat = MTS_SDL_TextureFormat.BGRA8; return true; }
+			if (coreFormat == TextureFormat.RGB8) { sdlFormat = MTS_SDL_TextureFormat.RGB8; return true; }
+			if (coreFormat == TextureFormat.BGR8) { sdlFormat = MTS_SDL_TextureFormat.BGR8; return true; }
+			if (coreFormat == TextureFormat.R8) { sdlFormat = MTS_SDL_TextureFormat.R8; return true; }
 
-		//	sdlFormat = MTS_SDL_TextureFormat.None;
-		//	return false;
-		//}
+			sdlFormat = MTS_SDL_TextureFormat.None;
+			return false;
+		}
 
 		[DllImport("MTS.Engine.SDL.Native.dll", CallingConvention = CallingConvention.Cdecl)]
 		public static extern void mts_sdl_InitialRenderState();

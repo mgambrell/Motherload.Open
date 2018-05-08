@@ -78,7 +78,7 @@ namespace MTS.Engine
 					//TODO: this is bad, what if this never ran? need to rethink some things
 					loader.bakeContext.resolvedDependencies = new Dictionary<object, string>();
 					loader.bakeContext.dependsBag = new Bag<object, PipelineBakeContext.DependsRecord>();
-					var pipeline = contentManager.ContentConnector.GetPipeline(hotloadable);
+					var pipeline = contentManager.PipelineConnector.GetPipeline(hotloadable);
 					pipeline.Prepare(loader.bakeContext);
 					//junk
 					bool resolvedDependencies = loader.bakeContext.ResolveDependencies(hotloadable.Name);

@@ -18,39 +18,9 @@ namespace MTS.Engine
 		public object Handle;
 	}
 
-	/// <summary>
-	/// The bridge between abstract content engine and specific engine and platform concerns.
-	/// For instance, loads textures from baked texture resources
-	/// WARNING: some of this is PIPELINE-side and some of this is RUNTIME-side
-	/// Maybe I should not have mixed those up.
-	/// TODO: rename something like BackendInterface or BackendConnector?
-	/// </summary>
-	public class ContentConnectorBase
+	public class PipelineConnectorBase
 	{
 		Dictionary<Type, IContentPipeline> pipelinesCache = new Dictionary<Type, IContentPipeline>();
-
-		public ContentConnectorBase()
-		{
-			//try loading the pipelines assembly
-			try
-			{
-				AppDomain.CurrentDomain.Load("MTS.Engine.Pipeline");
-			}
-			catch
-			{
-			}
-		}
-
-		public virtual void UnloadShader(ContentConnectorContext_ShaderProgram context) { }
-		public virtual void LoadShader(ContentConnectorContext_ShaderProgram context) { }
-
-		public virtual IntPtr LoadTexture(ContentConnectorContext_Texture context)
-		{
-			return IntPtr.Zero;
-		}
-		public virtual void DestroyTexture(IntPtr handle)
-		{
-		}
 
 		/// <summary>
 		/// Gets a pipeline suitable for building the given content
@@ -90,6 +60,39 @@ namespace MTS.Engine
 			}
 
 			return ret;
+		}
+	}
+
+	/// <summary>
+	/// The bridge between abstract content engine and specific engine and platform concerns.
+	/// For instance, loads textures from baked texture resources
+	/// WARNING: some of this is PIPELINE-side and some of this is RUNTIME-side
+	/// Maybe I should not have mixed those up.
+	/// TODO: rename something like BackendInterface or BackendConnector?
+	/// </summary>
+	public class RuntimeConnectorBase
+	{
+		public RuntimeConnectorBase()
+		{
+			//try loading the pipelines assembly
+			try
+			{
+				AppDomain.CurrentDomain.Load("MTS.Engine.Pipeline");
+			}
+			catch
+			{
+			}
+		}
+
+		public virtual void UnloadShader(ContentConnectorContext_ShaderProgram context) { }
+		public virtual void LoadShader(ContentConnectorContext_ShaderProgram context) { }
+
+		public virtual IntPtr LoadTexture(ContentConnectorContext_Texture context)
+		{
+			return IntPtr.Zero;
+		}
+		public virtual void DestroyTexture(IntPtr handle)
+		{
 		}
 	}
 

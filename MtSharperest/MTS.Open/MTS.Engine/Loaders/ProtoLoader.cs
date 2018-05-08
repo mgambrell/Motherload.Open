@@ -29,7 +29,7 @@ namespace MTS.Engine.Loaders
 			loadBakedContext.ContentPath = name;
 			var fpBaked = Path.Combine(directoryOwner.BakedContentDiskRoot, name);
 
-			var bakeable = content.Manager.ContentConnector.GetPipeline(content);
+			var bakeable = content.Manager.PipelineConnector.GetPipeline(content);
 			var bakedLoader = content as IBakedLoader;
 
 			//what is this hot garbage?? I would like a special context for preparing which has more limited information

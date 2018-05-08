@@ -305,31 +305,50 @@ namespace MTS.Engine
 		public static readonly string DefaultDataDirectory = "data";
 #endif
 
+		ProjectConfig ProjectConfig;
+
 		public ContentManager()
 		{
 		#if !BRUTED
 			hotloadManager = new HotloadManager(this);
-		#endif
+#endif
+
+			//locate configuration. If it isn't in the EXE assembly, then it's in this assembly
+			//NOTE: it would be ideal if the user could specify this somehow.
+			//however, it's going to need to be located via reflection for the oven.
+			var projectConfigType = System.Reflection.Assembly.GetEntryAssembly().GetType("ProjectConfig", false);
+			if (projectConfigType == null)
+				projectConfigType = typeof(ProjectConfig);
+
+			ProjectConfig = (ProjectConfig)Activator.CreateInstance(projectConfigType);
+			SetBackend(ProjectConfig.Platforms[ConsoleEnvironment.Platform].Backend);
 		}
 
-		public void SetBackend(Backend backend)
+		void SetBackend(BackendType backend)
 		{
 			//try to set the default content connector
 			//user can override it in a minute, in case that's important
-			Type connectorType = null;
+			Type runtimeConnectorType = null;
+			Type pipelineConnectorType = null;
 			switch (backend)
 			{
-				case Backend.SDL:
-					connectorType = AppDomain.CurrentDomain.Load("MTS.Engine.SDL").GetType("MTS.Engine.SDL.DefaultContentConnector", false);
+				case BackendType.SDL:
+					runtimeConnectorType = AppDomain.CurrentDomain.Load("MTS.Engine.SDL").GetType("MTS.Engine.SDL.DefaultRuntimeConnector", false);
+					pipelineConnectorType = AppDomain.CurrentDomain.Load("MTS.Engine.SDL").GetType("MTS.Engine.SDL.DefaultPipelineConnector", false);
 					break;
-				case Backend.Switch:
-					connectorType = AppDomain.CurrentDomain.Load("MTS.Engine.Switch").GetType("MTS.Engine.Switch.DefaultContentConnector", false);
+				case BackendType.Switch:
+					runtimeConnectorType = AppDomain.CurrentDomain.Load("MTS.Engine.Switch").GetType("MTS.Engine.Switch.DefaultRuntimeConnector", false);
 					break;
 			}
 
-			if (connectorType != null)
+			if (runtimeConnectorType != null)
 			{
-				ContentConnector = (ContentConnectorBase)Activator.CreateInstance(connectorType);
+				RuntimeConnector = (RuntimeConnectorBase)Activator.CreateInstance(runtimeConnectorType);
+			}
+
+			if (pipelineConnectorType != null)
+			{
+				PipelineConnector = (PipelineConnectorBase)Activator.CreateInstance(pipelineConnectorType);
 			}
 		}
 
@@ -373,7 +392,8 @@ namespace MTS.Engine
 			return content;
 		}
 
-		public ContentConnectorBase ContentConnector;
+		public RuntimeConnectorBase RuntimeConnector;
+		public PipelineConnectorBase PipelineConnector;
 
 		/// <summary>
 		/// Whether content is dumped when it's baked (this is lame, needs to be replaced with more sophistication)

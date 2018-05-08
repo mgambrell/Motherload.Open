@@ -79,7 +79,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DefaultContentConnector.cs" />
+    <Compile Include="Pipeline\DefaultPipelineConnector.cs" />
+    <Compile Include="DefaultRuntimeConnector.cs" />
     <Compile Include="mts_sdl.interop.cs" />
   </ItemGroup>
   <ItemGroup>

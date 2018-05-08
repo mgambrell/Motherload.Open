@@ -183,7 +183,7 @@ namespace MTS.Engine
 
 #if !BRUTED
 			//try getting the pipeline we'd use to bake this content. If there's such a pipeline, set us up to use it
-			var pipeline = Manager.ContentConnector.GetPipeline(content);
+			var pipeline = Manager.PipelineConnector.GetPipeline(content);
 
 			if (pipeline != null)
 			{
