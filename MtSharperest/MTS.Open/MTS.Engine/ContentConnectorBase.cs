@@ -6,7 +6,7 @@ using System.Reflection;
 
 namespace MTS.Engine
 {
-	public class ContentConnectorContext_Texture
+	public class RuntimeConncetor_TextureContext
 	{
 		public ImageBuffer ImageBuffer;
 		public BinaryReader Reader;
@@ -87,7 +87,7 @@ namespace MTS.Engine
 		public virtual void UnloadShader(ContentConnectorContext_ShaderProgram context) { }
 		public virtual void LoadShader(ContentConnectorContext_ShaderProgram context) { }
 
-		public virtual IntPtr LoadTexture(ContentConnectorContext_Texture context)
+		public virtual IntPtr LoadTexture(RuntimeConncetor_TextureContext context)
 		{
 			return IntPtr.Zero;
 		}

@@ -19,6 +19,7 @@
 	<!--==========================================================================-->
 	<!-- ITEM DEFINITIONS (standard build environment) -->
 	<ItemDefinitionGroup>
+	
 		<ClCompile>
 			<!-- Copy some of these properties into the preprocessor -->
 			<!-- Note, some of these macros are a little lame.. not all upper-cased.. it's annoying to do that in msbuild -->
@@ -31,6 +32,7 @@
 			<PreprocessorDefinitions Condition="'$(Configuration)' == 'Release'">NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
 
 		</ClCompile>
+		
 		<!-- Since native libraries can get built as lib or dll, we need to add dependencies both ways -->
 		<Link>
 			<AdditionalDependencies>$(MTS_AdditionalLibs);%(AdditionalDependencies)</AdditionalDependencies>
@@ -66,13 +68,17 @@
 	</ItemDefinitionGroup>	
 
 	<!--==========================================================================-->
-
+	<!-- PROPERTIES (standard build environment) -->
 	<PropertyGroup>
 
 		<!-- Note: this may need to vary by platform -->
 		<TargetPath>$(OutDir)$(TargetName)$(TargetExt)</TargetPath>
 		
 	</PropertyGroup>
+	
+	<!--============================-->
+	<!-- standard stuff for c# -->
+	<!-- INTENTIONALLY BLANK ... all in phase 1 -->
 
 	<!-- import handling for each platform -->
 	<Import Condition="'$(M_BRUTE_PlatformName)'=='Windows'" Project="$(M_PackagesDir)Motherload.Open/MtSharperest/MTS.Open/Build/Platforms/Windows/Platform_Windows.props"/>

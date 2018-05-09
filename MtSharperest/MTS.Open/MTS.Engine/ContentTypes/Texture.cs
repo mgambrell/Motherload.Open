@@ -9,12 +9,12 @@ namespace MTS.Engine
 	public enum TextureFormat
 	{
 		/// <summary>
-		/// in memory as hex RR GG BB AA
+		/// in memory as RR GG BB AA
 		/// </summary>
 		RGBA8,
 
 		/// <summary>
-		/// in memory as hex BB GG RR AA
+		/// in memory as BB GG RR AA
 		/// </summary>
 		BGRA8,
 
@@ -97,7 +97,7 @@ namespace MTS.Engine
 
 			var ms = new MemoryStream(rawbuf);
 			var brRaw = new BinaryReader(ms);
-			var resLoaderContext = new ContentConnectorContext_Texture();
+			var resLoaderContext = new RuntimeConncetor_TextureContext();
 			resLoaderContext.ImageBuffer = new ImageBuffer();
 			//resLoaderContext.Reader = brRaw; //meaningless now, should be restored later
 			resLoaderContext.ImageBuffer.Data = rawbuf;
@@ -146,7 +146,7 @@ namespace MTS.Engine
 			bw.Flush();
 			ms.Position = 0;
 
-			var resLoaderContext = new ContentConnectorContext_Texture();
+			var resLoaderContext = new RuntimeConncetor_TextureContext();
 			resLoaderContext.ImageBuffer = new ImageBuffer();
 			//resLoaderContext.Reader = brRaw; //meaningless now, should be restored later
 			resLoaderContext.ImageBuffer.Data = ms.GetBuffer();

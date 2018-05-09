@@ -12,6 +12,8 @@ It's required that you construct what I call a "packages" directory. It should c
 
 You can then find a demo at /Motherload.Switch/MtSharperest/Demos/SwitchDemo
 
+THIS INFORMATION IS NOW VERY OUT OF DATE
+
 Note the skus directory - this is where we build each platform. There's a brute.bat in there, which creates a `.bruted` directory containing a buildable .sln. Run my brute.bats from a visual studio command prompt (I'm using vs2015).
 
 When opening a demo or template, change visual studio to select the Debug|x64 configuration. This is where you'll do the bulk of the .net-based prototyping for your game. (TODO: consider renaming this to Proto and Brute, for a more prescriptive arrangement)
@@ -32,3 +34,8 @@ When making a new sln, be sure to reference MTS.Engine.Pipeline. Nothing needs i
 
 TODO: add more prescriptive docs, organized by task: Try a new project; make a console build; add an existing library; develop a new library
 
+quick index:
+
+M_BRUTE_PlatformName: Windows, Proto, Switch (note: Proto is not a real brute platform name but this is used as a placeholder internally for when brute isnt involved)
+Backends: SDL, Switch
+Platforms: Proto, (Windows, Switch)

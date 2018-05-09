@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Project ToolsVersion="4.0" DefaultTargets="IntegrityChecks" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+	<!-- set the project type and jack us into the matrix -->
+	
+	<PropertyGroup Label="MTS Config">
+		<M_ProjectType>Managed</M_ProjectType>
+	</PropertyGroup>
+	
+	<Import Project="MTS_private_phase1.props" />
+
+</Project>

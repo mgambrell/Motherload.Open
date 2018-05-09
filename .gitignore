@@ -1,10 +1,5 @@
-/MtSharperest/MTS.Open/MTS.Engine/obj
-/MtSharperest/MTS.Open/MTS.Engine/bin
-/MtSharperest/MTS.Open/MTS.Engine.SDL/bin
-/MtSharperest/MTS.Open/MTS.Engine.SDL/obj
-/MtSharperest/MTS.Open/MTS.Engine.Pipeline/obj
-/MtSharperest/MTS.Open/MTS.Engine.Pipeline/bin
-*.suo
+.bruted
+.bin
+.obj
+.vs
 *.user
-/MtSharperest/MTS.Open/MTS.Oven/obj
-/MtSharperest/MTS.Open/MTS.Oven/bin
