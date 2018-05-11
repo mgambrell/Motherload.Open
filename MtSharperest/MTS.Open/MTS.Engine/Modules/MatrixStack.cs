@@ -13,7 +13,7 @@ namespace MTS.Engine.Modules.MatrixStack
 			IsDirty = false;
 		}
 
-		public static implicit operator Matrix(MatrixStack ms) { return ms.top; }
+		public static implicit operator Matrix(MatrixStack ms) { return ms.Top; }
 
 		public MatrixStack(Matrix matrix) { LoadMatrix(matrix); }
 
@@ -24,10 +24,8 @@ namespace MTS.Engine.Modules.MatrixStack
 			IsDirty = false;
 		}
 
-		Matrix top;
+		public Matrix Top;
 		Stack<Matrix> stack = new Stack<Matrix>();
-
-		public Matrix Top { get { return top; } }
 
 		/// <summary>
 		/// Resets the matrix stack to an empty identity matrix stack
@@ -44,21 +42,21 @@ namespace MTS.Engine.Modules.MatrixStack
 		public void Clear(Matrix value)
 		{
 			stack.Clear();
-			top = value;
+			Top = value;
 		}
 
-		public void LoadMatrix(Matrix value) { top = value; IsDirty = true; }
+		public void LoadMatrix(Matrix value) { Top = value; IsDirty = true; }
 
-		public void LoadIdentity() { top = Matrix.Identity; IsDirty = true; }
+		public void LoadIdentity() { Top = Matrix.Identity; IsDirty = true; }
 
-		public void Pop() { top = stack.Pop(); IsDirty = true; }
-		public void Push() { stack.Push(top); IsDirty = true; }
+		public void Pop() { Top = stack.Pop(); IsDirty = true; }
+		public void Push() { stack.Push(Top); IsDirty = true; }
 
-		public void RotateAxis(Vector3 axisRotation, float angle) { top = Matrix.CreateFromAxisAngle(axisRotation, angle) * top; IsDirty = true; }
+		public void RotateAxis(Vector3 axisRotation, float angle) { Top = Matrix.CreateFromAxisAngle(axisRotation, angle) * Top; IsDirty = true; }
 
-		public void Scale(Vector3 scale) { top = Matrix.CreateScale(scale) * top; IsDirty = true; }
-		public void Scale(Vector2 scale) { top = Matrix.CreateScale(scale.X, scale.Y, 1) * top; IsDirty = true; }
-		public void Scale(float x, float y, float z) { top = Matrix.CreateScale(x, y, z) * top; IsDirty = true; }
+		public void Scale(Vector3 scale) { Top = Matrix.CreateScale(scale) * Top; IsDirty = true; }
+		public void Scale(Vector2 scale) { Top = Matrix.CreateScale(scale.X, scale.Y, 1) * Top; IsDirty = true; }
+		public void Scale(float x, float y, float z) { Top = Matrix.CreateScale(x, y, z) * Top; IsDirty = true; }
 		public void Scale(float ratio) { Scale(ratio, ratio, ratio); IsDirty = true; }
 		public void Scale(float x, float y) { Scale(x, y, 1); IsDirty = true; }
 
@@ -68,14 +66,13 @@ namespace MTS.Engine.Modules.MatrixStack
 		public void RotateZ(float angle) { MultiplyMatrix(Matrix.CreateRotationZ(angle)); IsDirty = true; }
 
 		public void Translate(Vector2 translate) { Translate(translate.X, translate.Y, 0); IsDirty = true; }
-		public void Translate(Vector3 translate) { top = Matrix.CreateTranslation(translate) * top; IsDirty = true; }
-		public void Translate(float x, float y, float z) { top = Matrix.CreateTranslation(x, y, z) * top; IsDirty = true; }
+		public void Translate(Vector3 translate) { Top = Matrix.CreateTranslation(translate) * Top; IsDirty = true; }
+		public void Translate(float x, float y, float z) { Top = Matrix.CreateTranslation(x, y, z) * Top; IsDirty = true; }
 		public void Translate(float x, float y) { Translate(x, y, 0); IsDirty = true; }
-		public void PreTranslate(float x, float y) { top = top * Matrix.CreateTranslation(x, y, 0); IsDirty = true; }
 		public void Translate(Point pt) { Translate(pt.X, pt.Y, 0); IsDirty = true; }
 
 		public void MultiplyMatrix(MatrixStack ms) { MultiplyMatrix(ms.Top); IsDirty = true; }
-		public void MultiplyMatrix(Matrix value) { top = value * top; IsDirty = true; }
+		public void MultiplyMatrix(Matrix value) { Top = value * Top; IsDirty = true; }
 	}
 
 
