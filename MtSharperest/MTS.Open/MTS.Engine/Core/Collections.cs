@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections;
 
-namespace MTS.Engine
+namespace MTS.Engine.Collections
 {
 	/// <summary>
 	/// base class for Bag and SortedBag

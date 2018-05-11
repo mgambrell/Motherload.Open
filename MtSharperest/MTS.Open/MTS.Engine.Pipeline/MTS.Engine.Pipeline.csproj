@@ -50,6 +50,23 @@
     <Compile Include="Pipelines\TexAtlas.cs" />
     <Compile Include="Pipelines\TextFile.cs" />
     <Compile Include="Pipelines\TexturePipeline.cs" />
+    <Compile Include="ThirdParty\rickyah-ini-parser\Exceptions\ParsingException.cs" />
+    <Compile Include="ThirdParty\rickyah-ini-parser\FileIniParser.cs" />
+    <Compile Include="ThirdParty\rickyah-ini-parser\Helpers\Assert.cs" />
+    <Compile Include="ThirdParty\rickyah-ini-parser\Model\Configuration\ConcatenateDuplicatedKeysIniParserConfiguration.cs" />
+    <Compile Include="ThirdParty\rickyah-ini-parser\Model\Configuration\IniParserConfiguration.cs" />
+    <Compile Include="ThirdParty\rickyah-ini-parser\Model\Formatting\DefaultIniDataFormatter.cs" />
+    <Compile Include="ThirdParty\rickyah-ini-parser\Model\Formatting\IIniDataFormatter.cs" />
+    <Compile Include="ThirdParty\rickyah-ini-parser\Model\IniData.cs" />
+    <Compile Include="ThirdParty\rickyah-ini-parser\Model\IniDataCaseInsensitive.cs" />
+    <Compile Include="ThirdParty\rickyah-ini-parser\Model\KeyData.cs" />
+    <Compile Include="ThirdParty\rickyah-ini-parser\Model\KeyDataCollection.cs" />
+    <Compile Include="ThirdParty\rickyah-ini-parser\Model\SectionData.cs" />
+    <Compile Include="ThirdParty\rickyah-ini-parser\Model\SectionDataCollection.cs" />
+    <Compile Include="ThirdParty\rickyah-ini-parser\Parser\ConcatenateDuplicatedKeysIniDataParser.cs" />
+    <Compile Include="ThirdParty\rickyah-ini-parser\Parser\IniDataParser.cs" />
+    <Compile Include="ThirdParty\rickyah-ini-parser\StreamIniDataParser.cs" />
+    <Compile Include="ThirdParty\rickyah-ini-parser\StringIniParser.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="BeforeBuild">

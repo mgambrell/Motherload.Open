@@ -1,0 +1,1 @@
+Contains 'modules' -- tiny units of optional functionality. The engine shouldn't use these internally.
