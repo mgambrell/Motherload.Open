@@ -143,11 +143,11 @@ Game: a managed game (a .net exe)
 	
 	<PropertyGroup Condition="'$(Configuration)' == 'Brute'">
 		<MyDefineConstants>BRUTED;$(MyDefineConstants)</MyDefineConstants>
-	</PropertyGroup>	
+	</PropertyGroup>
 	
 	<PropertyGroup Condition="'$(SolutionPlatform)' == 'Proto'">
 		<MyDefineConstants>PROTO;$(MyDefineConstants)</MyDefineConstants>
-	</PropertyGroup>		
+	</PropertyGroup>
 	
 	<PropertyGroup>
 		<DefineConstants>$(MyDefineConstants)</DefineConstants>
