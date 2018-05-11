@@ -1,25 +1,14 @@
 ﻿using System;
-using System.Runtime.InteropServices;
-using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Drawing;
 using System.Drawing.Imaging;
 
-namespace MTS.Engine
+using MTS.Engine.ContentUtils;
+
+namespace MTS.Engine.Pipeline
 {
-
-	class ImageAnalyzer
+	public static unsafe class ImageLoading
 	{
-
-	#if !BRUTED
-		/// <summary>
-		/// a new argument `TextureFormat desiredFormat` could be used to do some work earlier on, swizzling rgb order most likely.
-		/// TODO: this whole enchilada is a good candidate for moving to c++, of course. 
-		/// </summary>
-		public static unsafe ImageBuffer AnalyzeImageInfo(string path)
+		public static ImageBuffer LoadImage(string path)
 		{
 			var ret = new ImageBuffer();
 
@@ -104,7 +93,6 @@ namespace MTS.Engine
 			ret.MipLevels = 1;
 			return ret;
 		}
-	#endif
 
 		public static void Convert(ImageConversionContext context)
 		{
@@ -238,7 +226,4 @@ namespace MTS.Engine
 		} //Convert()
 
 	}
-
-
-
 }

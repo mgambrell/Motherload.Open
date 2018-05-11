@@ -2,7 +2,9 @@ using System;
 using System.IO;
 using MTS.Engine;
 
-namespace MTS.Engine.Pipelines
+using MTS.Engine.ContentUtils;
+
+namespace MTS.Engine.Pipeline.Pipelines
 {
 	public class AnimsetPipeline : IContentPipeline
 	{
@@ -19,8 +21,8 @@ namespace MTS.Engine.Pipelines
 			//I dont know... I dont know...
 			if (!File.Exists(path)) return false;
 
-			var bb = new BitmapBuffer(64, 64);
-			bb.Serialize(context.BakedWriter);
+			var img = ImageBuffer.Create(TextureFormat.Color, 64, 64);
+			img.Serialize(context.BakedWriter);
 
 			var cellLines = File.ReadAllLines(path);
 			context.BakedWriter.Write(cellLines.Length);

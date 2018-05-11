@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using MTS.Engine;
 
-namespace MTS.Engine.Pipelines
+namespace MTS.Engine.Pipeline.Pipelines
 {
 	public class TexturePipeline : IContentPipeline
 	{
@@ -21,8 +21,8 @@ namespace MTS.Engine.Pipelines
 			var path = context.RawContentDiskPath;
 			if (!File.Exists(path)) return false;
 
-			var bb = new BitmapBuffer(path);
-			bb.Serialize(context.BakedWriter);
+			var img = ImageLoading.LoadImage(path);
+			img.Serialize(context.BakedWriter);
 
 			return true;
 		}

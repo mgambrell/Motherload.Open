@@ -7,6 +7,8 @@ using System.Reflection;
 using IniParser;
 using IniParser.Model;
 
+using MTS.Engine.ContentUtils;
+
 namespace MTS.Engine
 {
 	public class NitroFont : ContentBase, IBakedLoader

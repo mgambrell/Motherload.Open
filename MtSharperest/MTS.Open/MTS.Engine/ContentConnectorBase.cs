@@ -4,9 +4,11 @@ using System.Linq;
 using System.IO;
 using System.Reflection;
 
+using MTS.Engine.ContentUtils;
+
 namespace MTS.Engine
 {
-	public class RuntimeConncetor_TextureContext
+	public class RuntimeConnector_TextureContext
 	{
 		public ImageBuffer ImageBuffer;
 		public BinaryReader Reader;
@@ -16,6 +18,30 @@ namespace MTS.Engine
 	{
 		public BinaryReader Reader;
 		public object Handle;
+	}
+
+	public class PipelineConnector_TextureBaking
+	{
+		public ImageBuffer Image;
+		public BinaryWriter Writer;
+	}
+
+	public class PipelineConnector_TextureEvaluation
+	{
+		/// <summary>
+		/// Input: information about the texture
+		/// </summary>
+		public ImageInfo Info;
+
+		/// <summary>
+		/// Set to true if the pipeline can handle this texture
+		/// </summary>
+		public bool Accepted { get; private set; }
+
+		/// <summary>
+		/// Accepts the texture
+		/// </summary>
+		public void Accept() { Accepted = true; }
 	}
 
 	public class PipelineConnectorBase
@@ -31,7 +57,7 @@ namespace MTS.Engine
 			//we don't want this assembly to have to have a reference to the pipelines assembly
 			//so what we're going to do is establish a convention here
 			//Pipelines for type EngineType will be implemented by MTS.Engine.Pipelines.EngineTypePipeline
-			//we'll walk down the base type hierarchy to find EngineType (since sometimes the provided content will be derived from Enginetype)
+			//we'll walk down the base type hierarchy to find EngineType (since sometimes the provided content will be derived from EngineType)
 			//and we'll use reflection to try finding each thing
 			//Now, this is meant for use on the Proto target.. nonetheless, to speed it up, we'll keep it cached
 
@@ -61,6 +87,20 @@ namespace MTS.Engine
 
 			return ret;
 		}
+
+		/// <summary>
+		/// Before textures are baked, they come through here to give us a chance to check things and mutate them
+		/// </summary>
+		public virtual void EvaluateTexture(PipelineConnector_TextureEvaluation evaluation)
+		{
+		}
+
+		/// <summary>
+		/// Performs texture encoding. May call through to some reference implementations or base type stuff if the backend has no special requirements
+		/// </summary>
+		public virtual void BakeTexture(PipelineConnector_TextureBaking baking)
+		{
+		}
 	}
 
 	/// <summary>
@@ -87,7 +127,7 @@ namespace MTS.Engine
 		public virtual void UnloadShader(ContentConnectorContext_ShaderProgram context) { }
 		public virtual void LoadShader(ContentConnectorContext_ShaderProgram context) { }
 
-		public virtual IntPtr LoadTexture(RuntimeConncetor_TextureContext context)
+		public virtual IntPtr LoadTexture(RuntimeConnector_TextureContext context)
 		{
 			return IntPtr.Zero;
 		}

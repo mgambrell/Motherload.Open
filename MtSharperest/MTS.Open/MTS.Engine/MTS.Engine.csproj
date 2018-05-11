@@ -26,7 +26,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assembly.cs" />
-    <Compile Include="BitmapBuffer.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="ContentAttributesCollection.cs" />
     <Compile Include="ContentAttributes\ContentAttributes.cs" />
@@ -46,12 +45,12 @@
     <Compile Include="ContentTypes\ShaderProgram.cs" />
     <Compile Include="ContentTypes\TextFile.cs" />
     <Compile Include="ContentTypes\Texture.cs" />
+    <Compile Include="ContentUtils\ImageBuffer.cs" />
     <Compile Include="Core\Collections.cs" />
     <Compile Include="Host\SmartFileSystemWatcher.cs" />
     <Compile Include="HotloadManager.cs" />
     <Compile Include="Loaders\BakedLoader.cs" />
     <Compile Include="Loaders\ProtoLoader.cs" />
-    <Compile Include="PipelineStuff.cs" />
     <Compile Include="ThirdParty\rickyah-ini-parser\Exceptions\ParsingException.cs" />
     <Compile Include="ThirdParty\rickyah-ini-parser\FileIniParser.cs" />
     <Compile Include="ThirdParty\rickyah-ini-parser\Helpers\Assert.cs" />

@@ -11,6 +11,16 @@ namespace MTS.Engine.SDL
 				return new ShaderProgramPipeline();
 			return base.GetPipeline(content);
 		}
+
+		public override void EvaluateTexture(PipelineConnector_TextureEvaluation evaluation)
+		{
+			evaluation.Accept();
+		}
+
+		public override void BakeTexture(PipelineConnector_TextureBaking baking)
+		{
+			baking.Image.BakeTexture(baking);
+		}
 	}
 
 	public class ShaderProgramPipeline : IContentPipeline

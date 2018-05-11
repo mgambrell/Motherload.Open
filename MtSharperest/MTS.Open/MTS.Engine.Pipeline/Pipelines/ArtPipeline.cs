@@ -3,7 +3,9 @@ using System.Linq;
 using System.IO;
 using MTS.Engine;
 
-namespace MTS.Engine.Pipelines
+using MTS.Engine.ContentUtils;
+
+namespace MTS.Engine.Pipeline.Pipelines
 {
 	public class ArtPipeline : IContentPipeline
 	{
@@ -30,7 +32,7 @@ namespace MTS.Engine.Pipelines
 
 			var path = context.Depends["source"];
 
-			var imageInfo = ImageAnalyzer.AnalyzeImageInfo(path);
+			var imageInfo = ImageLoading.LoadImage(path);
 
 			//TODO: we can only handle certain input formats here (no compressed formats)
 			//but we can output any format (after we crop it)
@@ -86,7 +88,7 @@ namespace MTS.Engine.Pipelines
 				imageContext.From = imageInfo;
 				imageContext.NewAlpha = 0xFF;
 				imageContext.ToFormat = toFormat;
-				ImageAnalyzer.Convert(imageContext);
+				ImageLoading.Convert(imageContext);
 				imageInfo = imageContext.Output;
 			}
 

@@ -6,7 +6,7 @@ using IniParser;
 using IniParser.Model;
 
 
-namespace MTS.Engine.Pipelines
+namespace MTS.Engine.Pipeline.Pipelines
 {
 	public class ConfigFilePipeline : IContentPipeline
 	{

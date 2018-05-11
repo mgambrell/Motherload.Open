@@ -6,7 +6,7 @@ namespace MTS.Engine.SDL
 {
 	public unsafe class DefaultRuntimeConnector : RuntimeConnectorBase
 	{
-		public override IntPtr LoadTexture(RuntimeConncetor_TextureContext context)
+		public override IntPtr LoadTexture(RuntimeConnector_TextureContext context)
 		{
 			SDL.MTS_SDL_TextureDescr texdescr = new SDL.MTS_SDL_TextureDescr();
 

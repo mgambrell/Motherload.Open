@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using MTS.Engine;
+using MTS.Engine.ContentUtils;
 
 public class TexAtlas
 {

@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using MTS.Engine;
 
-namespace MTS.Engine.Pipelines
+namespace MTS.Engine.Pipeline.Pipelines
 {
 	public class NitroFontPipeline : IContentPipeline
 	{

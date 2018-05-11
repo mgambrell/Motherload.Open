@@ -15,6 +15,9 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
   </PropertyGroup>
+  <PropertyGroup>
+    <RootNamespace>MTS.Engine.Pipeline</RootNamespace>
+  </PropertyGroup>
   <Import Project="..\..\..\..\Motherload.Open\MtSharperest\MTS.Open\Build\MTS_managed_phase1.props" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <Import Project="..\..\..\..\Motherload.Open\MtSharperest\MTS.Open\Build\MTS_managed_phase2.props" />
@@ -36,11 +39,11 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Compile Include="ImageLoading.cs" />
     <Compile Include="Pipelines\AnimsetPipeline.cs" />
     <Compile Include="Pipelines\ArtPipeline.cs" />
     <Compile Include="Pipelines\ConfigFilePipeline.cs" />
     <Compile Include="Pipelines\FloatArrayTextFile.cs" />
-    <Compile Include="Pipelines\ImageAnalyzer.cs" />
     <Compile Include="Pipelines\Math.cs" />
     <Compile Include="Pipelines\NitroFontPipeline.cs" />
     <Compile Include="Pipelines\ShaderProgramPipeline.cs" />

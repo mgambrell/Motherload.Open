@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace MTS.Engine
+namespace MTS.Engine.ContentUtils
 {
 	/// <summary>
 	/// Descriptive information about image data: format, dimensions, etc.
@@ -155,7 +155,7 @@ namespace MTS.Engine
 				return new AlphaTrimResult
 				{
 					Width = 0, Height = 0,
-					ResultImage = Create(TextureFormat.Canonical, 0, 0),
+					ResultImage = Create(TextureFormat.Color, 0, 0),
 					x = 0,
 					y = 0
 				};
@@ -166,7 +166,6 @@ namespace MTS.Engine
 
 			var img = Create(Format, w, h);
 
-			BitmapBuffer bbRet = new BitmapBuffer(w, h);
 			sidx = miny * Width + minx;
 			int didx = 0;
 			fixed (byte* pSrc = Data)
@@ -194,7 +193,6 @@ namespace MTS.Engine
 		{
 			var img = Create(Format, w, h);
 
-			BitmapBuffer bbRet = new BitmapBuffer(w, h);
 			int sidx = 0;
 			int didx = 0;
 			fixed (byte* pSrc = Data)
@@ -222,9 +220,7 @@ namespace MTS.Engine
 
 			writer.Write(Data.Length);
 
-			//special handling for 0 size
-			//note: something earlier should have made sure this can never happen. 
-
+			//special handling for 0 size, in the rate event it's needed
 			if (Width == 0 || Height == 0)
 			{
 				writer.Write(0); //compressed length
@@ -243,6 +239,14 @@ namespace MTS.Engine
 				writer.Write(outBuffer, 0, comprlen);
 			}
 
+		}
+
+		/// <summary>
+		/// reference implementation of texture baking
+		/// </summary>
+		public void BakeTexture(PipelineConnector_TextureBaking baking)
+		{
+			baking.Image.Serialize(baking.Writer);
 		}
 	}
 

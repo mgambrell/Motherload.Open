@@ -4,6 +4,8 @@ using System.Linq;
 using System.IO;
 using System.Reflection;
 
+using MTS.Engine.ContentUtils;
+
 namespace MTS.Engine
 {
 	public enum TextureFormat
@@ -29,19 +31,19 @@ namespace MTS.Engine
 		BGR8,
 
 		/// <summary>
-		/// in memory as RR. This is what we use for paletted images. 
-		/// Hm. Maybe I should make it I8 instead..
-		/// I mean, I dont like people seeing "I8, OK, ill always implement that as R8"
-		/// Someone might want a greyscale 1-channel thing too.
-		/// It's important to not automatically treat that like a palette.
-		/// So, I'll have to clean that up later somehow.
-		/// </summary>
+		/// in memory as RR
+		/// /// </summary>
 		R8,
+
+		/// <summary>
+		/// In memory as II.. should appear to shaders as would format `R8` but signifies extra handling for the palette
+		/// </summary>
+		I8,
 
 		/// <summary>
 		/// The texture format you should use 99% of the time
 		/// </summary>
-		Canonical = RGBA8,
+		Color = RGBA8,
 	}
 
 	/// <summary>
@@ -97,7 +99,7 @@ namespace MTS.Engine
 
 			var ms = new MemoryStream(rawbuf);
 			var brRaw = new BinaryReader(ms);
-			var resLoaderContext = new RuntimeConncetor_TextureContext();
+			var resLoaderContext = new RuntimeConnector_TextureContext();
 			resLoaderContext.ImageBuffer = new ImageBuffer();
 			//resLoaderContext.Reader = brRaw; //meaningless now, should be restored later
 			resLoaderContext.ImageBuffer.Data = rawbuf;
@@ -146,7 +148,7 @@ namespace MTS.Engine
 			bw.Flush();
 			ms.Position = 0;
 
-			var resLoaderContext = new RuntimeConncetor_TextureContext();
+			var resLoaderContext = new RuntimeConnector_TextureContext();
 			resLoaderContext.ImageBuffer = new ImageBuffer();
 			//resLoaderContext.Reader = brRaw; //meaningless now, should be restored later
 			resLoaderContext.ImageBuffer.Data = ms.GetBuffer();
