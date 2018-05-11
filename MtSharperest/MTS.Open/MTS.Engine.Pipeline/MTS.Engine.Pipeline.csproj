@@ -46,7 +46,6 @@
     <Compile Include="Pipelines\FloatArrayTextFile.cs" />
     <Compile Include="Pipelines\Math.cs" />
     <Compile Include="Pipelines\NitroFontPipeline.cs" />
-    <Compile Include="Pipelines\ShaderProgramPipeline.cs" />
     <Compile Include="Pipelines\TexAtlas.cs" />
     <Compile Include="Pipelines\TextFile.cs" />
     <Compile Include="Pipelines\TexturePipeline.cs" />

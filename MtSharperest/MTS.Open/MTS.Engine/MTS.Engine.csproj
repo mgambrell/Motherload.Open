@@ -29,8 +29,7 @@
     <Compile Include="Class1.cs" />
     <Compile Include="ContentAttributesCollection.cs" />
     <Compile Include="ContentAttributes\ContentAttributes.cs" />
-    <Compile Include="ContentAttributes\FragmentShaderName.cs" />
-    <Compile Include="ContentAttributes\VertexShaderName.cs" />
+    <Compile Include="ContentAttributes\ShaderNames.cs" />
     <Compile Include="ContentBase.cs" />
     <Compile Include="ContentConnectorBase.cs" />
     <Compile Include="ContentDirectory.cs" />

@@ -28,14 +28,14 @@ namespace MTS.Engine.Pipeline
 						{
 							int src = y * stride + x;
 							int srcVal = ((int*)ptr)[src];
-							data[idx++] = (byte)(srcVal);
-							data[idx++] = (byte)(srcVal >> 8);
 							data[idx++] = (byte)(srcVal >> 16);
+							data[idx++] = (byte)(srcVal >> 8);
+							data[idx++] = (byte)(srcVal >> 0);
 							data[idx++] = (byte)(srcVal >> 24);
 						}
 					bmp.UnlockBits(bmpdata);
 
-					ret.Format = TextureFormat.BGRA8;
+					ret.Format = TextureFormat.Color;
 				}
 				else if (bmp.PixelFormat == PixelFormat.Format24bppRgb)
 				{

@@ -27,10 +27,9 @@ namespace MTS.Engine.SDL
 	{
 		public void Prepare(PipelineBakeContext context)
 		{
-			var vsna = context.Content.Attributes.GetAttribute<VertexShaderNameAttribute>();
-			var fsna = context.Content.Attributes.GetAttribute<FragmentShaderNameAttribute>();
+			var na = context.Content.Attributes.GetAttribute<ShaderNamesAttribute>();
 
-			if (vsna == null || fsna == null)
+			if (na == null)
 			{
 				context.Failed = true;
 				return;
@@ -38,8 +37,8 @@ namespace MTS.Engine.SDL
 
 			var dir = System.IO.Path.GetDirectoryName(context.RawContentDiskPath);
 
-			context.Depend("vs", dir + "/" + vsna.Name + ".glsl");
-			context.Depend("fs", dir + "/" + fsna.Name + ".glsl");
+			context.Depend("vs", dir + "/" + na.VsName + ".glsl");
+			context.Depend("fs", dir + "/" + na.FsName + ".glsl");
 		}
 
 		public bool Bake(PipelineBakeContext context)

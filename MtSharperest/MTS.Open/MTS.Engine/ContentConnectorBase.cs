@@ -56,7 +56,7 @@ namespace MTS.Engine
 			//OK, here's the deal
 			//we don't want this assembly to have to have a reference to the pipelines assembly
 			//so what we're going to do is establish a convention here
-			//Pipelines for type EngineType will be implemented by MTS.Engine.Pipelines.EngineTypePipeline
+			//Pipelines for type EngineType will be implemented by MTS.Engine.Pipeline.Pipelines.EngineTypePipeline
 			//we'll walk down the base type hierarchy to find EngineType (since sometimes the provided content will be derived from EngineType)
 			//and we'll use reflection to try finding each thing
 			//Now, this is meant for use on the Proto target.. nonetheless, to speed it up, we'll keep it cached
@@ -69,7 +69,7 @@ namespace MTS.Engine
 			var baseType = type;
 			for (;;)
 			{
-				var candidateTypeName = "MTS.Engine.Pipelines." + baseType.Name + "Pipeline";
+				var candidateTypeName = "MTS.Engine.Pipeline.Pipelines." + baseType.Name + "Pipeline";
 				foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
 				{
 					var pipelineType = assembly.GetType(candidateTypeName, false);

@@ -4,9 +4,6 @@ using System.Linq;
 using System.IO;
 using System.Reflection;
 
-using IniParser;
-using IniParser.Model;
-
 using MTS.Engine.ContentUtils;
 
 namespace MTS.Engine

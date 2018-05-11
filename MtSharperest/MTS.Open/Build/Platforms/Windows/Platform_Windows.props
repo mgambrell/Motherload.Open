@@ -23,6 +23,8 @@
 
 		<!-- OPTIMIZATION FLAGS -->
 		<WholeProgramOptimization Condition="'$(Configuration)'=='Release'">true</WholeProgramOptimization>
+		
+		<LocalDebuggerWorkingDirectory>$(SolutionDir)</LocalDebuggerWorkingDirectory>
 
 	</PropertyGroup>
 

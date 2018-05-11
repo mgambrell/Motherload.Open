@@ -94,7 +94,7 @@ Game: a managed game (a .net exe)
 		<M_StagingDir>$(SolutionDir)..\</M_StagingDir>
 	
 		<!-- applications go to a useful location. since the sku and thus M_StagingDir is implied by SolutionPlatform, go into  subdir based on SolutionConfiguration -->
-		<OutDir Condition="'$(M_ProjectType)'=='Bruted'">$(M_StagingDir).bin\$(SolutionConfiguration)\</OutDir>
+		<OutDir Condition="'$(M_ProjectType)'=='Bruted'">$(M_StagingDir).bin\$(SolutionPlatform)\</OutDir>
 		<!-- native libraries just go to the IntDir -->
 		<!-- however, we want proto native libraries (as theyre DLLs vs+msbuild cant reference+copy well) to go to the output directory -->
 		<OutDir Condition="'$(M_ProjectType)'=='Native'">$(IntDir)</OutDir>
@@ -131,18 +131,26 @@ Game: a managed game (a .net exe)
 	</PropertyGroup>
 	
 	<PropertyGroup Condition="'$(Configuration)' == 'Debug'">
-		<DefineConstants>DEBUG;TRACE</DefineConstants>
+		<MyDefineConstants>DEBUG;TRACE;$(MyDefineConstants)</MyDefineConstants>
 		<DebugSymbols>true</DebugSymbols>
 		<DebugType>full</DebugType>		
 	</PropertyGroup>
 	
 	<PropertyGroup Condition="'$(Configuration)' == 'Release'">
-		<DefineConstants></DefineConstants>
+		<MyDefineConstants>$(MyDefineConstants)</MyDefineConstants>
 		<Optimize>true</Optimize>
 	</PropertyGroup>
 	
 	<PropertyGroup Condition="'$(Configuration)' == 'Brute'">
-		<DefineConstants>BRUTED</DefineConstants>
+		<MyDefineConstants>BRUTED;$(MyDefineConstants)</MyDefineConstants>
+	</PropertyGroup>	
+	
+	<PropertyGroup Condition="'$(SolutionPlatform)' == 'Proto'">
+		<MyDefineConstants>PROTO;$(MyDefineConstants)</MyDefineConstants>
+	</PropertyGroup>		
+	
+	<PropertyGroup>
+		<DefineConstants>$(MyDefineConstants)</DefineConstants>
 	</PropertyGroup>	
 	<!--============================-->
 

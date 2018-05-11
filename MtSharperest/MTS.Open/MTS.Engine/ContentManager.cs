@@ -22,9 +22,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.IO;
 using System.Reflection;
+
+using MTS.Engine.Collections;
 
 namespace MTS.Engine
 {
@@ -301,7 +302,7 @@ namespace MTS.Engine
 			public static readonly string DefaultContentDirectory = "/rom:/content"; //TODO: this is nonsense when bruted.
 			public static readonly string DefaultDataDirectory = "/rom:/data";
 #else
-		public static readonly string DefaultContentDirectory = @"..\..\..\content";
+		public static readonly string DefaultContentDirectory = Directory.Exists(@"..\..\content") ? @"..\..\content" : "content";
 		public static readonly string DefaultDataDirectory = "data";
 #endif
 
@@ -311,9 +312,9 @@ namespace MTS.Engine
 
 		public ContentManager()
 		{
-		#if !BRUTED
+		#if PROTO
 			hotloadManager = new HotloadManager(this);
-#endif
+		#endif
 
 			//automatically select ProjectConfig from the entry assembly (not ideal)
 			SelectProjectConfig(Assembly.GetEntryAssembly(), ConsoleEnvironment.Platform);
@@ -463,7 +464,7 @@ namespace MTS.Engine
 			return content.LoadFromBakedInProgress(context);
 		}
 
-#if !BRUTED
+#if PROTO
 		HotloadManager hotloadManager;
 		/// <summary>
 		/// Call this (once per frame most likely) to reload changed content
