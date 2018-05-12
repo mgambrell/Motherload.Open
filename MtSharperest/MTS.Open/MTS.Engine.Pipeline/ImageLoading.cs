@@ -8,6 +8,28 @@ namespace MTS.Engine.Pipeline
 {
 	public static unsafe class ImageLoading
 	{
+		public static void SaveImage(ImageBuffer img, string path)
+		{
+			using (var bmp = new Bitmap(img.Width, img.Height, PixelFormat.Format32bppArgb))
+			{
+				BitmapData bmpdata = bmp.LockBits(new Rectangle(0, 0, img.Width, img.Height), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
+				byte* ptr = (byte*)bmpdata.Scan0.ToPointer();
+				int stride = bmpdata.Stride / 4;
+				for (int idx = 0, y = 0; y < img.Height; y++)
+					for (int x = 0; x < img.Width; x++)
+					{
+						int src = y * stride + x;
+						*ptr++ = img.Data[idx + 2];
+						*ptr++ = img.Data[idx + 1];
+						*ptr++ = img.Data[idx + 0];
+						*ptr++ = img.Data[idx + 3];
+						idx += 4;
+					}
+				bmp.UnlockBits(bmpdata);
+				bmp.Save(path, ImageFormat.Png);
+			}
+		}
+
 		public static ImageBuffer LoadImage(string path)
 		{
 			var ret = new ImageBuffer();

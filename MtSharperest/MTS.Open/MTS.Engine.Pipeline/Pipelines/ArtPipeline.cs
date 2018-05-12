@@ -32,13 +32,13 @@ namespace MTS.Engine.Pipeline.Pipelines
 
 			var path = context.Depends["source"];
 
-			var imageInfo = ImageLoading.LoadImage(path);
+			var imageBuffer = ImageLoading.LoadImage(path);
 
 			//TODO: we can only handle certain input formats here (no compressed formats)
 			//but we can output any format (after we crop it)
 
-			int width = imageInfo.Width;
-			int height = imageInfo.Height;
+			int width = imageBuffer.Width;
+			int height = imageBuffer.Height;
 			int physwidth = width;
 			int physheight = height;
 			int ox = 0, oy = 0;
@@ -48,7 +48,7 @@ namespace MTS.Engine.Pipeline.Pipelines
 			//TODO - apply art-specific operations (cropping, etc.)
 			//TODO - make controllable
 			//TODO - handle errors
-			var conversionResult = imageInfo.ConvertToAlphaProcessableFormat(false);
+			var conversionResult = imageBuffer.ConvertToAlphaProcessableFormat(false);
 
 			bool doTrim = true;
 			if (conversionResult.ConversionResult == ConversionResult.Error_InputFormatHasNoAlpha) doTrim = false;
@@ -56,10 +56,10 @@ namespace MTS.Engine.Pipeline.Pipelines
 			if (doTrim)
 			{
 				//accept the converted image
-				imageInfo = conversionResult.ResultImage;
+				imageBuffer = conversionResult.ResultImage;
 
-				var alphaTrimResult = imageInfo.AlphaTrim();
-				imageInfo = alphaTrimResult.ResultImage;
+				var alphaTrimResult = imageBuffer.AlphaTrim();
+				imageBuffer = alphaTrimResult.ResultImage;
 
 				ox = alphaTrimResult.x;
 				oy = alphaTrimResult.y;
@@ -68,14 +68,14 @@ namespace MTS.Engine.Pipeline.Pipelines
 			}
 
 			bool doPadPow2 = true;
-			if (!imageInfo.IsAlphaProcessableFormat()) doPadPow2 = false;
+			if (!imageBuffer.IsAlphaProcessableFormat()) doPadPow2 = false;
 			if (doPadPow2)
 			{
 				int widthRound = PipelineMath.TextureUptoPow2(physwidth);
 				int heightRound = PipelineMath.TextureUptoPow2(physheight);
 				if (widthRound != physwidth || heightRound != physheight)
 				{
-					imageInfo = imageInfo.ExpandDownRight(widthRound, heightRound);
+					imageBuffer = imageBuffer.ExpandDownRight(widthRound, heightRound);
 				}
 			}
 
@@ -85,19 +85,23 @@ namespace MTS.Engine.Pipeline.Pipelines
 				var toFormat = ((TextureFormatAttribute)fmtAttribute).Format;
 
 				ImageConversionContext imageContext = new ImageConversionContext();
-				imageContext.From = imageInfo;
+				imageContext.From = imageBuffer;
 				imageContext.NewAlpha = 0xFF;
 				imageContext.ToFormat = toFormat;
 				ImageLoading.Convert(imageContext);
-				imageInfo = imageContext.Output;
+				imageBuffer = imageContext.Output;
 			}
 
+			umax = (ox + physwidth) / imageBuffer.Width;
+			vmax = (oy + physheight) / imageBuffer.Height;
 
-			umax = (ox + physwidth) / imageInfo.Width;
-			vmax = (oy + physheight) / imageInfo.Height;
-
-			//the bitmap goes first...
-			imageInfo.Serialize(context.BakedWriter);
+			//the texture goes first...
+			var textureBakingContext = new PipelineConnector_TextureBaking()
+			{
+				Image = imageBuffer,
+				Writer = context.BakedWriter
+			};
+			context.PipelineConnector.BakeTexture(textureBakingContext);
 
 			//..then art-specific stuff
 			context.BakedWriter.Write(width);

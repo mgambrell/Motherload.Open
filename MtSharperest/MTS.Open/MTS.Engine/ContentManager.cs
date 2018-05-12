@@ -95,6 +95,11 @@ namespace MTS.Engine
 	public class PipelineBakeContext
 	{
 		/// <summary>
+		/// The PipelineConnector in use
+		/// </summary>
+		public PipelineConnectorBase PipelineConnector;
+
+		/// <summary>
 		/// The content being baked
 		/// </summary>
 		public ContentBase Content;
@@ -489,6 +494,10 @@ namespace MTS.Engine
 		public void StopHotloadMonitor(ContentDirectory directory) { }
 #endif
 
+		[System.Diagnostics.Conditional("PROTO")]
+		public void Bake()
+		{
+		}
 
 	} //class ContentManager
 }

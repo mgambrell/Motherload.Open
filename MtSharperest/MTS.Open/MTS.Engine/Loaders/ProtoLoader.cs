@@ -35,6 +35,7 @@ namespace MTS.Engine.Loaders
 			//what is this hot garbage?? I would like a special context for preparing which has more limited information
 			bakeContext = new PipelineBakeContext()
 			{
+				PipelineConnector = content.Manager.PipelineConnector,
 				Content = content,
 				RawContentDiskRoot = directoryOwner.RawContentDiskRoot,
 				ContentPath = name,
