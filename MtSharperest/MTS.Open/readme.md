@@ -10,6 +10,9 @@ It's required that you construct what I call a "packages" directory. It should c
 * BRUTE - https://github.com/SickheadGames/BRUTE.git (folder_refactor branch)
 * MonoGame.Switch (https://github.com/mgambrell/MonoGame.Switch) (matts_static_pinvokes branch)
 
+ERRATA:
+* When changing configurations in visual studio, you may have to close it and reopen it or else F5/Ctrl+F5 won't work. They aren't re-evaluated out of the msbuild files when changing configuration.
+
 You can then find a demo at /Motherload.Switch/MtSharperest/Demos/SwitchDemo
 
 THIS INFORMATION IS NOW VERY OUT OF DATE
