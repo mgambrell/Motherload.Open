@@ -99,6 +99,16 @@ struct MTS_SDL_SamplerStateStruct
 	MTS_SDL_SamplerStateDescr descr;
 };
 
+struct MTS_SDL_DepthStencilStateStruct
+{
+	MTS_SDL_DepthStencilStateDescr descr;
+};
+
+struct MTS_SDL_PolygonStateStruct
+{
+	MTS_SDL_PolygonStateDescr descr;
+};
+
 struct MTS_SDL_TextureStruct
 {
 	GLuint glid;
@@ -268,7 +278,7 @@ MTS_SDL_Shader mts_sdl_Shader_Create(MTS_SDL_ShaderType type, const char* code)
 	return mts_sdl_Shader_CreateMulti(type, 1, codes, nullptr);
 }
 
-MTS_EXPORT void mts_sdl_Shader_Destroy(MTS_SDL_Shader shader)
+void mts_sdl_Shader_Destroy(MTS_SDL_Shader shader)
 {
 	glDeleteShader(shader->glid);
 	delete shader;
@@ -315,6 +325,25 @@ void mts_sdl_Program_Destroy(MTS_SDL_Program program)
 {
 	glDeleteProgram(program->glid);
 	delete program;
+}
+
+MTS_SDL_DepthStencilState mts_sdl_DepthStencilState_Create(MTS_SDL_DepthStencilStateDescr* descr)
+{
+	auto ret = new MTS_SDL_DepthStencilStateStruct();
+	ret->descr = *descr;
+	return ret;
+}
+
+MTS_SDL_PolygonState mts_sdl_PolygonState_Create(MTS_SDL_PolygonStateDescr* descr)
+{
+	auto ret = new MTS_SDL_PolygonStateStruct();
+	ret->descr = *descr;
+	return ret;
+}
+
+void mts_sdl_PolygonState_Destroy(MTS_SDL_PolygonState polygonState)
+{
+	delete polygonState;
 }
 
 struct ConstantBufferStream
@@ -533,6 +562,7 @@ MTS_SDL_RenderTarget mts_sdl_RenderTarget_Create(int width, int height)
 	glBindFramebuffer(GL_FRAMEBUFFER, rt.fb_id);
 
 	//Create a depth or depth/stencil renderbuffer, allocate storage for it, and attach it to the framebuffer’s depth attachment point.
+	//(TODO: this needs to be more controllable..)
 	glGenRenderbuffers(1, &rt.dsb_id);
 	glBindRenderbuffer(GL_RENDERBUFFER, rt.dsb_id);
 	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height);
@@ -629,6 +659,72 @@ void mts_sdl_SamplerState_Destroy(MTS_SDL_SamplerState samplerState)
 void mts_sdl_Device_Bind_SamplerState(int target, MTS_SDL_SamplerState samplerState)
 {
 	glBindSampler(target, samplerState->glid);
+}
+
+void mts_sdl_Device_Bind_DepthStencilState(MTS_SDL_DepthStencilState depthStencilState)
+{
+	const auto& descr = depthStencilState->descr;
+
+	static const GLuint comparisonLut[] = {
+		0xFFFF, //Invalid
+		GL_NEVER,
+		GL_LESS, GL_EQUAL, GL_LEQUAL, GL_GREATER, GL_NOTEQUAL, GL_GEQUAL,
+		GL_ALWAYS
+	};
+
+	static const GLenum stencilOpLut[] = {
+		0xFFFF, //Invalid
+		GL_KEEP, GL_ZERO,
+		GL_REPLACE,
+		GL_INCR,GL_DECR,
+		GL_INVERT,
+		GL_INCR_WRAP, GL_DECR_WRAP
+	};
+
+	if(descr.DepthWriteEnable) glDepthMask(GL_TRUE); else glDepthMask(GL_FALSE);
+
+	if(descr.DepthTestEnable) {
+		glEnable(GL_DEPTH_TEST); 
+		glDepthFunc(comparisonLut[(int)descr.DepthFunc]);
+	}
+	else glDisable(GL_DEPTH_TEST);
+	
+	if(descr.StencilTestEnable) {
+		glEnable(GL_STENCIL_TEST);
+		glStencilOpSeparate(GL_FRONT, stencilOpLut[(int)descr.StencilFailFront], stencilOpLut[(int)descr.StencilDepthFailFront], stencilOpLut[(int)descr.StencilDepthPassFront]);
+		glStencilOpSeparate(GL_BACK, stencilOpLut[(int)descr.StencilFailBack], stencilOpLut[(int)descr.StencilDepthFailBack], stencilOpLut[(int)descr.StencilDepthPassBack]);
+		glStencilFuncSeparate(GL_FRONT, comparisonLut[(int)descr.StencilFuncFront], 0, 0); //TODO - mask and ref. need to cache last set values
+		glStencilFuncSeparate(GL_BACK, comparisonLut[(int)descr.StencilFuncBack], 0, 0); //TODO - mask and ref. need to cache last set values
+	}
+	else glDisable(GL_STENCIL_TEST);
+}
+
+void mts_sdl_Device_Bind_PolygonState(MTS_SDL_PolygonState polygonState)
+{
+	const auto& descr = polygonState->descr;
+
+	static const GLuint modeLut[] = {
+		GL_POINT, GL_LINE, GL_FILL
+	};
+
+	static const GLuint cullFaceLut[] = {
+		0xFFFF, //Invalid
+		GL_FRONT, GL_BACK, GL_FRONT_AND_BACK
+	};
+
+	static const GLuint frontFaceLut[] = {
+		GL_CW, GL_CCW,
+	};
+
+	glFrontFace(frontFaceLut[(int)descr.FrontFace]);
+	glPolygonMode(GL_FRONT_AND_BACK, modeLut[(int)descr.PolygonMode]);
+
+	if(descr.CullFace == MTS_SDL_CullFace::None) {
+		glDisable(GL_CULL_FACE);
+	} else {
+		glEnable(GL_CULL_FACE);
+		glCullFace(cullFaceLut[(int)descr.CullFace]);
+	}
 }
 
 void mts_sdl_Device_Bind_BlendState(int target, MTS_SDL_BlendState blendState)

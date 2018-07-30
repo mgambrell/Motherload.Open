@@ -13,6 +13,8 @@ namespace MTS.Engine.SDL
 	public struct MTS_SDL_RenderTarget { public IntPtr ptr; public static MTS_SDL_RenderTarget Null { get { return new MTS_SDL_RenderTarget() { ptr = IntPtr.Zero }; } } }
 	public struct MTS_SDL_BlendState { public IntPtr ptr; }
 	public struct MTS_SDL_SamplerState { public IntPtr ptr; }
+	public struct MTS_SDL_DepthStencilState { public IntPtr ptr; }
+	public struct MTS_SDL_PolygonState { public IntPtr ptr; }
 	public struct MTS_SDL_Texture { public IntPtr ptr; }
 
 	public enum MTS_SDL_ShaderType
@@ -128,6 +130,113 @@ namespace MTS.Engine.SDL
 		public MTS_SDL_BlendWriteMask writeMask;
 	};
 
+	public enum MTS_SDL_StencilOp : int
+	{
+		Invalid = 0,
+
+		//Do not modify the stencil value.
+		Keep = 1,
+
+		//brief Set the stencil value to zero.
+		Zero = 2,
+
+		//Replace the stencil value with the reference value.
+		Replace = 3,
+
+		//Increment the stencil value, clamping the result to the maximum value.
+		Increment = 4,
+
+		//Decrement the stencil value, clamping the result to zero.
+		Decrement = 5,
+
+		//Invert all bits in the stencil value.
+		Invert = 6,
+
+		//Increment the stencil value, where values larger than the maximum value wrap to zero.
+		IncrementWrap = 7,
+
+		//Decrement the stencil value, where values less than zero wrap to the maximum value.
+		DecrementWrap = 8,
+	}
+
+	public enum MTS_SDL_Comparison : int
+	{
+		Invalid = 0,
+
+		//Comparison always fails.
+		Never = 1,
+
+		//Comparison passes if the test value is less than the reference value.
+		Less = 2,
+
+		//Comparison passes if the test value is equal to the reference value.
+		Equal = 3,
+
+		//Comparison passes if the test value is less than or equal to the reference value.
+		LEqual = 4,
+
+		//Comparison passes if the test value is greater than the reference value.
+		Greater = 5,
+
+		//Comparison passes if the test value is not equal to reference value.
+		NotEqual = 6,
+
+		//Comparison passes if the test value is greater than or equal to the reference value.
+		GEqual = 7,
+
+		//Comparison always passes.
+		Always = 8
+	};
+
+
+	//specifications for depth stencil state.
+	public struct MTS_SDL_DepthStencilStateDescr
+	{
+		public MTS_SDL_Comparison StencilFuncFront;
+		public MTS_SDL_StencilOp StencilFailFront, StencilDepthFailFront, StencilDepthPassFront;
+
+		public MTS_SDL_Comparison StencilFuncBack;
+		public MTS_SDL_StencilOp StencilFailBack, StencilDepthFailBack, StencilDepthPassBack;
+
+		public MTS_SDL_Comparison DepthFunc;
+
+		public byte DepthTestEnable, DepthWriteEnable;
+		public byte StencilTestEnable;
+	}
+
+	//specifications for polygon state.
+
+	public enum MTS_SDL_CullFace
+	{
+		None = 0,
+		Front = 1,
+		Back = 2,
+		FrontAndBack = 3
+	};
+
+	public enum MTS_SDL_FrontFace
+	{
+		//Clockwise primitives are considered front-facing.
+		CW = 0,
+
+		//Counter-clockwise primitives are considered front-facing.
+		CCW = 1,
+	};
+
+	public enum MTS_SDL_PolygonMode
+	{
+		Point = 0,
+		Line = 1,
+		Fill = 2,
+	};
+
+
+	public struct MTS_SDL_PolygonStateDescr
+	{
+		public MTS_SDL_CullFace CullFace;
+		public MTS_SDL_FrontFace FrontFace;
+		public MTS_SDL_PolygonMode PolygonMode;
+	};
 
 	public struct MTS_SDL_SamplerStateDescr
 	{
@@ -268,6 +377,14 @@ namespace MTS.Engine.SDL
 		[DllImport("MTS.Engine.SDL.Native.dll", CallingConvention = CallingConvention.Cdecl)]
 		public static extern MTS_SDL_BlendState mts_sdl_BlendState_Create(ref MTS_SDL_BlendStateDescr descr);
 
+		//creates a depth stencil state object
+		//NOTE: doing this with * is better because it enforces that the layout be blittable (we certainly don't want it to be marshaled)
+		[DllImport("MTS.Engine.SDL.Native.dll", CallingConvention = CallingConvention.Cdecl)]
+		public static unsafe extern MTS_SDL_DepthStencilState mts_sdl_DepthStencilState_Create(MTS_SDL_DepthStencilStateDescr *descr);
+
+		[DllImport("MTS.Engine.SDL.Native.dll", CallingConvention = CallingConvention.Cdecl)]
+		public static unsafe extern MTS_SDL_PolygonState mts_sdl_PolygonState_Create(MTS_SDL_PolygonStateDescr *descr);
+
 		//destroys the given blend state object
 		[DllImport("MTS.Engine.SDL.Native.dll", CallingConvention = CallingConvention.Cdecl)]
 		public static extern void mts_sdl_BlendState_Destroy(MTS_SDL_BlendState blendState);
@@ -287,6 +404,14 @@ namespace MTS.Engine.SDL
 		//binds the blend state object (target is usually 0)
 		[DllImport("MTS.Engine.SDL.Native.dll", CallingConvention = CallingConvention.Cdecl)]
 		public static extern void mts_sdl_Device_Bind_BlendState(int target, MTS_SDL_BlendState blendState);
+
+		//binds the depth stencil state object
+		[DllImport("MTS.Engine.SDL.Native.dll", CallingConvention = CallingConvention.Cdecl)]
+		public static extern void mts_sdl_Device_Bind_DepthStencilState(MTS_SDL_DepthStencilState depthStencilState);
+
+		//binds the polygon state object
+		[DllImport("MTS.Engine.SDL.Native.dll", CallingConvention = CallingConvention.Cdecl)]
+		public static extern void mts_sdl_Device_Bind_PolygonState(MTS_SDL_PolygonState polygonState);
 
 		//sets the constant color on the blending unit 
 		[DllImport("MTS.Engine.SDL.Native.dll", CallingConvention = CallingConvention.Cdecl)]

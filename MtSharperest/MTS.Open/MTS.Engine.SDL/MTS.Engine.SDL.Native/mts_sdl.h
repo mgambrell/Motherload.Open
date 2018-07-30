@@ -2,7 +2,7 @@
 
 //putting all the MTS apis for here now, and API reference
 
-#define MTS_EXPORT __declspec(dllexport)
+#include <MTS/MTS_Native.h>
 
 extern "C"
 {
@@ -150,7 +150,9 @@ struct MTS_SDL_ClearDescr
 	int stencil;
 };
 
+//forward declarations for opaque handles; ignore me
 struct MTS_SDL_ShaderStruct;
+struct MTS_SDL_DepthStencilStateStruct;
 struct MTS_SDL_ProgramStruct;
 struct MTS_SDL_VertexLayoutStruct;
 struct MTS_SDL_DynamicVertexBufferStruct;
@@ -159,33 +161,165 @@ struct MTS_SDL_RenderTargetStruct;
 struct MTS_SDL_BlendStateStruct;
 struct MTS_SDL_SamplerStateStruct;
 struct MTS_SDL_TextureStruct;
+struct MTS_SDL_PolygonStateStruct;
 
-//opaque handle for a compiled shader resource
+//opaque handles for all the basic resource types
 typedef MTS_SDL_ShaderStruct* MTS_SDL_Shader;
-
-//opaque handle for a compiled program resource
+typedef MTS_SDL_DepthStencilStateStruct* MTS_SDL_DepthStencilState;
 typedef MTS_SDL_ProgramStruct* MTS_SDL_Program;
-
-//opaque handle for a vertex layout resource
 typedef MTS_SDL_VertexLayoutStruct* MTS_SDL_VertexLayout;
-
-//opaque handle for a dynamic vertex buffer resource
 typedef MTS_SDL_DynamicVertexBufferStruct* MTS_SDL_DynamicVertexBuffer;
-
-//opaque handle for a static vertex buffer resource
 typedef MTS_SDL_StaticVertexBufferStruct* MTS_SDL_StaticVertexBuffer;
-
-//opaque handle for a render target resource
 typedef MTS_SDL_RenderTargetStruct* MTS_SDL_RenderTarget;
-
-//opaque handle for a blend state resource
 typedef MTS_SDL_BlendStateStruct* MTS_SDL_BlendState;
-
-//opaque handle for a blend state resource
 typedef MTS_SDL_SamplerStateStruct* MTS_SDL_SamplerState;
-
-//opaque handle fot a texture resource
 typedef MTS_SDL_TextureStruct* MTS_SDL_Texture;
+typedef MTS_SDL_PolygonStateStruct* MTS_SDL_PolygonState;
+
+enum class MTS_SDL_Comparison
+{
+	Invalid = 0,
+
+	//Comparison always fails.
+	Never = 1,
+
+	//Comparison passes if the test value is less than the reference value.
+	Less = 2,
+
+	//Comparison passes if the test value is equal to the reference value.
+	Equal = 3,
+
+	//Comparison passes if the test value is less than or equal to the reference value.
+	LEqual = 4,
+
+	//Comparison passes if the test value is greater than the reference value.
+	Greater = 5,
+
+	//Comparison passes if the test value is not equal to reference value.
+	NotEqual = 6,
+
+	//Comparison passes if the test value is greater than or equal to the reference value.
+	GEqual = 7,
+
+	//Comparison always passes.
+	Always = 8
+};
+
+//---------------------------------------------------------------------------------
+//MTS_SDL_DepthStencilState
+//---------------------------------------------------------------------------------
+
+enum class MTS_SDL_StencilOp
+{
+	Invalid = 0,
+
+	//Keeps the current value.
+	Keep = 1,
+
+	//Sets the stencil buffer value to 0.
+	Zero = 2,
+
+	//Sets the stencil buffer value to ref, as specified by glStencilFunc.
+	Replace = 3,
+
+	//Increments the current stencil buffer value. Clamps to the maximum representable unsigned value.
+	Increment = 4,
+
+	//Decrements the current stencil buffer value. Clamps to 0.
+	Decrement = 5,
+
+	//Bitwise inverts the current stencil buffer value.
+	Invert = 6,
+
+	//Increments the current stencil buffer value. Wraps stencil buffer value to zero when incrementing the maximum representable unsigned value.
+	IncrementWrap = 7,
+
+	//Decrements the current stencil buffer value. Wraps stencil buffer value to the maximum representable unsigned value when decrementing a stencil buffer value of zero.
+	DecrementWrap = 8,
+};
+
+//specifications for depth stencil state.
+struct MTS_SDL_DepthStencilStateDescr
+{
+	MTS_SDL_Comparison StencilFuncFront;
+	MTS_SDL_StencilOp StencilFailFront, StencilDepthFailFront, StencilDepthPassFront;
+
+	MTS_SDL_Comparison StencilFuncBack;
+	MTS_SDL_StencilOp StencilFailBack, StencilDepthFailBack, StencilDepthPassBack;
+
+	MTS_SDL_Comparison DepthFunc;
+
+	bool DepthTestEnable, DepthWriteEnable;
+	bool StencilTestEnable;
+
+	void ToDefaults()
+	{
+		DepthFunc = MTS_SDL_Comparison::Never;
+		DepthTestEnable = false;
+		DepthWriteEnable = false;
+		StencilTestEnable = false;
+		StencilFuncFront = MTS_SDL_Comparison::Always;
+		StencilFuncBack = MTS_SDL_Comparison::Always;
+		StencilFailFront = StencilDepthFailFront = StencilDepthPassFront = MTS_SDL_StencilOp::Keep;
+		StencilFailBack = StencilDepthFailBack = StencilDepthPassBack = MTS_SDL_StencilOp::Keep;
+	}
+};
+
+//Creates the given type of shader. For convenience, the argument is a simple C-string
+EXPORT MTS_SDL_DepthStencilState mts_sdl_DepthStencilState_Create(MTS_SDL_DepthStencilStateDescr* descr);
+
+EXPORT void mts_sdl_Device_Bind_DepthStencilState(MTS_SDL_DepthStencilState depthStencilState);
+
+//---------------------------------------------------------------------------------
+//MTS_SDL_PolygonState
+//---------------------------------------------------------------------------------
+
+enum class MTS_SDL_CullFace
+{
+	None = 0,
+	Front = 1,
+	Back = 2,
+	FrontAndBack = 3
+};
+
+
+enum class MTS_SDL_FrontFace
+{
+	//Clockwise primitives are considered front-facing.
+	CW = 1,
+
+	//Counter-clockwise primitives are considered front-facing.
+	CCW = 2,
+};
+
+enum class MTS_SDL_PolygonMode
+{
+	Point = 0,
+	Line = 1,
+	Fill = 2,
+};
+
+struct MTS_SDL_PolygonStateDescr
+{
+	MTS_SDL_CullFace CullFace;
+	MTS_SDL_FrontFace FrontFace;
+	MTS_SDL_PolygonMode PolygonMode;
+
+	void ToDefaults()
+	{
+		CullFace = MTS_SDL_CullFace::None; 
+		FrontFace = MTS_SDL_FrontFace::CCW;
+		PolygonMode = MTS_SDL_PolygonMode::Fill;
+	}
+};
+
+//creates the polygon state.
+EXPORT MTS_SDL_PolygonState mts_sdl_PolygonState_Create(MTS_SDL_PolygonStateDescr* descr);
+
+//destroys the polygon state
+EXPORT void mts_sdl_PolygonState_Destroy(MTS_SDL_PolygonState polygonState);
+
+EXPORT void mts_sdl_Device_Bind_PolygonState(MTS_SDL_PolygonState polygonState);
 
 //initializes render state to a common baseline
 //hopefully this can be made the same between platforms
@@ -193,142 +327,142 @@ typedef MTS_SDL_TextureStruct* MTS_SDL_Texture;
 //* winding is CCW (opengl default) (todo: why not make an engine config option for this? acknowledging that it's wrong for half of all users)
 //* cull is NONE (sensible for 2d games, so you dont have to worry about winding)
 //* blending is DISABLED (we'll have a highly managed mechanism for setting blending state later)
-MTS_EXPORT void mts_sdl_InitialRenderState();
+EXPORT void mts_sdl_InitialRenderState();
 
 //Creates the given type of shader. arguments style matches opengl.
-MTS_EXPORT MTS_SDL_Shader mts_sdl_Shader_CreateMulti(MTS_SDL_ShaderType type, int count, const char** codes, const int *lengths);
+EXPORT MTS_SDL_Shader mts_sdl_Shader_CreateMulti(MTS_SDL_ShaderType type, int count, const char** codes, const int *lengths);
 
 //Creates the given type of shader. For convenience, the argument is a simple C-string
-MTS_EXPORT MTS_SDL_Shader mts_sdl_Shader_Create(MTS_SDL_ShaderType type, const char* code);
+EXPORT MTS_SDL_Shader mts_sdl_Shader_Create(MTS_SDL_ShaderType type, const char* code);
 
 //Deletes the given shader (it may still be referenced by programs though)
-MTS_EXPORT void mts_sdl_Shader_Destroy(MTS_SDL_Shader shader);
+EXPORT void mts_sdl_Shader_Destroy(MTS_SDL_Shader shader);
 
 //Creates a program from the given shaders
-MTS_EXPORT MTS_SDL_Program mts_sdl_Program_Create(MTS_SDL_Shader vertexShader, MTS_SDL_Shader fragmentShader);
+EXPORT MTS_SDL_Program mts_sdl_Program_Create(MTS_SDL_Shader vertexShader, MTS_SDL_Shader fragmentShader);
 
 //Destroys a program
-MTS_EXPORT void mts_sdl_Program_Destroy(MTS_SDL_Program program);
+EXPORT void mts_sdl_Program_Destroy(MTS_SDL_Program program);
 
 //Binds this program as current - TODO: move onto device
-MTS_EXPORT void mts_sdl_Program_Bind(MTS_SDL_Program pgm);
+EXPORT void mts_sdl_Program_Bind(MTS_SDL_Program pgm);
 
 //Creates a vertex layout from the provided description
-MTS_EXPORT MTS_SDL_VertexLayout mts_sdl_VertexLayout_Create(const MTS_SDL_VertexLayoutDescr* layout);
+EXPORT MTS_SDL_VertexLayout mts_sdl_VertexLayout_Create(const MTS_SDL_VertexLayoutDescr* layout);
 
 //destroys a vertex layout
-MTS_EXPORT void mts_sdl_VertexLayout_Release(MTS_SDL_VertexLayout layout);
+EXPORT void mts_sdl_VertexLayout_Release(MTS_SDL_VertexLayout layout);
 
 //signal to begin writing to the constant buffer. you should do this before setting values in it
 //you will need to do this each frame or else it will run out eventually
-MTS_EXPORT void mts_sdl_ConstantBuffer_BeginFrame(int bufferIndex);
+EXPORT void mts_sdl_ConstantBuffer_BeginFrame(int bufferIndex);
 
 //Sets the given data into a constant buffer
 //if this mismatches the actual opengl Uniform Block size, you will be sorry.. you may also get an error
-MTS_EXPORT void mts_sdl_ConstantBuffer_Set(int bufferIndex, void* data, int size);
+EXPORT void mts_sdl_ConstantBuffer_Set(int bufferIndex, void* data, int size);
 
 //creates a dynamic vertex buffer
 //it's assumed this will contain a specific type of vertex; addressing will be done with those units
 //therefore the MTS_SDL_VertexLayout must be provided too
 //really, it's just a MyVertexFormat[], so don't expect anything too powerful
-MTS_EXPORT MTS_SDL_DynamicVertexBuffer mts_sdl_DynamicVertexBuffer_Create(MTS_SDL_VertexLayout vertexLayout, int nElements);
+EXPORT MTS_SDL_DynamicVertexBuffer mts_sdl_DynamicVertexBuffer_Create(MTS_SDL_VertexLayout vertexLayout, int nElements);
 
 //signal to begin writing to the dynamic vertex buffer
-MTS_EXPORT void mts_sdl_DynamicVertexBuffer_Begin(MTS_SDL_DynamicVertexBuffer dvb);
+EXPORT void mts_sdl_DynamicVertexBuffer_Begin(MTS_SDL_DynamicVertexBuffer dvb);
 
 //sets the given data into the dynamic vertex buffer
 //returns the initial vertex index written to (for use as a starting when drawing)
-MTS_EXPORT int mts_sdl_DynamicVertexBuffer_SetElements(MTS_SDL_DynamicVertexBuffer dvb, void* data, int nElements);
+EXPORT int mts_sdl_DynamicVertexBuffer_SetElements(MTS_SDL_DynamicVertexBuffer dvb, void* data, int nElements);
 
 //destroys the dynamic vertex buffer
-MTS_EXPORT void mts_sdl_DynamicVertexBuffer_Destroy(MTS_SDL_DynamicVertexBuffer dvb);
+EXPORT void mts_sdl_DynamicVertexBuffer_Destroy(MTS_SDL_DynamicVertexBuffer dvb);
 
 //creates a static vertex buffer
-MTS_EXPORT MTS_SDL_StaticVertexBuffer mts_sdl_StaticVertexBuffer_Create(MTS_SDL_VertexLayout vertexLayout, int nElements, void* elements);
+EXPORT MTS_SDL_StaticVertexBuffer mts_sdl_StaticVertexBuffer_Create(MTS_SDL_VertexLayout vertexLayout, int nElements, void* elements);
 
 //destroys the static vertex buffer
-MTS_EXPORT void mts_sdl_StaticVertexBuffer_Destroy(MTS_SDL_StaticVertexBuffer svb);
+EXPORT void mts_sdl_StaticVertexBuffer_Destroy(MTS_SDL_StaticVertexBuffer svb);
 
 //creates a texture
-MTS_EXPORT MTS_SDL_Texture mts_sdl_Texture_Create(MTS_SDL_TextureDescr* descr);
+EXPORT MTS_SDL_Texture mts_sdl_Texture_Create(MTS_SDL_TextureDescr* descr);
 
 //destroys a texture
-MTS_EXPORT void mts_sdl_Texture_Destroy(MTS_SDL_Texture tex);
+EXPORT void mts_sdl_Texture_Destroy(MTS_SDL_Texture tex);
 
 //creates a render target with the given dimensions
 //this is probably oversimplified
-MTS_EXPORT MTS_SDL_RenderTarget mts_sdl_RenderTarget_Create(int width, int height);
+EXPORT MTS_SDL_RenderTarget mts_sdl_RenderTarget_Create(int width, int height);
 
 //binds this render target as current
-MTS_EXPORT void mts_sdl_RenderTarget_Bind(MTS_SDL_RenderTarget rt);
+EXPORT void mts_sdl_RenderTarget_Bind(MTS_SDL_RenderTarget rt);
 
 //destroys the given render target
-MTS_EXPORT void mts_sdl_RenderTarget_Destroy(MTS_SDL_RenderTarget rt);
+EXPORT void mts_sdl_RenderTarget_Destroy(MTS_SDL_RenderTarget rt);
 
 //creates a blend state object
-MTS_EXPORT MTS_SDL_BlendState mts_sdl_BlendState_Create(const MTS_SDL_BlendStateDescr* descr);
+EXPORT MTS_SDL_BlendState mts_sdl_BlendState_Create(const MTS_SDL_BlendStateDescr* descr);
 
 //destroys the given blend state object
-MTS_EXPORT void mts_sdl_BlendState_Destroy(MTS_SDL_BlendState blendState);
+EXPORT void mts_sdl_BlendState_Destroy(MTS_SDL_BlendState blendState);
 
 //creates a sampler state object
-MTS_EXPORT MTS_SDL_SamplerState mts_sdl_SamplerState_Create(const MTS_SDL_SamplerStateDescr* descr);
+EXPORT MTS_SDL_SamplerState mts_sdl_SamplerState_Create(const MTS_SDL_SamplerStateDescr* descr);
 
 //destroys the given sampler state object
-MTS_EXPORT void mts_sdl_SamplerState_Destroy(MTS_SDL_SamplerState samplerState);
+EXPORT void mts_sdl_SamplerState_Destroy(MTS_SDL_SamplerState samplerState);
 
 //draws (equivalent of glDrawArrays)
-MTS_EXPORT void mts_sdl_Draw(MTS_SDL_PrimitiveType primitiveType, int startIndex, int nVertices);
+EXPORT void mts_sdl_Draw(MTS_SDL_PrimitiveType primitiveType, int startIndex, int nVertices);
 
 //binds the blend state object (target is usually 0)
-MTS_EXPORT void mts_sdl_Device_Bind_BlendState(int target, MTS_SDL_BlendState blendState);
+EXPORT void mts_sdl_Device_Bind_BlendState(int target, MTS_SDL_BlendState blendState);
 
 //sets the constant color on the blending unit 
-MTS_EXPORT void mts_sdl_Device_Bind_BlendState_Color(float r, float g, float b, float a);
+EXPORT void mts_sdl_Device_Bind_BlendState_Color(float r, float g, float b, float a);
 
 //binds the dynamic vertex buffer. binds the entire thing (there is no provision for binding a range; control the range through your draw calls instead)
 //this binds its associated vertex layout as well
-MTS_EXPORT void mts_sdl_Device_Bind_DynamicVertexBuffer(MTS_SDL_DynamicVertexBuffer dvb);
+EXPORT void mts_sdl_Device_Bind_DynamicVertexBuffer(MTS_SDL_DynamicVertexBuffer dvb);
 
 //binds the dynamic vertex buffer. binds the entire thing (there is no provision for binding a range; control the range through your draw calls instead)
 //this binds its associated vertex layout as well
-MTS_EXPORT void mts_sdl_Device_Bind_StaticVertexBuffer(MTS_SDL_StaticVertexBuffer svb);
+EXPORT void mts_sdl_Device_Bind_StaticVertexBuffer(MTS_SDL_StaticVertexBuffer svb);
 
 //Binds this vertex layout as current
-MTS_EXPORT void mts_sdl_Device_Bind_VertexLayout(MTS_SDL_VertexLayout layout);
+EXPORT void mts_sdl_Device_Bind_VertexLayout(MTS_SDL_VertexLayout layout);
 
 //Binds the backbuffer as current render target
-MTS_EXPORT void mts_sdl_Device_Bind_Backbuffer();
+EXPORT void mts_sdl_Device_Bind_Backbuffer();
 
 //Binds this texture to the given texture unit
-MTS_EXPORT void mts_sdl_Device_Bind_Texture(int target, MTS_SDL_Texture tex);
+EXPORT void mts_sdl_Device_Bind_Texture(int target, MTS_SDL_Texture tex);
 
 //Binds this render target's texture to the given texture unit
-MTS_EXPORT void mts_sdl_Device_Bind_TextureRT(int target, MTS_SDL_RenderTarget rt);
+EXPORT void mts_sdl_Device_Bind_TextureRT(int target, MTS_SDL_RenderTarget rt);
 
-MTS_EXPORT void mts_sdl_Device_Bind_SamplerState(int target, MTS_SDL_SamplerState sampler);
+EXPORT void mts_sdl_Device_Bind_SamplerState(int target, MTS_SDL_SamplerState sampler);
 
 //Sets device's current viewport
-MTS_EXPORT void mts_sdl_Device_SetViewport(int x, int y, int width, int height);
+EXPORT void mts_sdl_Device_SetViewport(int x, int y, int width, int height);
 
 //Sets device's current depth range
-MTS_EXPORT void mts_sdl_Device_SetDepthRange(float hither, float yon);
+EXPORT void mts_sdl_Device_SetDepthRange(float hither, float yon);
 
 //begins drawing for a frame.
 //chiefly, makes sure once-per-frame processes run, whatever they are
-MTS_EXPORT void mts_sdl_Device_BeginFrame();
+EXPORT void mts_sdl_Device_BeginFrame();
 
 //clears the framebuffer
-MTS_EXPORT void mts_sdl_Device_Clear(MTS_SDL_ClearDescr* descr);
+EXPORT void mts_sdl_Device_Clear(MTS_SDL_ClearDescr* descr);
 
 //ends frame and swaps buffers
-MTS_EXPORT void mts_sdl_Device_EndFrame();
+EXPORT void mts_sdl_Device_EndFrame();
 
 //startup the platform driver
-MTS_EXPORT void mts_sdl_Init();
+EXPORT void mts_sdl_Init();
 
 //exits the platform driver
-MTS_EXPORT void mts_sdl_Exit();
+EXPORT void mts_sdl_Exit();
 
 } //extern "C"
 
