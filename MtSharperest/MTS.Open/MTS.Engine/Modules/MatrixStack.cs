@@ -60,6 +60,7 @@ namespace MTS.Engine.Modules.MatrixStack
 		public void Scale(float ratio) { Scale(ratio, ratio, ratio); IsDirty = true; }
 		public void Scale(float x, float y) { Scale(x, y, 1); IsDirty = true; }
 
+		//TODO - make rad and degree variants
 		public void RotateAxis(float x, float y, float z, float angle) { MultiplyMatrix(Matrix.CreateFromAxisAngle(new Vector3(x, y, z), angle)); IsDirty = true; }
 		public void RotateY(float angle) { MultiplyMatrix(Matrix.CreateRotationY(angle)); IsDirty = true; }
 		public void RotateX(float angle) { MultiplyMatrix(Matrix.CreateRotationX(angle)); IsDirty = true; }

@@ -16,7 +16,8 @@ namespace MTS.Engine
 			//I need to remove this restriction later with deeper study
 			//various platforms dislike sizes under 16 for various formats
 			//one platform in particular doesnt like widths under 64 for linear textures
-			if (candidate < 64) candidate = 64;
+			//BLECK. dont want this now
+			//if (candidate < 64) candidate = 64;
 
 			return candidate;
 		}
