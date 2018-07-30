@@ -16,11 +16,6 @@ namespace MTS.Engine.Pipeline.Pipelines
 			context.Depend("source", path);
 		}
 
-		//TODO - this has really exposed the need to have this separated from instance methods on an art content instance
-		//i mean, it really has nothing at all to do with the content
-		//the baker should be a totally separate interface, so we're not encouraged to put it here (however, it is OK if we do)
-		//unfortuately, right now only a content instance knows which object type can be used to bake it.
-		//we would need some kind of reflection index of bakers for content types. can we put it in an attribute so it doesnt need to be manually registered?
 		public unsafe bool Bake(PipelineBakeContext context)
 		{
 			Console.WriteLine("Art.Bake: " + context.ContentPath);
