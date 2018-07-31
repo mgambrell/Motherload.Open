@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace MTS.Engine
+namespace MTS.Engine.ContentTypes
 {
 	/// <summary>
 	/// Just a text file.

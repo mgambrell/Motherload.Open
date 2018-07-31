@@ -7,7 +7,7 @@ using System.Linq;
 using System.IO;
 using System.Reflection;
 
-namespace MTS.Engine
+namespace MTS.Engine.ContentTypes
 {
 	public class AnimSet : AnimSet<EMPTYDIR, EMPTYDIR>
 	{

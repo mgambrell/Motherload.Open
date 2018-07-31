@@ -61,6 +61,12 @@ namespace MTS.Engine
 			//and we'll use reflection to try finding each thing
 			//Now, this is meant for use on the Proto target.. nonetheless, to speed it up, we'll keep it cached
 
+			//TODO - this is not a great system, it is hard for the user to extend.
+			//well, I'll improve it later
+			//could we have the content type return which pipeline typename it wants to use?
+			//that could be powerful! you could then extend it later. and the BASE type could implement ALL THIS LOGIC! fascinating!
+			//(or at least call into here to do it) DO THAT LATER 
+
 			var type = content.GetType();
 			IContentPipeline ret;
 			if (pipelinesCache.TryGetValue(type, out ret))
@@ -69,7 +75,9 @@ namespace MTS.Engine
 			var baseType = type;
 			for (;;)
 			{
-				var candidateTypeName = "MTS.Engine.Pipeline.Pipelines." + baseType.Name + "Pipeline";
+				//remove prefix, and path into the pipelines from there
+				var name = baseType.FullName.Replace("MTS.Engine.ContentTypes.", "");
+				var candidateTypeName = "MTS.Engine.Pipeline.Pipelines." + name + "Pipeline";
 				foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
 				{
 					var pipelineType = assembly.GetType(candidateTypeName, false);

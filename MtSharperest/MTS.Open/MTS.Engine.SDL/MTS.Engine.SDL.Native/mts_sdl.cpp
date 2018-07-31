@@ -398,7 +398,6 @@ int mts_sdl_DynamicVertexBuffer_SetElements(MTS_SDL_DynamicVertexBuffer dvb, voi
 	if(dvb->cursor * stride + size > dvb->size)
 		return -1;
 
-	int err = glGetError();
 	glBindBuffer(GL_ARRAY_BUFFER,dvb->glid);
 
 	void* ptr = glMapBufferRange(GL_ARRAY_BUFFER, dvb->cursor * stride, size, GL_MAP_UNSYNCHRONIZED_BIT | GL_MAP_INVALIDATE_RANGE_BIT | GL_MAP_WRITE_BIT);
@@ -797,7 +796,7 @@ void mts_sdl_Draw(MTS_SDL_PrimitiveType primitiveType, int startIndex, int nVert
 	if(primitiveType == MTS_SDL_PrimitiveType::TriangleStrip) glPrimitiveType = GL_TRIANGLE_STRIP;
 	if(primitiveType == MTS_SDL_PrimitiveType::Trianglefan) glPrimitiveType = GL_TRIANGLE_FAN;
 
-	//check for error
+	//check for mistake
 	if(glPrimitiveType == 0) return;
 
 	glDrawArrays(glPrimitiveType, startIndex, nVertices);

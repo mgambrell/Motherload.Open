@@ -8,7 +8,7 @@ using MTS.Engine.ContentUtils;
 
 namespace MTS.Engine
 {
-	public enum TextureFormat
+public enum TextureFormat
 	{
 		/// <summary>
 		/// in memory as RR GG BB AA
@@ -45,7 +45,10 @@ namespace MTS.Engine
 		/// </summary>
 		Color = RGBA8,
 	}
+}
 
+namespace MTS.Engine.ContentTypes
+{
 	/// <summary>
 	/// The basic texture content.
 	/// Textures can be NP2 in any platform we support, but there may be other rules about their dimensions depending on hardware platform.

@@ -4,7 +4,7 @@ using System.Linq;
 using System.IO;
 using System.Reflection;
 
-namespace MTS.Engine
+namespace MTS.Engine.ContentTypes
 {
 	/// <summary>
 	/// Art is basically a texture, with a little extra information.

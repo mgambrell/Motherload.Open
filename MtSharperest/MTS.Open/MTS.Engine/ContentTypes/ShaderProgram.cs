@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace MTS.Engine
+namespace MTS.Engine.ContentTypes
 {
 	/// <summary>
 	/// A compiled shader program. It will take care of compiling itself when the source file changes.

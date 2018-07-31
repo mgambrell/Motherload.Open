@@ -4,7 +4,7 @@ using System.Linq;
 using System.IO;
 using System.Reflection;
 
-namespace MTS.Engine
+namespace MTS.Engine.ContentTypes
 {
 	/// <summary>
 	/// A comma-separated array of floats in a text file.

@@ -18,6 +18,11 @@ namespace MTS.Engine
 		public bool IsLoaded { get; protected set; }
 
 		/// <summary>
+		/// Each time the content is loaded, this increments; you can use it to detect hotloaded content
+		/// </summary>
+		public int LoadSerial { get; protected set; }
+
+		/// <summary>
 		/// Returns the short file name of the content (no extension, no path)
 		/// </summary>
 		public string Name { get { return _name; } }
@@ -41,6 +46,11 @@ namespace MTS.Engine
 			loadContext.Content = this;
 
 			IsLoaded = _loader.Load(loadContext);
+
+			if (IsLoaded)
+			{
+				LoadSerial++;
+			}
 
 			return IsLoaded;
 		}

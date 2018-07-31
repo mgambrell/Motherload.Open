@@ -44,6 +44,7 @@
     <Compile Include="ContentTypes\ShaderProgram.cs" />
     <Compile Include="ContentTypes\TextFile.cs" />
     <Compile Include="ContentTypes\Texture.cs" />
+    <Compile Include="ContentTypes\Voxels\GoxelText.cs" />
     <Compile Include="ContentUtils\ImageBuffer.cs" />
     <Compile Include="Core\Collections.cs" />
     <Compile Include="Host\SmartFileSystemWatcher.cs" />

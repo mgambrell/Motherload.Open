@@ -49,6 +49,7 @@
     <Compile Include="Pipelines\TexAtlas.cs" />
     <Compile Include="Pipelines\TextFile.cs" />
     <Compile Include="Pipelines\TexturePipeline.cs" />
+    <Compile Include="Pipelines\Voxels\GoxelTextPipeline.cs" />
     <Compile Include="ThirdParty\rickyah-ini-parser\Exceptions\ParsingException.cs" />
     <Compile Include="ThirdParty\rickyah-ini-parser\FileIniParser.cs" />
     <Compile Include="ThirdParty\rickyah-ini-parser\Helpers\Assert.cs" />

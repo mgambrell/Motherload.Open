@@ -9,14 +9,12 @@ namespace MTS.Engine
 		/// Not a great name, but this analyzes the inputs and determines dependencies, and whether the content exists / can be built
 		/// To simplify things, you can specify several dependencies with the same tag, and the existing one will get selected
 		/// If there are multiple choices, it will be an error
-		/// So for example, Texture could depend on mytexture.png and mytexture.tga 
+		/// So for example, Texture could depend on mytexture.png and mytexture.tga
 		/// </summary>
 		void Prepare(PipelineBakeContext context);
 
 		/// <summary>
 		/// Bakes the content from its raw ingredients.
-		/// Note: it's strange that this is an instance method, when it should not refer to any instance members--but that's just how it is.
-		/// Maybe this can be another interface? MakeBaker? I need to try that.
 		/// </summary>
 		bool Bake(PipelineBakeContext context);
 	}
@@ -70,7 +68,7 @@ namespace MTS.Engine.PrivateInterfaces
 
 	public interface IArtLoaders
 	{
-		void LoadParamsOwned(int width, int height, float umin, float vmin, float umax, float vmax, Texture texture);
+		void LoadParamsOwned(int width, int height, float umin, float vmin, float umax, float vmax, ContentTypes.Texture texture);
 	}
 }
 

@@ -7,7 +7,7 @@ using System.Reflection;
 //todo: support arrays? (comma separated)
 //todo: support arrays? (Item0= Item1= Item2= etc.?) [would specify via attribute, some kind of flatten or merge command]
 
-namespace MTS.Engine
+namespace MTS.Engine.ContentTypes
 {
 	/// <summary>
 	/// Inherit from this type.

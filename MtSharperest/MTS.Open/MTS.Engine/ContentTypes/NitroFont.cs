@@ -6,7 +6,7 @@ using System.Reflection;
 
 using MTS.Engine.ContentUtils;
 
-namespace MTS.Engine
+namespace MTS.Engine.ContentTypes
 {
 	public class NitroFont : ContentBase, IBakedLoader
 	{

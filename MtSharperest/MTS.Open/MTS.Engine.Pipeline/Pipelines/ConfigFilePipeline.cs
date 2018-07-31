@@ -5,6 +5,7 @@ using MTS.Engine;
 using IniParser;
 using IniParser.Model;
 
+using MTS.Engine.ContentTypes;
 
 namespace MTS.Engine.Pipeline.Pipelines
 {

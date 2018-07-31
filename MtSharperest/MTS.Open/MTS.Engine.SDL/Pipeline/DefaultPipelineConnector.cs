@@ -1,6 +1,8 @@
 using System;
 using System.IO;
 
+using MTS.Engine.ContentTypes;
+
 namespace MTS.Engine.SDL
 {
 	public class DefaultPipelineConnector : PipelineConnectorBase
