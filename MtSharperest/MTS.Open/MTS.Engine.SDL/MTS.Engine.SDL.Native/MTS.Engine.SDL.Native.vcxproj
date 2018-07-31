@@ -16,6 +16,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="mts_sdl.cpp" />
+    <ClCompile Include="PADL.cpp" />
     <ClCompile Include="thirdparty\libepoxy\src\dispatch_common.c" />
     <ClCompile Include="thirdparty\libepoxy\src\dispatch_wgl.c" />
     <ClCompile Include="thirdparty\libepoxy\src\gl_generated_dispatch.c" />
@@ -24,6 +25,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mts_sdl.h" />
+    <ClInclude Include="PADL.h" />
     <ClInclude Include="thirdparty\libepoxy\src\config.h" />
     <ClInclude Include="thirdparty\libepoxy\src\config\libepoxy-config-win.h" />
   </ItemGroup>

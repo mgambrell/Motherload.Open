@@ -50,6 +50,7 @@
     <Compile Include="HotloadManager.cs" />
     <Compile Include="Loaders\BakedLoader.cs" />
     <Compile Include="Loaders\ProtoLoader.cs" />
+    <Compile Include="Modules\BitPad.cs" />
     <Compile Include="Modules\MatrixStack.cs" />
     <Compile Include="XNA\BoundingBox.cs" />
     <Compile Include="XNA\BoundingFrustum.cs" />

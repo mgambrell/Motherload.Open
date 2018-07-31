@@ -419,6 +419,7 @@
       <Filter>thirdparty\sdl2</Filter>
     </ClCompile>
     <ClCompile Include="mts_sdl.cpp" />
+    <ClCompile Include="PADL.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="thirdparty">
@@ -700,5 +701,6 @@
       <Filter>thirdparty\sdl2</Filter>
     </ClInclude>
     <ClInclude Include="mts_sdl.h" />
+    <ClInclude Include="PADL.h" />
   </ItemGroup>
 </Project>

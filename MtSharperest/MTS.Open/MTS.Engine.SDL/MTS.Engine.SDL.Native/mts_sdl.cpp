@@ -26,55 +26,6 @@ static int _Attribute_Format_Lookup[] = {
 	GL_INT, GL_UNSIGNED_INT
 };
 
-void mts_sdl_InitialRenderState()
-{
-	//https://www.khronos.org/opengl/wiki/Tutorial1:_Rendering_shapes_with_glDrawRangeElements,_VAO,_VBO,_shaders_(C%2B%2B_/_freeGLUT)
-	glDisable(GL_STENCIL_TEST);
-	int err = glGetError();
-	glDisable(GL_CULL_FACE);
-	err = glGetError();
-	glDisable(GL_BLEND);
-	err = glGetError();
-	//glDisable(GL_ALPHA_TEST); //nonsense on 3.2?
-	err = glGetError();
-	glDisable(GL_DITHER);
-	err = glGetError();
-	glDisable(GL_DEPTH_TEST);
-	err = glGetError();
-
-	glShadeModel(GL_SMOOTH);
-	err = glGetError();
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-	err = glGetError();
-	glReadBuffer(GL_BACK);
-	err = glGetError();
-	glDrawBuffer(GL_BACK);
-	err = glGetError();
-	glDepthFunc(GL_ALWAYS);
-	err = glGetError();
-	glDepthMask(GL_TRUE);
-	err = glGetError();
-	glStencilMask(0);
-	err = glGetError();
-	glStencilFunc(GL_EQUAL, 0, 0);
-	err = glGetError();
-	glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
-	err = glGetError();
-	glFrontFace(GL_CCW);
-	err = glGetError();
-	glCullFace(GL_BACK);
-	err = glGetError();
-	glClearColor(0.0, 0.0, 0.0, 0.0);
-	err = glGetError();
-	glClearDepth(0.0);
-	err = glGetError();
-	glClearStencil(0);
-	err = glGetError();
-	//these things shouldnt really be relevant to the user
-	glActiveTexture(GL_TEXTURE0);
-	err = glGetError();
-}
-
 static MTS_SDL_VertexLayout _currLayout;
 
 struct MTS_SDL_ShaderStruct
@@ -868,7 +819,6 @@ void __stdcall MessageCallback( GLenum source,
 	}
 }
 
-
 void mts_sdl_Init()
 {
 	SDL_Surface* screenSurface = NULL; 
@@ -902,8 +852,6 @@ void mts_sdl_Init()
 	//	const char *gl_ext = (const char *)glGetStringi(GL_EXTENSIONS, i);
 	//	printf("%s\n",gl_ext);
 	//}
-
-	mts_sdl_InitialRenderState();
 
 	_engine_init();
 }
