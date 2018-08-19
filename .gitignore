@@ -3,3 +3,4 @@
 .obj
 .vs
 *.user
+/MtSharperest/ThirdParty/nuget.exe
