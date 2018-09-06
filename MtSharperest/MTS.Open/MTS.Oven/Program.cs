@@ -12,6 +12,12 @@ using System.Linq;
 //or, is it bad if the engine versions mismatch? Maybe so.
 //We might have to move more logic into ContentManager and make this a really dumb driver
 
+//UPDATE - ok these are sloppy notes
+//I actually TRIED that thing mentioned above
+//the problem is, the console exe won't be built to include all the needed DLLS.
+//I had another idea, which is that the bake.bat file should just build the oven, which will make it copy over all the latest MTS dlls
+//you change MTS, you rebuild oven, that's fair
+
 public class Program
 {
 	[DllImport("kernel32.dll", SetLastError = true)]
