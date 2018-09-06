@@ -7,7 +7,7 @@ It's required that you construct what I call a "packages" directory. It should c
 
 * Motherload.Open - https://github.com/mgambrell/Motherload.Open.git
 * Motherload.Switch - https://github.com/mgambrell/Motherload.Switch.git
-* BRUTE - https://github.com/SickheadGames/BRUTE.git (folder_refactor branch)
+* BRUTE - https://github.com/SickheadGames/BRUTE.git (matts_static_pinvokes branch)
 * MonoGame.Switch (https://github.com/mgambrell/MonoGame.Switch) (matts_static_pinvokes branch)
 
 ERRATA:
